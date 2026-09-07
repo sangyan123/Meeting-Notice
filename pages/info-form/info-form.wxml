@@ -1,0 +1,106 @@
+<!--pages/info-form/info-form.wxml-->
+<view class="page">
+  <view class="nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-bar">
+      <view class="nav-back" bindtap="onBack">‹</view>
+      <text class="nav-title">参会人员信息填报</text>
+      <view class="nav-placeholder"></view>
+    </view>
+  </view>
+
+  <view class="body">
+    <view class="card">
+      <text class="section-title">基本信息</text>
+      <view class="field">
+        <text class="field-label">姓名</text>
+        <input class="input readonly" value="{{form.name}}" disabled />
+      </view>
+      <view class="field">
+        <text class="field-label">手机号码 <text class="req">*</text></text>
+        <input
+          class="input"
+          type="number"
+          maxlength="11"
+          placeholder="请输入手机号码"
+          value="{{form.phone}}"
+          bindinput="onPhone"
+        />
+      </view>
+    </view>
+
+    <view class="card">
+      <text class="section-title">住宿需求 <text class="req">*</text></text>
+      <radio-group bindchange="onHotelNeed">
+        <label class="radio-item" wx:for="{{hotelOptions}}" wx:key="value">
+          <radio value="{{item.value}}" checked="{{form.hotelNeed === item.value}}" color="#B31A21" />
+          <text>{{item.label}}</text>
+        </label>
+      </radio-group>
+    </view>
+
+    <view class="card">
+      <text class="section-title">用餐特殊需求 <text class="req">*</text></text>
+      <radio-group bindchange="onDiet">
+        <label class="radio-item" wx:for="{{dietOptions}}" wx:key="value">
+          <radio value="{{item.value}}" checked="{{form.diet === item.value}}" color="#B31A21" />
+          <text>{{item.label}}</text>
+        </label>
+      </radio-group>
+    </view>
+
+    <view class="card travel-card">
+      <text class="section-title">出行信息</text>
+      <view class="field dropdown-field">
+        <text class="field-label">交通方式 <text class="req">*</text></text>
+        <view class="dropdown">
+          <view
+            class="dropdown-trigger {{transportOpen ? 'open' : ''}} {{!form.transport ? 'placeholder' : ''}}"
+            catchtap="onToggleTransport"
+          >
+            <text>{{form.transport || '请选择交通方式'}}</text>
+            <text class="arrow">{{transportOpen ? '∧' : '∨'}}</text>
+          </view>
+          <view class="dropdown-panel" wx:if="{{transportOpen}}">
+            <view
+              class="dropdown-item {{form.transport === item ? 'active' : ''}}"
+              wx:for="{{transportOptions}}"
+              wx:key="*this"
+              data-value="{{item}}"
+              catchtap="onSelectTransport"
+            >{{item}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="field">
+        <text class="field-label">抵达日期 <text class="req">*</text></text>
+        <picker mode="date" value="{{form.arriveDate}}" bindchange="onArrive">
+          <view class="picker {{!form.arriveDate ? 'placeholder' : ''}}">
+            {{form.arriveDate || 'yyyy/mm/日'}}
+            <text class="arrow">📅</text>
+          </view>
+        </picker>
+      </view>
+      <view class="field">
+        <text class="field-label">离开日期 <text class="req">*</text></text>
+        <picker mode="date" value="{{form.leaveDate}}" bindchange="onLeaveDate">
+          <view class="picker {{!form.leaveDate ? 'placeholder' : ''}}">
+            {{form.leaveDate || 'yyyy/mm/日'}}
+            <text class="arrow">📅</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="card">
+      <text class="section-title muted">备注 (选填)</text>
+      <textarea
+        class="textarea"
+        placeholder="如有其他需要说明的情况，请在此填写"
+        value="{{form.remark}}"
+        bindinput="onRemark"
+      />
+    </view>
+
+    <view class="submit-btn {{canSubmit ? 'ready' : ''}}" bindtap="onSubmit">提交</view>
+  </view>
+</view>

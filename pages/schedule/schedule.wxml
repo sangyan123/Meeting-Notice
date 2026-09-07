@@ -1,0 +1,58 @@
+<!--pages/schedule/schedule.wxml-->
+<view class="page">
+  <view class="nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-bar">
+      <view class="nav-back" bindtap="onBack">‹</view>
+      <text class="nav-title">会议日程</text>
+      <view class="nav-placeholder"></view>
+    </view>
+  </view>
+
+  <!-- 日期选择 -->
+  <scroll-view class="date-bar" scroll-x enable-flex scroll-into-view="date-{{activeDate}}">
+    <view
+      id="date-{{item.id}}"
+      class="date-chip {{activeDate === item.id ? 'active' : ''}}"
+      wx:for="{{dates}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onSelectDate"
+    >
+      <text class="date-md">{{item.md}}</text>
+      <text class="date-week">{{item.week}}</text>
+    </view>
+  </scroll-view>
+
+  <view class="summary">
+    <view class="summary-bar"></view>
+    <text class="summary-text">{{currentSummary}}</text>
+  </view>
+
+  <view class="timeline">
+    <view class="timeline-line"></view>
+    <view class="meeting-block" wx:for="{{currentMeetings}}" wx:key="id">
+      <view class="timeline-dot"></view>
+      <view class="meeting-card" data-id="{{item.id}}" bindtap="onToggle">
+        <view class="card-top">
+          <view class="card-main">
+            <view class="card-title-row">
+              <text class="card-title">{{item.title}}</text>
+              <text class="card-tag tag-{{item.tagType}}">{{item.tag}}</text>
+              <text class="card-arrow {{item.expanded ? 'up' : ''}}">∨</text>
+            </view>
+            <view class="card-meta">
+              <text class="meta-item">🕐 {{item.time}}</text>
+              <text class="meta-item">📍 {{item.place}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="card-detail" wx:if="{{item.expanded}}">
+          <view class="detail-row">📅 会议类型：{{item.type}}</view>
+          <view class="detail-row">📍 会议地点：{{item.place}}</view>
+          <view class="detail-row">🕐 会议时间：{{item.time}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{currentMeetings.length === 0}}">当日暂无会议安排</view>
+  </view>
+</view>

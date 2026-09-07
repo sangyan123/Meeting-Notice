@@ -1,0 +1,94 @@
+@import "../../styles/service-page.wxss";
+
+.meal-card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  padding: 8rpx 28rpx 8rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+.meal-head {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+}
+
+.meal-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: #E85A5A;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+.meal-icon.yellow {
+  background: #F5C518;
+}
+
+.meal-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.meal-name {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6rpx;
+}
+
+.meal-time {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.meal-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-top: 1rpx solid #F0EEE8;
+}
+
+.meal-label {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  margin-right: 24rpx;
+}
+
+.meal-value {
+  font-size: 26rpx;
+  color: var(--text);
+  text-align: right;
+  flex: 1;
+}
+
+.tips-box {
+  background: #FFF8E6;
+  border-radius: 16rpx;
+  padding: 24rpx 28rpx;
+  margin-top: 8rpx;
+  margin-bottom: 40rpx;
+}
+
+.tips-title {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #C9A227;
+  margin-bottom: 12rpx;
+}
+
+.tips-content {
+  font-size: 24rpx;
+  color: #8A7A4A;
+  line-height: 1.6;
+}

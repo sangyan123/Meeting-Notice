@@ -1,0 +1,65 @@
+@import "../../styles/service-page.wxss";
+
+.record-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+  padding-bottom: 8rpx;
+}
+
+.record-head-left {
+  flex: 1;
+  min-width: 0;
+  margin-right: 16rpx;
+}
+
+.record-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10rpx;
+}
+
+.record-time {
+  font-size: 22rpx;
+  color: var(--text-muted);
+}
+
+.status-badge {
+  flex-shrink: 0;
+  background: #E8F7EF;
+  color: #3DAA6D;
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+}
+
+.notice {
+  display: flex;
+  align-items: center;
+  background: #FFF8E6;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+}
+
+.notice-icon {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  background: #F5C518;
+  color: #ffffff;
+  font-size: 22rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12rpx;
+  flex-shrink: 0;
+}
+
+.notice-text {
+  font-size: 24rpx;
+  color: #8A7A4A;
+}

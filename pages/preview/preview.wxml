@@ -1,0 +1,28 @@
+<!--pages/preview/preview.wxml-->
+<view class="page">
+  <view class="nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-bar">
+      <view class="nav-back" bindtap="onBack">‹</view>
+      <text class="nav-title">材料预览</text>
+      <view class="nav-action" bindtap="onDownload">⬇</view>
+    </view>
+  </view>
+
+  <view class="info-bar">
+    <view class="info-left">
+      <text class="doc-title">{{doc.title}}</text>
+      <text class="doc-meta">{{doc.type}} · {{doc.pages}}页 · {{doc.size}}</text>
+    </view>
+    <view class="pager">
+      <view class="pager-btn {{currentPage <= 1 ? 'disabled' : ''}}" bindtap="onPrev">‹</view>
+      <text class="pager-text">{{currentPage}}/{{totalPages}}</text>
+      <view class="pager-btn {{currentPage >= totalPages ? 'disabled' : ''}}" bindtap="onNext">›</view>
+    </view>
+  </view>
+
+  <scroll-view class="viewer" scroll-y style="height: {{viewerHeight}}px;">
+    <view class="paper">
+      <text class="paper-text">{{pageContent}}</text>
+    </view>
+  </scroll-view>
+</view>

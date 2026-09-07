@@ -1,0 +1,14 @@
+/* pages/refs/refs.wxss */
+@import "../materials/materials.wxss";
+
+.nav-back {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 56rpx;
+  font-weight: 300;
+  line-height: 1;
+}

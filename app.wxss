@@ -1,0 +1,64 @@
+/**app.wxss — 全局样式**/
+page {
+  --primary: #B31A21;
+  --primary-dark: #9A151C;
+  --bg: #F6F4EE;
+  --card: #ffffff;
+  --text: #222222;
+  --text-secondary: #888888;
+  --text-muted: #AAAAAA;
+  --border: #F0EEE8;
+  --gold: #D4AF37;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+view, text, image, button, scroll-view {
+  box-sizing: border-box;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx 32rpx 20rpx;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.section-title::before {
+  content: '';
+  width: 8rpx;
+  height: 28rpx;
+  background: var(--primary);
+  border-radius: 4rpx;
+  margin-right: 14rpx;
+}
+
+.section-link {
+  font-size: 24rpx;
+  color: var(--primary);
+}
+
+.card {
+  margin: 0 24rpx;
+  background: var(--card);
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+.chevron {
+  color: #CCCCCC;
+  font-size: 28rpx;
+  margin-left: 12rpx;
+}

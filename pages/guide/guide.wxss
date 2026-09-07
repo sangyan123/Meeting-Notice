@@ -1,0 +1,41 @@
+/* pages/guide/guide.wxss */
+@import "../services/services.wxss";
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 88rpx;
+  padding: 0 8rpx;
+}
+
+.nav-back,
+.nav-placeholder {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 56rpx;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.nav-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.header {
+  padding-bottom: 48rpx;
+}
+
+.header-deco {
+  margin-top: 8rpx;
+}
+
+.header-content {
+  padding-top: 24rpx;
+}

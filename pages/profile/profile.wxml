@@ -1,0 +1,57 @@
+<!--pages/profile/profile.wxml-->
+<view class="page">
+  <view class="header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="user-row">
+      <view class="avatar">
+        <text class="avatar-text">{{userInfo.avatarText}}</text>
+      </view>
+      <view class="user-info">
+        <text class="user-name">{{userInfo.name}}</text>
+        <text class="user-meta">代表编号 {{userInfo.delegateNo}}</text>
+        <text class="user-meta">{{userInfo.delegation}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="body">
+    <!-- 代表信息 -->
+    <view class="card info-card">
+      <view class="info-row" wx:for="{{infoRows}}" wx:key="label">
+        <text class="info-label">{{item.label}}</text>
+        <text class="info-value">{{item.value}}</text>
+      </view>
+    </view>
+
+    <!-- 记录入口 -->
+    <view class="card menu-card">
+      <view
+        class="menu-item"
+        wx:for="{{recordMenus}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onMenuTap"
+      >
+        <view class="menu-icon menu-icon-red">{{item.icon}}</view>
+        <text class="menu-label">{{item.label}}</text>
+        <text class="chevron">›</text>
+      </view>
+    </view>
+
+    <!-- 设置入口 -->
+    <view class="card menu-card">
+      <view
+        class="menu-item"
+        wx:for="{{settingMenus}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onMenuTap"
+      >
+        <view class="menu-icon menu-icon-gray">{{item.icon}}</view>
+        <text class="menu-label">{{item.label}}</text>
+        <text class="chevron">›</text>
+      </view>
+    </view>
+
+    <view class="logout-btn" bindtap="onLogout">退出登录</view>
+  </view>
+</view>

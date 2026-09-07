@@ -1,0 +1,41 @@
+<!--pages/services/services.wxml-->
+<view class="page">
+  <view class="header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="header-deco"></view>
+    <view class="header-content">
+      <text class="header-title">会务服务</text>
+      <text class="header-sub">为代表提供会议期间综合服务</text>
+    </view>
+  </view>
+
+  <view class="body">
+    <!-- 服务入口 -->
+    <view class="card service-card">
+      <view class="service-grid">
+        <view
+          class="service-item"
+          wx:for="{{services}}"
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="onServiceTap"
+        >
+          <view class="service-icon" style="background: {{item.bg}};">
+            <text class="icon-glyph" style="color: {{item.color}};">{{item.icon}}</text>
+          </view>
+          <text class="service-label">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 联系方式 -->
+    <view class="card contact-card">
+      <text class="contact-title">大会秘书处联系方式</text>
+      <view class="contact-list">
+        <view class="contact-row" wx:for="{{contacts}}" wx:key="label">
+          <text class="contact-label">{{item.label}}</text>
+          <text class="contact-value">{{item.value}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,41 @@
+<!--pages/notice-detail/notice-detail.wxml-->
+<view class="page">
+  <view class="nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-bar">
+      <view class="nav-back" bindtap="onBack">‹</view>
+      <text class="nav-title">消息详情</text>
+      <view class="nav-placeholder"></view>
+    </view>
+  </view>
+
+  <scroll-view class="body" scroll-y style="height: {{scrollHeight}}px;">
+    <view class="meta">
+      <view class="meta-top">
+        <text class="tag tag-{{notice.tagType}}">{{notice.tag}}</text>
+        <text class="meta-time">{{notice.datetime}}</text>
+      </view>
+      <text class="meta-title">{{notice.title}}</text>
+      <text class="meta-issuer">发行方：{{notice.issuer}}</text>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="content">
+      <text class="content-text">{{notice.content}}</text>
+      <view class="sign">
+        <text class="sign-org">{{notice.issuer}}</text>
+        <text class="sign-date">{{notice.signDate}}</text>
+      </view>
+    </view>
+
+    <view class="body-spacer"></view>
+  </scroll-view>
+
+  <view class="footer" style="padding-bottom: {{safeBottom}}px;">
+    <text class="footer-tip">请选择您对此通知的回执状态</text>
+    <view class="footer-btns">
+      <view class="btn btn-attend {{replyStatus === 'attend' ? 'selected' : ''}}" bindtap="onAttend">✓ 出席</view>
+      <view class="btn btn-leave {{replyStatus === 'leave' ? 'selected' : ''}}" bindtap="onLeave">✕ 请假</view>
+    </view>
+  </view>
+</view>

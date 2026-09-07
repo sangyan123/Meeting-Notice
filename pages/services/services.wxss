@@ -1,0 +1,118 @@
+/* pages/services/services.wxss */
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.header {
+  background: var(--primary);
+  padding: 0 40rpx 56rpx;
+  position: relative;
+}
+
+.header-deco {
+  height: 2rpx;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.6), transparent);
+  margin: 16rpx 40rpx 0;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  padding-top: 48rpx;
+}
+
+.header-title {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12rpx;
+}
+
+.header-sub {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.body {
+  margin-top: -24rpx;
+  padding: 0 24rpx 40rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.service-card {
+  margin: 0;
+  padding: 36rpx 16rpx 20rpx;
+}
+
+.service-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.service-item {
+  width: 33.333%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 36rpx;
+}
+
+.service-icon {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14rpx;
+}
+
+.icon-glyph {
+  font-size: 40rpx;
+  line-height: 1;
+}
+
+.service-label {
+  font-size: 24rpx;
+  color: var(--text);
+}
+
+.contact-card {
+  margin: 24rpx 0 0;
+  padding: 32rpx 28rpx 8rpx;
+}
+
+.contact-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text);
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #F0EEE8;
+}
+
+.contact-row:last-child {
+  border-bottom: none;
+}
+
+.contact-label {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.contact-value {
+  font-size: 26rpx;
+  color: var(--text);
+  text-align: right;
+  margin-left: 24rpx;
+}

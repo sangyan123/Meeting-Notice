@@ -1,0 +1,62 @@
+<!--pages/seat/seat.wxml-->
+<view class="page">
+  <view class="nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-bar">
+      <view class="nav-back" bindtap="onBack">‹</view>
+      <text class="nav-title">座位导览</text>
+      <view class="nav-placeholder"></view>
+    </view>
+  </view>
+
+  <view class="body">
+    <view class="card">
+      <view class="seat-head">
+        <text class="card-title">我的座位</text>
+        <view class="seat-badge">{{seatInfo.seat}}</view>
+      </view>
+      <view class="row">
+        <text class="row-label">代表团</text>
+        <text class="row-value">{{seatInfo.delegation}}</text>
+      </view>
+      <view class="row">
+        <text class="row-label">区域</text>
+        <text class="row-value">{{seatInfo.area}}</text>
+      </view>
+      <view class="row">
+        <text class="row-label">入口</text>
+        <text class="row-value">{{seatInfo.entrance}}</text>
+      </view>
+    </view>
+
+    <view class="card">
+      <text class="card-title">会场平面示意图</text>
+      <view class="map">
+        <view class="stage">主席台</view>
+        <!-- 上排：1区 2区 3区 -->
+        <view class="zones-row">
+          <view class="zone" wx:for="{{topZones}}" wx:key="id">
+            <text class="zone-name">{{item.name}}</text>
+            <view class="me-mark" wx:if="{{item.id === myZone}}">我</view>
+          </view>
+        </view>
+        <!-- 下排：4区 5区 -->
+        <view class="zones-row bottom">
+          <view class="zone wide" wx:for="{{bottomZones}}" wx:key="id">
+            <text class="zone-name">{{item.name}}</text>
+          </view>
+        </view>
+        <view class="legend">
+          <view class="legend-dot"></view>
+          <text class="legend-text">您的座位（{{seatInfo.seat}}）</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="row" wx:for="{{facilities}}" wx:key="label">
+        <text class="row-label">{{item.label}}</text>
+        <text class="row-value">{{item.value}}</text>
+      </view>
+    </view>
+  </view>
+</view>

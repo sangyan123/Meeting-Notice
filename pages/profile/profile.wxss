@@ -1,0 +1,145 @@
+/* pages/profile/profile.wxss */
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.header {
+  background: var(--primary);
+  padding: 0 40rpx 48rpx;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  padding-top: 24rpx;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 4rpx solid #D4AF37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 28rpx;
+  box-shadow: 0 0 0 4rpx rgba(212, 175, 55, 0.25);
+}
+
+.avatar-text {
+  font-size: 48rpx;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10rpx;
+}
+
+.user-meta {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+}
+
+.body {
+  margin-top: -20rpx;
+  padding: 0 24rpx 48rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.info-card {
+  margin: 0;
+  padding: 8rpx 28rpx;
+}
+
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #F0EEE8;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  margin-right: 24rpx;
+}
+
+.info-value {
+  font-size: 26rpx;
+  color: var(--text);
+  font-weight: 500;
+  text-align: right;
+  flex: 1;
+}
+
+.menu-card {
+  margin: 24rpx 0 0;
+  padding: 0 8rpx 0 28rpx;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 20rpx 30rpx 0;
+  border-bottom: 1rpx solid #F0EEE8;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-icon {
+  width: 44rpx;
+  font-size: 32rpx;
+  margin-right: 16rpx;
+  text-align: center;
+  line-height: 1;
+}
+
+.menu-icon-red {
+  color: var(--primary);
+}
+
+.menu-icon-gray {
+  color: #888888;
+  filter: grayscale(1);
+}
+
+.menu-label {
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--text);
+}
+
+.logout-btn {
+  margin-top: 32rpx;
+  background: #ffffff;
+  border-radius: 20rpx;
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  color: #888888;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+}

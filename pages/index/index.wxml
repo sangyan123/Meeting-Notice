@@ -1,0 +1,85 @@
+<!--pages/index/index.wxml-->
+<view class="page">
+  <!-- 顶部红头 -->
+  <view class="header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="header-top">
+      <view class="brand">
+        <view class="emblem">
+          <text class="emblem-text">徽</text>
+        </view>
+        <view class="brand-text">
+          <text class="brand-org">{{meetingInfo.org}}</text>
+          <text class="brand-title">{{meetingInfo.title}}</text>
+          <text class="brand-date">{{meetingInfo.dateRange}}</text>
+        </view>
+      </view>
+      <view class="bell-wrap" bindtap="onBellTap">
+        <view class="bell-icon">🔔</view>
+        <view class="bell-badge" wx:if="{{unreadCount > 0}}">{{unreadCount}}</view>
+      </view>
+    </view>
+
+    <view class="quick-nav">
+      <view class="quick-item" wx:for="{{quickNav}}" wx:key="id" data-id="{{item.id}}" bindtap="onQuickNav">
+        <view class="quick-icon">{{item.icon}}</view>
+        <text class="quick-label">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日会议 -->
+  <view class="section-header">
+    <view class="section-title">今日会议</view>
+    <view class="section-link" bindtap="onAllSchedule">全部日程 ></view>
+  </view>
+  <view class="card">
+    <view
+      class="meeting-item"
+      wx:for="{{todayMeetings}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onMeetingDetail"
+    >
+      <view class="meeting-main">
+        <view class="dot"></view>
+        <view class="meeting-info">
+          <text class="meeting-title">{{item.title}}</text>
+          <view class="meeting-meta">
+            <text class="meta-line">🕐 {{item.time}}</text>
+            <text class="meta-line">📍 {{item.place}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="detail-btn" catchtap="onMeetingDetail" data-id="{{item.id}}">详情</view>
+    </view>
+  </view>
+
+  <!-- 最新通知 -->
+  <view class="section-header">
+    <view class="section-title">最新通知</view>
+    <view class="section-link" bindtap="onAllNotices">查看全部 ></view>
+  </view>
+  <view class="card notice-card">
+    <view
+      class="notice-item"
+      wx:for="{{notices}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onNoticeTap"
+    >
+      <view class="notice-main">
+        <view class="dot"></view>
+        <view class="notice-info">
+          <text class="notice-title">{{item.title}}</text>
+          <view class="notice-meta">
+            <text class="tag tag-{{item.tagType}}">{{item.tag}}</text>
+            <text class="notice-time">{{item.time}}</text>
+          </view>
+        </view>
+      </view>
+      <text class="chevron">›</text>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>

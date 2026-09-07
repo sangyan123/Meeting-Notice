@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/materials/materials",
+    "pages/services/services",
+    "pages/profile/profile",
+    "pages/schedule/schedule",
+    "pages/notice-detail/notice-detail",
+    "pages/notices/notices",
+    "pages/guide/guide",
+    "pages/refs/refs",
+    "pages/preview/preview",
+    "pages/seat/seat",
+    "pages/hotel/hotel",
+    "pages/meal/meal",
+    "pages/bus/bus",
+    "pages/leave/leave",
+    "pages/info-form/info-form",
+    "pages/info-record/info-record"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#B31A21",
+    "navigationBarTitleText": "会务通知",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F6F4EE",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#B31A21",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/materials/materials",
+        "text": "会议材料",
+        "iconPath": "assets/icons/materials.png",
+        "selectedIconPath": "assets/icons/materials-active.png"
+      },
+      {
+        "pagePath": "pages/services/services",
+        "text": "会务服务",
+        "iconPath": "assets/icons/services.png",
+        "selectedIconPath": "assets/icons/services-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "个人中心",
+        "iconPath": "assets/icons/profile.png",
+        "selectedIconPath": "assets/icons/profile-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
