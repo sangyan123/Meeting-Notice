@@ -129,6 +129,7 @@
   flex: 1;
   font-size: 28rpx;
   color: var(--text);
+  text-align: center;
 }
 
 .logout-btn {

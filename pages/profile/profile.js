@@ -30,15 +30,26 @@ Page({
   },
 
   onMenuTap(e) {
+    const id = e.currentTarget.dataset.id
+    if (id === 'rsvp') {
+      wx.navigateTo({ url: '/pages/notices/notices' })
+      return
+    }
+    if (id === 'leave') {
+      wx.navigateTo({ url: '/pages/leave/leave?tab=records' })
+      return
+    }
+    if (id === 'guide') {
+      wx.navigateTo({ url: '/pages/guide/guide' })
+      return
+    }
     const map = {
-      rsvp: '我的回执记录',
-      leave: '我的请假记录',
       msg: '消息设置',
       guide: '会议指南',
       contact: '联系秘书处'
     }
     wx.showToast({
-      title: `${map[e.currentTarget.dataset.id] || ''}开发中`,
+      title: `${map[id] || ''}开发中`,
       icon: 'none'
     })
   },
