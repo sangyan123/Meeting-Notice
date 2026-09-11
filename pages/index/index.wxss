@@ -34,6 +34,7 @@
   justify-content: center;
   flex-shrink: 0;
   margin-right: 20rpx;
+  margin-top: 16rpx;
   border: 3rpx solid rgba(255, 255, 255, 0.35);
 }
 
