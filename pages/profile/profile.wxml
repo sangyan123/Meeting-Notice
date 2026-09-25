@@ -31,7 +31,7 @@
         data-id="{{item.id}}"
         bindtap="onMenuTap"
       >
-        <view class="menu-icon menu-icon-red">{{item.icon}}</view>
+        <image class="menu-img" src="{{item.img}}" mode="aspectFit" />
         <text class="menu-label">{{item.label}}</text>
         <text class="chevron">›</text>
       </view>
@@ -46,7 +46,7 @@
         data-id="{{item.id}}"
         bindtap="onMenuTap"
       >
-        <view class="menu-icon menu-icon-gray">{{item.icon}}</view>
+        <image class="menu-img" src="{{item.img}}" mode="aspectFit" />
         <text class="menu-label">{{item.label}}</text>
         <text class="chevron">›</text>
       </view>

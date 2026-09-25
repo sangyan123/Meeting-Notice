@@ -108,21 +108,11 @@
   border-bottom: none;
 }
 
-.menu-icon {
+.menu-img {
   width: 44rpx;
-  font-size: 32rpx;
+  height: 44rpx;
   margin-right: 16rpx;
-  text-align: center;
-  line-height: 1;
-}
-
-.menu-icon-red {
-  color: var(--primary);
-}
-
-.menu-icon-gray {
-  color: #888888;
-  filter: grayscale(1);
+  flex-shrink: 0;
 }
 
 .menu-label {

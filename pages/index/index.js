@@ -4,9 +4,9 @@ Page({
     meetingInfo: {},
     unreadCount: 2,
     quickNav: [
-      { id: 'schedule', icon: '📅', label: '大会日程' },
-      { id: 'guide', icon: '❗', label: '会议指南' },
-      { id: 'refs', icon: '📄', label: '参阅材料' }
+      { id: 'schedule', label: '大会日程', img: '/assets/icons/nav-calendar.png' },
+      { id: 'guide', label: '会议指南', img: '/assets/icons/nav-guide.png' },
+      { id: 'refs', label: '参阅材料', img: '/assets/icons/nav-docs.png' }
     ],
     todayMeetings: [
       {

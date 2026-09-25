@@ -4,13 +4,13 @@ Page({
     userInfo: {},
     infoRows: [],
     recordMenus: [
-      { id: 'rsvp', icon: '☑', label: '我的回执记录' },
-      { id: 'leave', icon: '📋', label: '我的请假记录' }
+      { id: 'rsvp', label: '我的回执记录', img: '/assets/icons/menu-rsvp.png' },
+      { id: 'leave', label: '我的请假记录', img: '/assets/icons/menu-leave.png' }
     ],
     settingMenus: [
-      { id: 'msg', icon: '⚙', label: '消息设置' },
-      { id: 'guide', icon: 'ℹ', label: '会议指南' },
-      { id: 'contact', icon: '☎', label: '联系秘书处' }
+      { id: 'msg', label: '消息设置', img: '/assets/icons/menu-setting.png' },
+      { id: 'guide', label: '会议指南', img: '/assets/icons/menu-guide.png' },
+      { id: 'contact', label: '联系秘书处', img: '/assets/icons/menu-phone.png' }
     ]
   },
 

@@ -5,7 +5,7 @@
     <view class="header-top">
       <view class="brand">
         <view class="emblem">
-          <text class="emblem-text">徽</text>
+          <image class="emblem-img" src="/assets/icons/logo.png" mode="aspectFit" />
         </view>
         <view class="brand-text">
           <text class="brand-org">{{meetingInfo.org}}</text>
@@ -14,14 +14,14 @@
         </view>
       </view>
       <view class="bell-wrap" bindtap="onBellTap">
-        <view class="bell-icon">🔔</view>
+        <image class="bell-img" src="/assets/icons/nav-bell.png" mode="aspectFit" />
         <view class="bell-badge" wx:if="{{unreadCount > 0}}">{{unreadCount}}</view>
       </view>
     </view>
 
     <view class="quick-nav">
       <view class="quick-item" wx:for="{{quickNav}}" wx:key="id" data-id="{{item.id}}" bindtap="onQuickNav">
-        <view class="quick-icon">{{item.icon}}</view>
+        <image class="quick-img" src="{{item.img}}" mode="aspectFit" />
         <text class="quick-label">{{item.label}}</text>
       </view>
     </view>

@@ -69,9 +69,9 @@
   margin-bottom: 14rpx;
 }
 
-.icon-glyph {
-  font-size: 40rpx;
-  line-height: 1;
+.service-img {
+  width: 48rpx;
+  height: 48rpx;
 }
 
 .service-label {

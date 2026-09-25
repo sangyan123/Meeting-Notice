@@ -20,7 +20,7 @@
           bindtap="onServiceTap"
         >
           <view class="service-icon" style="background: {{item.bg}};">
-            <text class="icon-glyph" style="color: {{item.color}};">{{item.icon}}</text>
+            <image class="service-img" src="{{item.img}}" mode="aspectFit" />
           </view>
           <text class="service-label">{{item.label}}</text>
         </view>
