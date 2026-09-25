@@ -1,6 +1,7 @@
 Page({
   data: {
     statusBarHeight: 20,
+    headerPaddingTop: 20,
     meetingInfo: {},
     unreadCount: 2,
     quickNav: [
@@ -45,8 +46,19 @@ Page({
   onLoad() {
     const sys = wx.getSystemInfoSync()
     const app = getApp()
+    const statusBarHeight = sys.statusBarHeight || 20
+    // 自定义导航下，头部内容需下移到微信胶囊按钮下方：
+    // 胶囊底边 + 胶囊与状态栏之间的间距（上下间距对称）
+    let headerPaddingTop = statusBarHeight
+    if (wx.getMenuButtonBoundingClientRect) {
+      const rect = wx.getMenuButtonBoundingClientRect()
+      if (rect && rect.bottom) {
+        headerPaddingTop = rect.bottom + (rect.top - statusBarHeight)
+      }
+    }
     this.setData({
-      statusBarHeight: sys.statusBarHeight || 20,
+      statusBarHeight,
+      headerPaddingTop,
       meetingInfo: app.globalData.meetingInfo
     })
   },

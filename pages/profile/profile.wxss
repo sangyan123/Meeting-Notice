@@ -109,9 +109,9 @@
 }
 
 .menu-img {
-  width: 64rpx;
-  height: 64rpx;
-  margin-right: 16rpx;
+  width: 84rpx;
+  height: 84rpx;
+  margin-right: 24rpx;
   flex-shrink: 0;
 }
 

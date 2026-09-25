@@ -4,7 +4,7 @@ Page({
   data: {
     statusBarHeight: 20,
     services: [
-      { id: 'seat', label: '座位导览', icon: '▦', color: '#C82439', bg: '#FDECED' },
+      { id: 'seat', label: '电子排座', icon: '▦', color: '#C82439', bg: '#FDECED' },
       { id: 'hotel', label: '住宿安排', icon: '🏢', color: '#3A8FD6', bg: '#E8F3FC' },
       { id: 'meal', label: '用餐安排', icon: '🍴', color: '#3DAA6D', bg: '#E8F7EF' },
       { id: 'bus', label: '班车安排', icon: '🚌', color: '#E67E22', bg: '#FEF0E6' },

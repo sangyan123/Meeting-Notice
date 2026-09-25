@@ -43,7 +43,7 @@
 
 .service-card {
   margin: 0;
-  padding: 36rpx 16rpx 20rpx;
+  padding: 40rpx 16rpx 44rpx;
 }
 
 .service-grid {
@@ -56,27 +56,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 36rpx;
+  margin-bottom: 48rpx;
+}
+
+.service-item:nth-child(n+4) {
+  margin-bottom: 0;
 }
 
 .service-icon {
-  width: 96rpx;
-  height: 96rpx;
-  border-radius: 24rpx;
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 28rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 14rpx;
+  margin-bottom: 16rpx;
 }
 
 .service-img {
-  width: 64rpx;
-  height: 64rpx;
+  width: 72rpx;
+  height: 72rpx;
 }
 
 .service-label {
-  font-size: 24rpx;
-  color: var(--text);
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #2B2B2B;
 }
 
 .contact-card {

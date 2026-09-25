@@ -1,7 +1,7 @@
 <!--pages/index/index.wxml-->
 <view class="page">
   <!-- 顶部红头 -->
-  <view class="header" style="padding-top: {{statusBarHeight}}px;">
+  <view class="header" style="padding-top: {{headerPaddingTop}}px;">
     <view class="header-top">
       <view class="brand">
         <view class="emblem">
@@ -25,6 +25,7 @@
         <text class="quick-label">{{item.label}}</text>
       </view>
     </view>
+    <view class="header-line"></view>
   </view>
 
   <!-- 今日会议 -->
@@ -45,8 +46,14 @@
         <view class="meeting-info">
           <text class="meeting-title">{{item.title}}</text>
           <view class="meeting-meta">
-            <text class="meta-line">🕐 {{item.time}}</text>
-            <text class="meta-line">📍 {{item.place}}</text>
+            <view class="meta-line">
+              <image class="meta-icon" src="/assets/icons/meta-clock.png" mode="aspectFit" />
+              <text>{{item.time}}</text>
+            </view>
+            <view class="meta-line">
+              <image class="meta-icon" src="/assets/icons/meta-location.png" mode="aspectFit" />
+              <text>{{item.place}}</text>
+            </view>
           </view>
         </view>
       </view>
