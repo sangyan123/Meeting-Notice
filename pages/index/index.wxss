@@ -73,8 +73,8 @@
 }
 
 .bell-img {
-  width: 44rpx;
-  height: 44rpx;
+  width: 52rpx;
+  height: 52rpx;
 }
 
 .bell-badge {
@@ -112,8 +112,8 @@
 }
 
 .quick-img {
-  width: 44rpx;
-  height: 44rpx;
+  width: 60rpx;
+  height: 60rpx;
   margin-bottom: 10rpx;
 }
 

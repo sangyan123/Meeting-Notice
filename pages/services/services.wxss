@@ -70,8 +70,8 @@
 }
 
 .service-img {
-  width: 48rpx;
-  height: 48rpx;
+  width: 64rpx;
+  height: 64rpx;
 }
 
 .service-label {
