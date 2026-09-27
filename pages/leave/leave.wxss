@@ -213,9 +213,18 @@
 }
 
 .record-row {
+  display: flex;
+  align-items: center;
   font-size: 24rpx;
   color: var(--text-secondary);
   margin-bottom: 10rpx;
+}
+
+.record-icon {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 8rpx;
+  flex-shrink: 0;
 }
 
 .record-reason {

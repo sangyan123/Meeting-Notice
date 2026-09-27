@@ -64,9 +64,15 @@
         <text class="record-title">{{item.title}}</text>
         <view class="record-status status-{{item.status}}">{{item.statusText}}</view>
       </view>
-      <view class="record-row">📅 {{item.date}}</view>
+      <view class="record-row">
+        <image class="record-icon" src="/assets/icons/date.png" mode="aspectFit" />
+        <text>{{item.date}}</text>
+      </view>
       <view class="record-reason">{{item.reason}}</view>
-      <view class="record-row">👤 审批人：{{item.approver}}</view>
+      <view class="record-row">
+        <image class="record-icon" src="/assets/icons/people.png" mode="aspectFit" />
+        <text>审批人：{{item.approver}}</text>
+      </view>
     </view>
   </view>
 </view>

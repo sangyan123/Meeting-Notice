@@ -29,7 +29,7 @@
 
 .brand {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex: 1;
   padding-right: 24rpx;
 }
