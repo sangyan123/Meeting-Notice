@@ -92,3 +92,9 @@
   color: #8A7A4A;
   line-height: 1.6;
 }
+
+
+.meal-icon-img {
+  width: 40rpx;
+  height: 40rpx;
+}

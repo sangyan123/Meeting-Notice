@@ -8,8 +8,10 @@
 }
 
 .addr-pin {
+  width: 28rpx;
+  height: 28rpx;
   margin-right: 8rpx;
-  font-size: 28rpx;
+  flex-shrink: 0;
 }
 
 .addr-text {
@@ -28,9 +30,10 @@
 }
 
 .map-pin {
-  font-size: 40rpx;
-  color: var(--primary);
+  width: 40rpx;
+  height: 40rpx;
   margin-bottom: 8rpx;
+  flex-shrink: 0;
 }
 
 .map-name {

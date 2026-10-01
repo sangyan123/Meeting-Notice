@@ -188,6 +188,8 @@
 }
 
 .meta-item {
+  display: inline-flex;
+  align-items: center;
   font-size: 24rpx;
   color: var(--text-secondary);
 }
@@ -199,6 +201,8 @@
 }
 
 .detail-row {
+  display: flex;
+  align-items: center;
   font-size: 26rpx;
   color: #555555;
   line-height: 1.8;
@@ -214,4 +218,12 @@
   color: var(--text-muted);
   font-size: 26rpx;
   padding: 80rpx 0;
+}
+
+
+.meta-icon {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 8rpx;
+  flex-shrink: 0;
 }

@@ -20,11 +20,11 @@
     <view class="card">
       <text class="card-title">酒店地址</text>
       <view class="addr-line">
-        <text class="addr-pin">📍</text>
+        <image class="addr-pin" src="/assets/icons/meta-location.png" mode="aspectFit" />
         <text class="addr-text">{{address}}</text>
       </view>
       <view class="map-box">
-        <text class="map-pin">📍</text>
+        <image class="map-pin" src="/assets/icons/meta-location.png" mode="aspectFit" />
         <text class="map-name">{{hotelName}}</text>
         <text class="map-dist">{{distance}}</text>
       </view>

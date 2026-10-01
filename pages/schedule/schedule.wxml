@@ -41,15 +41,15 @@
               <text class="card-arrow {{item.expanded ? 'up' : ''}}">∨</text>
             </view>
             <view class="card-meta">
-              <text class="meta-item">🕐 {{item.time}}</text>
-              <text class="meta-item">📍 {{item.place}}</text>
+              <view class="meta-item"><image class="meta-icon" src="/assets/icons/meta-clock.png" mode="aspectFit" /><text>{{item.time}}</text></view>
+              <view class="meta-item"><image class="meta-icon" src="/assets/icons/meta-location.png" mode="aspectFit" /><text>{{item.place}}</text></view>
             </view>
           </view>
         </view>
         <view class="card-detail" wx:if="{{item.expanded}}">
-          <view class="detail-row">📅 会议类型：{{item.type}}</view>
-          <view class="detail-row">📍 会议地点：{{item.place}}</view>
-          <view class="detail-row">🕐 会议时间：{{item.time}}</view>
+          <view class="detail-row"><image class="meta-icon" src="/assets/icons/date.png" mode="aspectFit" /><text>会议类型：{{item.type}}</text></view>
+          <view class="detail-row"><image class="meta-icon" src="/assets/icons/meta-location.png" mode="aspectFit" /><text>会议地点：{{item.place}}</text></view>
+          <view class="detail-row"><image class="meta-icon" src="/assets/icons/meta-clock.png" mode="aspectFit" /><text>会议时间：{{item.time}}</text></view>
         </view>
       </view>
     </view>

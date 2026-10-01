@@ -17,13 +17,13 @@
     <view class="bus-card" wx:for="{{buses}}" wx:key="id">
       <view class="bus-top">
         <view class="bus-left">
-          <text class="bus-icon">🚌</text>
+          <image class="bus-icon" src="/assets/icons/che.png" mode="aspectFit" />
           <text class="bus-no">班次{{item.no}}</text>
           <text class="bus-time">{{item.time}}</text>
         </view>
         <view class="status {{item.full ? 'full' : 'ok'}}">{{item.full ? '已满员' : '可乘坐'}}</view>
       </view>
-      <view class="bus-route">📍 {{item.route}}</view>
+      <view class="bus-route"><image class="route-icon" src="/assets/icons/meta-location.png" mode="aspectFit" /><text>{{item.route}}</text></view>
       <view class="bus-bottom">
         <view class="progress">
           <view

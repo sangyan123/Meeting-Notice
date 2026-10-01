@@ -76,7 +76,7 @@
         <picker mode="date" value="{{form.arriveDate}}" bindchange="onArrive">
           <view class="picker {{!form.arriveDate ? 'placeholder' : ''}}">
             {{form.arriveDate || 'yyyy/mm/日'}}
-            <text class="arrow">📅</text>
+            <image class="date-icon" src="/assets/icons/date.png" mode="aspectFit" />
           </view>
         </picker>
       </view>
@@ -85,7 +85,7 @@
         <picker mode="date" value="{{form.leaveDate}}" bindchange="onLeaveDate">
           <view class="picker {{!form.leaveDate ? 'placeholder' : ''}}">
             {{form.leaveDate || 'yyyy/mm/日'}}
-            <text class="arrow">📅</text>
+            <image class="date-icon" src="/assets/icons/date.png" mode="aspectFit" />
           </view>
         </picker>
       </view>

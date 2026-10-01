@@ -11,7 +11,7 @@
   <scroll-view class="body" scroll-y>
     <view class="meal-card" wx:for="{{meals}}" wx:key="id">
       <view class="meal-head">
-        <view class="meal-icon {{item.highlight ? 'yellow' : ''}}">🍴</view>
+        <view class="meal-icon {{item.highlight ? 'yellow' : ''}}"><image class="meal-icon-img" src="/assets/icons/svc-meal.png" mode="aspectFit" /></view>
         <view class="meal-title-wrap">
           <text class="meal-name">{{item.name}}</text>
           <text class="meal-time">{{item.time}}</text>
