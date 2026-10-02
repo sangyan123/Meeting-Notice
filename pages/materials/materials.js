@@ -171,6 +171,7 @@ Page({
         categoryId: file.categoryId,
         meetingId: this.meetingId
       }),
+      file.title,
       ext
     )
       .then((tempPath) => {

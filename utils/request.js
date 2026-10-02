@@ -124,13 +124,34 @@ function ab2str(buffer) {
   }
 }
 
+/** 生成安全的文档文件名：去除非法字符，确保以指定扩展名结尾（查看器顶栏会显示该名字） */
+function safeDocName(name, ext) {
+  let n = String(name || '')
+    .replace(/[\\/:*?"<>|\r\n\t]/g, '')
+    .trim()
+  if (!n) {
+    n = '文件'
+  }
+  if (n.length > 80) {
+    n = n.slice(0, 80)
+  }
+  const suffix = '.' + String(ext || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '')
+  if (suffix.length > 1 && !n.toLowerCase().endsWith(suffix)) {
+    n += suffix
+  }
+  return n
+}
+
 /**
  * 带鉴权的文件下载，resolve 本地文件路径（用于 wx.openDocument 预览）。
  * 后端出错时返回 HTTP 200 + JSON（code 401/403/500），与文件流同为 200，
  * 因此必须用 arraybuffer + Content-Type 区分，不能用 wx.downloadFile。
- * ext：文件扩展名（pdf/docx/...），用于落盘命名以便 openDocument 识别。
+ * name：展示用文件名（如原始文件名），决定 openDocument 顶栏标题；
+ * ext：文件扩展名（pdf/docx/...），name 缺失扩展名时补上。
  */
-function downloadFile(path, ext) {
+function downloadFile(path, name, ext) {
   return new Promise((resolve, reject) => {
     wx.request({
       url: `${baseUrl}${path}`,
@@ -165,7 +186,13 @@ function downloadFile(path, ext) {
         }
         try {
           const fs = wx.getFileSystemManager()
-          const filePath = `${wx.env.USER_DATA_PATH}/material_${Date.now()}.${ext || 'pdf'}`
+          const dir = `${wx.env.USER_DATA_PATH}/preview`
+          try {
+            fs.mkdirSync(dir, true)
+          } catch (e) {
+            /* 目录已存在 */
+          }
+          const filePath = `${dir}/${safeDocName(name, ext)}`
           fs.writeFileSync(filePath, res.data, 'binary')
           resolve(filePath)
         } catch (e) {
