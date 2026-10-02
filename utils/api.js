@@ -16,11 +16,17 @@ module.exports = {
   /** 今天的会议列表 GET ?meetingTypeId= → [TMeetingMain] */
   todayMeetings: '/meeting/main/appTodayList',
 
+  /** 会议详情（基本信息+参会人+资料分类+统计）GET → {meeting, persons, tabs, topicCount, fileCount} */
+  meetingInfo: (meetingId) => `/meeting/main/appInfo/${meetingId}`,
+
   /** 会议日程列表 GET ?meetingId= → [{dayStr, dayType, title, contents[]}]（TMeetingDailyController） */
   meetingDailyList: '/meeting/daily/list',
 
-  /** 会议文件树 GET → [TMeetingTopic]，含 meetingAgenda.agendaAttachments */
+  /** 会议文件树 GET → [TMeetingTopic]，含 meetingAgenda.agendaAttachments（材料Tab：议程附件） */
   meetingFiles: (meetingId) => `/meeting/main/appFiles/${meetingId}`,
+
+  /** 全部分类文件树 GET → [{categoryId, categoryName, topics:[{topicId, topicName, files:[...]}]}]（参阅材料页：分类资料） */
+  meetingCategoryFiles: (meetingId) => `/meeting/main/categories/${meetingId}/files`,
 
   /** 会议文件下载流 GET（FileDownloadController），categoryId=3 议程附件 */
   meetingFileDownload: ({ fileId, categoryId, meetingId }) =>

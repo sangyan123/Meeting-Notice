@@ -7,8 +7,6 @@
     "pages/schedule/schedule",
     "pages/notice-detail/notice-detail",
     "pages/notices/notices",
-    "pages/guide/guide",
-    "pages/refs/refs",
     "pages/preview/preview",
     "pages/seat/seat",
     "pages/hotel/hotel",
@@ -17,6 +15,7 @@
     "pages/leave/leave",
     "pages/info-form/info-form",
     "pages/info-record/info-record",
+    "pages/meeting-detail/meeting-detail",
     "pages/login/login"
   ],
   "window": {

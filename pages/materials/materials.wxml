@@ -26,10 +26,10 @@
 
   <view class="list">
     <view class="list-loading" wx:if="{{loading}}">加载中...</view>
-    <view class="list-empty" wx:if="{{!loading && agendas.length === 0}}">该会议暂无可见材料</view>
-    <block wx:for="{{agendas}}" wx:key="id">
+    <view class="list-empty" wx:if="{{!loading && groups.length === 0}}">该会议暂无材料</view>
+    <block wx:for="{{groups}}" wx:key="id">
       <view class="agenda-item {{item.expanded ? 'open' : ''}}" data-id="{{item.id}}" bindtap="onToggle">
-        <view class="agenda-label">议程{{item.index}}</view>
+        <view class="agenda-label">{{item.index}}</view>
         <text class="agenda-title">{{item.title}}</text>
         <text class="agenda-count">{{item.count}}份</text>
         <text class="agenda-arrow {{item.expanded ? 'expanded' : ''}}">∨</text>

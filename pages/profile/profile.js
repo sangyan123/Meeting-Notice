@@ -42,7 +42,7 @@ Page({
       return
     }
     if (id === 'guide') {
-      wx.navigateTo({ url: '/pages/guide/guide' })
+      wx.switchTab({ url: '/pages/services/services' })
       return
     }
     const map = {
