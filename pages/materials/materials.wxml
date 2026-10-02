@@ -25,6 +25,8 @@
   </scroll-view>
 
   <view class="list">
+    <view class="list-loading" wx:if="{{loading}}">加载中...</view>
+    <view class="list-empty" wx:if="{{!loading && agendas.length === 0}}">该会议暂无可见材料</view>
     <block wx:for="{{agendas}}" wx:key="id">
       <view class="agenda-item {{item.expanded ? 'open' : ''}}" data-id="{{item.id}}" bindtap="onToggle">
         <view class="agenda-label">议程{{item.index}}</view>
@@ -41,10 +43,10 @@
           data-id="{{file.id}}"
           bindtap="onPreview"
         >
-          <view class="pdf-badge">PDF</view>
+          <view class="pdf-badge">{{file.type}}</view>
           <view class="file-info">
             <text class="file-title">{{file.title}}</text>
-            <text class="file-meta">{{file.pages}} 页 · {{file.size}}</text>
+            <text class="file-meta">{{file.meta}}</text>
           </view>
           <view class="eye-btn" catchtap="onPreview" data-id="{{file.id}}">👁</view>
         </view>

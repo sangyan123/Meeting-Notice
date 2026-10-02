@@ -1,0 +1,37 @@
+<!--pages/login/login.wxml-->
+<view class="page" style="padding-top: {{statusBarHeight}}px;">
+  <view class="hero">
+    <view class="logo-wrap">
+      <image class="logo" src="/assets/icons/logo.png" mode="aspectFit" />
+    </view>
+    <text class="title">会务通知</text>
+  </view>
+
+  <view class="form-card">
+    <view class="field">
+      <text class="label">账号</text>
+      <input
+        class="input"
+        placeholder="请输入账号或手机号"
+        placeholder-class="placeholder"
+        value="{{account}}"
+        bindinput="onAccount"
+      />
+    </view>
+    <view class="field">
+      <text class="label">密码</text>
+      <input
+        class="input"
+        password
+        placeholder="请输入密码"
+        placeholder-class="placeholder"
+        value="{{password}}"
+        bindinput="onPassword"
+        bindconfirm="onSubmit"
+      />
+    </view>
+    <button class="submit {{submitting ? 'disabled' : ''}}" bindtap="onSubmit">登 录</button>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>

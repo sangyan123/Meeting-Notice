@@ -253,3 +253,10 @@
 .safe-bottom {
   height: 40rpx;
 }
+
+.empty-tip {
+  padding: 48rpx 0;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--text-muted);
+}

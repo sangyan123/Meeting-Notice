@@ -26,11 +26,11 @@ Page({
 
   onLoad() {
     const sys = wx.getSystemInfoSync()
-    const user = getApp().globalData.userInfo
+    const user = getApp().globalData.userInfo || {}
     this.setData({
       statusBarHeight: sys.statusBarHeight || 20,
-      'seatInfo.seat': user.seat,
-      'seatInfo.delegation': user.delegation
+      'seatInfo.seat': user.seat || '待分配',
+      'seatInfo.delegation': user.delegation || user.deptName || user.company || '待分配'
     })
   },
 

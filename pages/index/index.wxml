@@ -59,6 +59,7 @@
       </view>
       <view class="detail-btn" catchtap="onMeetingDetail" data-id="{{item.id}}">详情</view>
     </view>
+    <view class="empty-tip" wx:if="{{!loading && todayMeetings.length === 0}}">今日暂无会议安排</view>
   </view>
 
   <!-- 最新通知 -->

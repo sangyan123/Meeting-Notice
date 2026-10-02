@@ -1,0 +1,28 @@
+/** 后端接口路径集中维护
+ *
+ * 环境地址见 utils/config.js。
+ * 路径与 nopaper-backend 的 Controller 一一对应，改后端路由时同步这里。
+ */
+module.exports = {
+  /** 登录 POST {username, password} → {token}（SysLoginController） */
+  login: '/appLogin',
+
+  /** 当前登录用户信息 GET → {user, personId}（PlosUserController） */
+  userInfo: '/meeting/user/getInfo',
+
+  /** 当前进行中的会议 GET → TMeetingMain（TMeetingMainController） */
+  currentMeeting: '/meeting/main/appCurrentMeeting',
+
+  /** 今天的会议列表 GET ?meetingTypeId= → [TMeetingMain] */
+  todayMeetings: '/meeting/main/appTodayList',
+
+  /** 会议日程列表 GET ?meetingId= → [{dayStr, dayType, title, contents[]}]（TMeetingDailyController） */
+  meetingDailyList: '/meeting/daily/list',
+
+  /** 会议文件树 GET → [TMeetingTopic]，含 meetingAgenda.agendaAttachments */
+  meetingFiles: (meetingId) => `/meeting/main/appFiles/${meetingId}`,
+
+  /** 会议文件下载流 GET（FileDownloadController），categoryId=3 议程附件 */
+  meetingFileDownload: ({ fileId, categoryId, meetingId }) =>
+    `/downloadServlet/download?fileId=${fileId}&categoryId=${categoryId}&meetingId=${meetingId}`
+}

@@ -48,11 +48,17 @@
         </view>
         <view class="card-detail" wx:if="{{item.expanded}}">
           <view class="detail-row"><image class="meta-icon" src="/assets/icons/date.png" mode="aspectFit" /><text>会议类型：{{item.type}}</text></view>
-          <view class="detail-row"><image class="meta-icon" src="/assets/icons/meta-location.png" mode="aspectFit" /><text>会议地点：{{item.place}}</text></view>
-          <view class="detail-row"><image class="meta-icon" src="/assets/icons/meta-clock.png" mode="aspectFit" /><text>会议时间：{{item.time}}</text></view>
+          <view class="detail-row"><image class="meta-icon" src="/assets/icons/meta-clock.png" mode="aspectFit" /><text>时间段：{{item.time}}</text></view>
+          <view class="detail-row content-row" wx:for="{{item.contents}}" wx:for-item="c" wx:key="id">
+            <view class="content-main">
+              <text class="content-name">{{c.name}}</text>
+              <text class="content-topics" wx:if="{{c.topics}}">议题：{{c.topics}}</text>
+            </view>
+          </view>
         </view>
       </view>
     </view>
-    <view class="empty" wx:if="{{currentMeetings.length === 0}}">当日暂无会议安排</view>
+    <view class="empty" wx:if="{{loading}}">日程加载中...</view>
+    <view class="empty" wx:if="{{!loading && currentMeetings.length === 0}}">当日暂无会议安排</view>
   </view>
 </view>

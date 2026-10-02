@@ -28,7 +28,7 @@ Page({
 
   onLoad() {
     const sys = wx.getSystemInfoSync()
-    const user = getApp().globalData.userInfo
+    const user = getApp().globalData.userInfo || {}
     this.setData({
       statusBarHeight: sys.statusBarHeight || 20,
       'form.name': user.name

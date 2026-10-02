@@ -1,3 +1,5 @@
+const { logout } = require('../../utils/request')
+
 Page({
   data: {
     statusBarHeight: 20,
@@ -16,15 +18,15 @@ Page({
 
   onLoad() {
     const sys = wx.getSystemInfoSync()
-    const user = getApp().globalData.userInfo
+    const user = getApp().globalData.userInfo || {}
     this.setData({
       statusBarHeight: sys.statusBarHeight || 20,
       userInfo: user,
       infoRows: [
-        { label: '代表编号', value: user.delegateNo },
-        { label: '代表团', value: user.delegation },
-        { label: '专委会', value: user.committee },
-        { label: '座位号', value: user.seat }
+        { label: '代表编号', value: user.delegateNo || user.account || '—' },
+        { label: '代表团', value: user.delegation || user.deptName || user.company || '—' },
+        { label: '专委会', value: user.committee || user.position || '—' },
+        { label: '座位号', value: user.seat || '—' }
       ]
     })
   },
@@ -60,7 +62,7 @@ Page({
       content: '确认退出登录？',
       success(res) {
         if (res.confirm) {
-          wx.showToast({ title: '已退出', icon: 'none' })
+          logout()
         }
       }
     })

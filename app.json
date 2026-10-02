@@ -16,7 +16,8 @@
     "pages/bus/bus",
     "pages/leave/leave",
     "pages/info-form/info-form",
-    "pages/info-record/info-record"
+    "pages/info-record/info-record",
+    "pages/login/login"
   ],
   "window": {
     "navigationBarBackgroundColor": "#B31A21",

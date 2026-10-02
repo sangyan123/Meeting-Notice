@@ -227,3 +227,24 @@
   margin-right: 8rpx;
   flex-shrink: 0;
 }
+
+.content-row {
+  align-items: flex-start;
+}
+
+.content-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.content-name {
+  font-size: 26rpx;
+  color: var(--text);
+}
+
+.content-topics {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
