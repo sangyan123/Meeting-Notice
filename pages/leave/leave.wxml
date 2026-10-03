@@ -52,8 +52,8 @@
         <text class="counter">{{reasonLength}} 字</text>
       </view>
 
-      <view class="submit-btn {{canSubmit ? 'ready' : ''}}" bindtap="onSubmit">提交请假申请</view>
-      <text class="submit-tip">提交后将发送至您所在代表团组长审批</text>
+      <view class="submit-btn {{canSubmit && !submitting ? 'ready' : ''}}" bindtap="onSubmit">{{submitting ? '提交中...' : '提交请假申请'}}</view>
+      <text class="submit-tip">提交后将更新您的参会状态为「请假」（当前状态：{{statusText || '加载中'}}）</text>
     </view>
   </view>
 
@@ -74,5 +74,6 @@
         <text>审批人：{{item.approver}}</text>
       </view>
     </view>
+    <view class="empty" wx:if="{{!records.length}}">暂无请假记录</view>
   </view>
 </view>
