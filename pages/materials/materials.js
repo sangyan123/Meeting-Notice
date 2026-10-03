@@ -3,6 +3,8 @@ const API = require('../../utils/api')
 const { ensureCurrentMeeting } = require('../../utils/meeting')
 const { resolveType, formatSize } = require('../../utils/file')
 
+const WEEKS = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+
 Page({
   data: {
     statusBarHeight: 20,
@@ -12,7 +14,9 @@ Page({
     activeFilter: 'all',
     filters: [{ id: 'all', name: '全部' }],
     groups: [],
-    expandMap: {}
+    expandMap: {},
+    showSchedule: false,
+    scheduleDays: []
   },
 
   onLoad() {
@@ -34,15 +38,60 @@ Page({
       .then((meeting) => {
         this.meetingId = meeting.id
         this.setData({ meetingTitle: meeting.meetingName || '会议材料' })
-        return request(API.meetingCategoryFiles(meeting.id))
+        // 日程表失败不阻塞材料加载（旧后端可能没有该接口）
+        return Promise.all([
+          request(API.meetingCategoryFiles(meeting.id)),
+          request(API.meetingDailyList, { data: { meetingId: meeting.id }, silent: true }).catch(
+            () => null
+          )
+        ])
       })
-      .then((res) => {
-        this.buildGroups(Array.isArray(res.data) ? res.data : [])
+      .then(([filesRes, dailyRes]) => {
+        const daily = dailyRes && Array.isArray(dailyRes.data) ? dailyRes.data : []
+        this.scheduleDays = this.buildScheduleDays(daily)
+        this.buildGroups(Array.isArray(filesRes.data) ? filesRes.data : [])
         this.setData({ loading: false })
       })
       .catch((err) => {
         this.setData({ loading: false })
         wx.showToast({ title: err.message || '加载材料失败', icon: 'none' })
+      })
+  },
+
+  /** 单场会议的结构化日程（t_meeting_daily）按天分组，供「大会日程」分类展示 */
+  buildScheduleDays(dailyList) {
+    const byDay = {}
+    dailyList.forEach((d) => {
+      const key = String(d.dayStr || '').replace(/\D/g, '')
+      if (!key) {
+        return
+      }
+      const dayType = Number(d.dayType)
+      ;(byDay[key] = byDay[key] || []).push({
+        dayType,
+        tag: dayType === 0 ? '上午' : dayType === 1 ? '下午' : '全天',
+        title: d.title || '',
+        contents: (d.contents || []).map((c) => ({
+          id: c.id,
+          name: c.contentName || c.agendaName || '',
+          topics: (c.topicList || []).map((t) => t.topicName).join('、')
+        }))
+      })
+    })
+    return Object.keys(byDay)
+      .sort()
+      .map((key) => {
+        const m = key.match(/^(\d{4})(\d{2})(\d{2})$/)
+        let label = key
+        if (m) {
+          const d = new Date(+m[1], +m[2] - 1, +m[3])
+          label = `${+m[2]}月${+m[3]}日 ${WEEKS[d.getDay()]}`
+        }
+        return {
+          key,
+          label,
+          items: byDay[key].sort((a, b) => a.dayType - b.dayType)
+        }
       })
   },
 
@@ -88,6 +137,11 @@ Page({
       })
     })
 
+    // 名字带「日程」的分类展示结构化日程表（如 Web 分类管理里的「大会日程」）
+    const scheduleFilter = filters.find(
+      (f) => f.id !== 'all' && (f.name || '').indexOf('日程') !== -1
+    )
+    this.scheduleFilterId = scheduleFilter ? scheduleFilter.id : ''
     this.allGroups = allGroups
     this.setData({ filters })
     this.applyFilter('all')
@@ -109,7 +163,12 @@ Page({
     this.setData({
       activeFilter: categoryId,
       groups,
-      totalCount
+      totalCount,
+      showSchedule:
+        !!categoryId &&
+        categoryId === this.scheduleFilterId &&
+        (this.scheduleDays || []).length > 0,
+      scheduleDays: this.scheduleDays || []
     })
   },
 

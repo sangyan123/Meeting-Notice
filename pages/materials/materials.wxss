@@ -214,3 +214,79 @@
   font-size: 26rpx;
   color: var(--text-muted);
 }
+
+.schedule-box {
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.schedule-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #33302b;
+  margin-bottom: 8rpx;
+}
+
+.schedule-day {
+  padding: 16rpx 0 8rpx;
+  border-bottom: 1rpx solid #f0ede5;
+}
+
+.schedule-day:last-child {
+  border-bottom: none;
+}
+
+.schedule-date {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #b31a21;
+  margin-bottom: 12rpx;
+}
+
+.schedule-item {
+  display: flex;
+  margin-bottom: 14rpx;
+}
+
+.seg-tag {
+  flex-shrink: 0;
+  width: 76rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  background: #f6f1e7;
+  color: #8a7f5c;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  margin-right: 16rpx;
+}
+
+.seg-main {
+  flex: 1;
+}
+
+.seg-title {
+  display: block;
+  font-size: 26rpx;
+  color: #55503f;
+}
+
+.seg-content {
+  margin-top: 6rpx;
+}
+
+.seg-name {
+  display: block;
+  font-size: 24rpx;
+  color: #6b6558;
+}
+
+.seg-topics {
+  display: block;
+  font-size: 22rpx;
+  color: #a39c8c;
+  margin-top: 2rpx;
+}

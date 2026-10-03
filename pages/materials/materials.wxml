@@ -26,7 +26,22 @@
 
   <view class="list">
     <view class="list-loading" wx:if="{{loading}}">加载中...</view>
-    <view class="list-empty" wx:if="{{!loading && groups.length === 0}}">该会议暂无材料</view>
+    <view class="schedule-box" wx:if="{{showSchedule && scheduleDays.length}}">
+      <view class="schedule-day" wx:for="{{scheduleDays}}" wx:for-item="day" wx:key="key">
+        <view class="schedule-date">{{day.label}}</view>
+        <view class="schedule-item" wx:for="{{day.items}}" wx:for-item="seg" wx:key="dayType">
+          <view class="seg-tag">{{seg.tag}}</view>
+          <view class="seg-main">
+            <text class="seg-title">{{seg.title}}</text>
+            <view class="seg-content" wx:for="{{seg.contents}}" wx:for-item="c" wx:key="id">
+              <text class="seg-name">{{c.name}}</text>
+              <text class="seg-topics" wx:if="{{c.topics}}">议题：{{c.topics}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="list-empty" wx:if="{{!loading && groups.length === 0 && !showSchedule}}">该会议暂无材料</view>
     <block wx:for="{{groups}}" wx:key="id">
       <view class="agenda-item {{item.expanded ? 'open' : ''}}" data-id="{{item.id}}" bindtap="onToggle">
         <view class="agenda-label">{{item.index}}</view>
