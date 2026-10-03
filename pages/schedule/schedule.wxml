@@ -9,7 +9,7 @@
   </view>
 
   <!-- 日期选择 -->
-  <scroll-view class="date-bar" scroll-x enable-flex scroll-into-view="date-{{activeDate}}">
+  <scroll-view class="date-bar" scroll-x scroll-into-view="date-{{activeDate}}">
     <view
       id="date-{{item.id}}"
       class="date-chip {{activeDate === item.id ? 'active' : ''}}"
@@ -32,29 +32,15 @@
     <view class="timeline-line"></view>
     <view class="meeting-block" wx:for="{{currentMeetings}}" wx:key="id">
       <view class="timeline-dot"></view>
-      <view class="meeting-card" data-id="{{item.id}}" bindtap="onToggle">
-        <view class="card-top">
-          <view class="card-main">
-            <view class="card-title-row">
-              <text class="card-title">{{item.title}}</text>
-              <text class="card-tag tag-{{item.tagType}}">{{item.tag}}</text>
-              <text class="card-arrow {{item.expanded ? 'up' : ''}}">∨</text>
-            </view>
-            <view class="card-meta">
-              <view class="meta-item"><image class="meta-icon" src="/assets/icons/meta-clock.png" mode="aspectFit" /><text>{{item.time}}</text></view>
-              <view class="meta-item"><image class="meta-icon" src="/assets/icons/meta-location.png" mode="aspectFit" /><text>{{item.place}}</text></view>
-            </view>
-          </view>
+      <view class="meeting-card" data-id="{{item.id}}" bindtap="onMeetingTap">
+        <view class="card-title-row">
+          <text class="card-title">{{item.name}}</text>
+          <view class="card-tag status-{{item.statusType}}">{{item.statusText}}</view>
         </view>
-        <view class="card-detail" wx:if="{{item.expanded}}">
-          <view class="detail-row"><image class="meta-icon" src="/assets/icons/date.png" mode="aspectFit" /><text>会议类型：{{item.type}}</text></view>
-          <view class="detail-row"><image class="meta-icon" src="/assets/icons/meta-clock.png" mode="aspectFit" /><text>时间段：{{item.time}}</text></view>
-          <view class="detail-row content-row" wx:for="{{item.contents}}" wx:for-item="c" wx:key="id">
-            <view class="content-main">
-              <text class="content-name">{{c.name}}</text>
-              <text class="content-topics" wx:if="{{c.topics}}">议题：{{c.topics}}</text>
-            </view>
-          </view>
+        <text class="card-type" wx:if="{{item.typeName}}">{{item.typeName}}</text>
+        <view class="card-meta">
+          <view class="meta-item"><image class="meta-icon" src="/assets/icons/meta-clock.png" mode="aspectFit" /><text>{{item.time}}</text></view>
+          <view class="meta-item"><image class="meta-icon" src="/assets/icons/meta-location.png" mode="aspectFit" /><text>{{item.place}}</text></view>
         </view>
       </view>
     </view>

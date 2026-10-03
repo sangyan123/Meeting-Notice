@@ -46,6 +46,28 @@ function formatMeetingTime(start, end) {
   return `${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${fmtHM(d)}`
 }
 
+/** 会议时间展示（含年月日）：同日 "2026-09-10 09:00—11:00"，跨日 "2026-09-10 09:00—09-11 12:00" */
+function formatMeetingTimeFull(start, end) {
+  const s = parseDate(start)
+  const e = parseDate(end)
+  if (!s && !e) {
+    return '时间待定'
+  }
+  const fmtDate = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+  if (s && e) {
+    const sameDay =
+      s.getFullYear() === e.getFullYear() &&
+      s.getMonth() === e.getMonth() &&
+      s.getDate() === e.getDate()
+    if (sameDay) {
+      return `${fmtDate(s)} ${fmtHM(s)}—${fmtHM(e)}`
+    }
+    return `${fmtDate(s)} ${fmtHM(s)}—${fmtDate(e)} ${fmtHM(e)}`
+  }
+  const d = s || e
+  return `${fmtDate(d)} ${fmtHM(d)}`
+}
+
 /** 大会日期区间展示："2024年3月5日—3月11日" */
 function formatMeetingRange(start, end) {
   const s = parseDate(start)
@@ -69,5 +91,6 @@ function formatMeetingRange(start, end) {
 module.exports = {
   parseDate,
   formatMeetingTime,
+  formatMeetingTimeFull,
   formatMeetingRange
 }

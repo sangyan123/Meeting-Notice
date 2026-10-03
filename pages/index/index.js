@@ -1,6 +1,6 @@
 const { request, getToken, goLogin } = require('../../utils/request')
 const API = require('../../utils/api')
-const { formatMeetingTime, formatMeetingRange } = require('../../utils/date')
+const { formatMeetingTime, formatMeetingRange, parseDate } = require('../../utils/date')
 
 Page({
   data: {
@@ -10,7 +10,7 @@ Page({
     unreadCount: 2,
     loading: true,
     quickNav: [
-      { id: 'schedule', label: '大会日程', img: '/assets/icons/nav-calendar.png' },
+      { id: 'schedule', label: '会议日程', img: '/assets/icons/nav-calendar.png' },
       { id: 'guide', label: '会议指南', img: '/assets/icons/nav-guide.png' },
       { id: 'refs', label: '参阅材料', img: '/assets/icons/nav-docs.png' }
     ],
@@ -66,12 +66,12 @@ Page({
     this.setData({ loading: true })
     Promise.all([
       request(API.currentMeeting),
-      request(API.todayMeetings)
+      request(API.appInfoList)
     ])
-      .then(([currentRes, todayRes]) => {
+      .then(([currentRes, listRes]) => {
         const app = getApp()
         const current = currentRes.data || null
-        const meetings = Array.isArray(todayRes.data) ? todayRes.data : []
+        const all = Array.isArray(listRes.data) ? listRes.data : []
 
         if (current && current.id) {
           app.globalData.meetingId = current.id
@@ -81,6 +81,25 @@ Page({
             dateRange: formatMeetingRange(current.startTime, current.endTime)
           }
         }
+
+        // 今日会议与Web会议信息页同口径：数据范围内、会期覆盖今天的会议
+        const today0 = new Date()
+        today0.setHours(0, 0, 0, 0)
+        const tomorrow0 = today0.getTime() + 86400000
+        const meetings = all
+          .filter((m) => {
+            const s = parseDate(m.startTime)
+            const e = parseDate(m.endTime)
+            if (!s && !e) {
+              return false
+            }
+            return (s || e).getTime() < tomorrow0 && (e || s).getTime() >= today0.getTime()
+          })
+          .sort(
+            (a, b) =>
+              (parseDate(a.startTime) || parseDate(a.endTime)).getTime() -
+              (parseDate(b.startTime) || parseDate(b.endTime)).getTime()
+          )
 
         this.setData({
           loading: false,

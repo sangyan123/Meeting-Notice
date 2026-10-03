@@ -40,6 +40,8 @@
   flex-direction: row;
   white-space: nowrap;
   padding: 24rpx 24rpx 8rpx;
+  height: 168rpx;
+  box-sizing: border-box;
   background: var(--bg);
 }
 
@@ -48,12 +50,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 112rpx;
+  min-width: 112rpx;
+  padding: 0 18rpx;
   height: 112rpx;
   margin-right: 16rpx;
   border-radius: 16rpx;
   background: #EFEDE6;
   flex-shrink: 0;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .date-chip.active {
@@ -65,11 +70,13 @@
   color: #555555;
   font-weight: 500;
   margin-bottom: 6rpx;
+  line-height: 1.2;
 }
 
 .date-week {
   font-size: 22rpx;
   color: #888888;
+  line-height: 1.2;
 }
 
 .date-chip.active .date-md,
@@ -247,4 +254,26 @@
   font-size: 24rpx;
   color: var(--text-secondary);
   line-height: 1.5;
+}
+
+.card-type {
+  display: block;
+  font-size: 24rpx;
+  color: #a39c8c;
+  margin-top: 6rpx;
+}
+
+.card-tag.status-published {
+  background: #e8f7ef;
+  color: #3daa6d;
+}
+
+.card-tag.status-pending {
+  background: #fff6e5;
+  color: #c9a227;
+}
+
+.card-tag.status-ended {
+  background: #efece4;
+  color: #9a9484;
 }

@@ -16,6 +16,9 @@ module.exports = {
   /** 今天的会议列表 GET ?meetingTypeId= → [TMeetingMain] */
   todayMeetings: '/meeting/main/appTodayList',
 
+  /** 会议信息列表 GET → [TMeetingMain]（与Web会议信息页同口径：数据范围过滤，排除创建中） */
+  appInfoList: '/meeting/main/appInfoList',
+
   /** 会议详情（基本信息+参会人+资料分类+统计）GET → {meeting, persons, tabs, topicCount, fileCount} */
   meetingInfo: (meetingId) => `/meeting/main/appInfo/${meetingId}`,
 
@@ -30,5 +33,17 @@ module.exports = {
 
   /** 会议文件下载流 GET（FileDownloadController），categoryId=3 议程附件 */
   meetingFileDownload: ({ fileId, categoryId, meetingId }) =>
-    `/downloadServlet/download?fileId=${fileId}&categoryId=${categoryId}&meetingId=${meetingId}`
+    `/downloadServlet/download?fileId=${fileId}&categoryId=${categoryId}&meetingId=${meetingId}`,
+
+  /** 提交请假 POST（简单版：将本人参会状态置为请假，TMeetingPersonController） */
+  appLeave: (meetingId) => `/meeting/person/appLeave/${meetingId}`,
+
+  /** 我的参会状态 GET → {status, roleType}（0=请假 1=到会 2=缺席 3=未设置） */
+  appMyStatus: (meetingId) => `/meeting/person/appMyStatus/${meetingId}`,
+
+  /** 我的座位 GET → {seatNo, tableCard, groupName}（Web 排座保存时回写参会人） */
+  appMySeat: (meetingId) => `/meeting/person/appMySeat/${meetingId}`,
+
+  /** 座位图 GET → {layoutName, rowCount, colCount, mySeatId, seats:[{id,r,c,no,name,mine,disabled,aisle,blank}]} */
+  appSeatMap: (meetingId) => `/meeting/person/appSeatMap/${meetingId}`
 }

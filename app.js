@@ -48,6 +48,7 @@ App({
       dateRange: ''
     },
     meetingId: null,
+    currentMeeting: null,
     infoRecord: null
   }
 })
