@@ -72,7 +72,9 @@ Page({
     ensureCurrentMeeting()
       .then((meeting) => request(API.meetingDailyList, { data: { meetingId: meeting.id } }))
       .then((res) => {
-        this.buildDays(Array.isArray(res.data) ? res.data : [])
+        // 新版后端在 data，旧版分页结构在 rows，两者都兼容
+        const list = Array.isArray(res.data) ? res.data : Array.isArray(res.rows) ? res.rows : []
+        this.buildDays(list)
         this.setData({ loading: false })
       })
       .catch((err) => {
@@ -85,7 +87,8 @@ Page({
   buildDays(dailyList) {
     const byDay = {}
     dailyList.forEach((daily) => {
-      const day = String(daily.dayStr || '')
+      // 库里 day_str 为 "2026-09-10"，归一化为 "20260910"，日期解析与"今天"匹配统一走 8 位数字
+      const day = String(daily.dayStr || '').replace(/\D/g, '')
       if (!byDay[day]) {
         byDay[day] = []
       }
