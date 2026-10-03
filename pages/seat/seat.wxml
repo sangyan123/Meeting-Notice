@@ -15,47 +15,52 @@
         <view class="seat-badge">{{seatInfo.seat}}</view>
       </view>
       <view class="row">
-        <text class="row-label">代表团</text>
-        <text class="row-value">{{seatInfo.delegation}}</text>
+        <text class="row-label">分组</text>
+        <text class="row-value">{{seatInfo.group}}</text>
+      </view>
+      <view class="row" wx:if="{{tableCard}}">
+        <text class="row-label">桌牌</text>
+        <text class="row-value">{{tableCard}}</text>
       </view>
       <view class="row">
-        <text class="row-label">区域</text>
-        <text class="row-value">{{seatInfo.area}}</text>
-      </view>
-      <view class="row">
-        <text class="row-label">入口</text>
-        <text class="row-value">{{seatInfo.entrance}}</text>
+        <text class="row-label">会议地点</text>
+        <text class="row-value">{{seatInfo.place}}</text>
       </view>
     </view>
 
     <view class="card">
-      <text class="card-title">会场平面示意图</text>
+      <text class="card-title">会议信息</text>
+      <view class="row">
+        <text class="row-label">会议名称</text>
+        <text class="row-value">{{meetingName}}</text>
+      </view>
+      <view class="row">
+        <text class="row-label">会议时间</text>
+        <text class="row-value">{{meetingTime}}</text>
+      </view>
+    </view>
+
+    <view class="card" wx:if="{{hasMap}}">
+      <text class="card-title">座位图{{mapName ? ' · ' + mapName : ''}}</text>
       <view class="map">
         <view class="stage">主席台</view>
-        <!-- 上排：1区 2区 3区 -->
-        <view class="zones-row">
-          <view class="zone" wx:for="{{topZones}}" wx:key="id">
-            <text class="zone-name">{{item.name}}</text>
-            <view class="me-mark" wx:if="{{item.id === myZone}}">我</view>
+        <scroll-view class="seat-scroll" scroll-x>
+          <view class="seat-row" wx:for="{{mapRows}}" wx:for-item="row" wx:key="idx">
+            <view
+              class="seat {{cell.mine ? 'mine' : ''}} {{cell.disabled ? 'disabled' : ''}} {{cell.blank || cell.aisle ? 'ghost' : ''}}"
+              wx:for="{{row.cells}}"
+              wx:for-item="cell"
+              wx:key="id"
+            >
+              <text wx:if="{{cell.mine}}">我</text>
+              <text wx:elif="{{cell.name}}">{{cell.name}}</text>
+            </view>
           </view>
-        </view>
-        <!-- 下排：4区 5区 -->
-        <view class="zones-row bottom">
-          <view class="zone wide" wx:for="{{bottomZones}}" wx:key="id">
-            <text class="zone-name">{{item.name}}</text>
-          </view>
-        </view>
+        </scroll-view>
         <view class="legend">
           <view class="legend-dot"></view>
-          <text class="legend-text">您的座位（{{seatInfo.seat}}）</text>
+          <text class="legend-text">红色为您的座位{{myMapSeat ? '（' + myMapSeat + '）' : ''}}</text>
         </view>
-      </view>
-    </view>
-
-    <view class="card">
-      <view class="row" wx:for="{{facilities}}" wx:key="label">
-        <text class="row-label">{{item.label}}</text>
-        <text class="row-value">{{item.value}}</text>
       </view>
     </view>
   </view>
