@@ -8,5 +8,37 @@
     </view>
   </view>
 
-  <view class="body"></view>
+  <view class="body">
+    <view class="card">
+      <view class="setting-row">
+        <view class="setting-info">
+          <text class="setting-name">接收会议通知</text>
+          <text class="setting-desc">关闭后将不再接收任何会议消息提醒</text>
+        </view>
+        <switch checked="{{settings.master}}" color="#B31A21" bindchange="onMasterChange" />
+      </view>
+      <view
+        class="setting-row {{settings.master ? '' : 'disabled'}}"
+        wx:for="{{categories}}"
+        wx:key="id"
+      >
+        <view class="setting-info">
+          <text class="setting-name">{{item.name}}</text>
+          <text class="setting-desc">{{item.desc}}</text>
+        </view>
+        <switch
+          checked="{{settings[item.id]}}"
+          disabled="{{!settings.master}}"
+          color="#B31A21"
+          data-id="{{item.id}}"
+          bindchange="onCategoryChange"
+        />
+      </view>
+    </view>
+
+    <view class="notice">
+      <text class="notice-icon">!</text>
+      <text class="notice-text">设置将保存在本机，如需协助请联系秘书处</text>
+    </view>
+  </view>
 </view>

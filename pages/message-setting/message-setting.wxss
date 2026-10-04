@@ -1,1 +1,65 @@
 @import "../../styles/service-page.wxss";
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #F0EEE8;
+}
+
+.setting-row:last-child {
+  border-bottom: none;
+}
+
+.setting-info {
+  flex: 1;
+  min-width: 0;
+  margin-right: 24rpx;
+}
+
+.setting-name {
+  display: block;
+  font-size: 28rpx;
+  color: var(--text);
+}
+
+.setting-desc {
+  display: block;
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-top: 6rpx;
+}
+
+.setting-row.disabled .setting-name,
+.setting-row.disabled .setting-desc {
+  opacity: 0.4;
+}
+
+.notice {
+  display: flex;
+  align-items: center;
+  background: #FFF8E6;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+}
+
+.notice-icon {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  background: #F5C518;
+  color: #ffffff;
+  font-size: 22rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12rpx;
+  flex-shrink: 0;
+}
+
+.notice-text {
+  font-size: 24rpx;
+  color: #8A7A4A;
+}
