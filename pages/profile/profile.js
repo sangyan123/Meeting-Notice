@@ -47,7 +47,7 @@ Page({
       return
     }
     if (id === 'msg') {
-      wx.showToast({ title: '消息设置开发中', icon: 'none' })
+      wx.navigateTo({ url: '/pages/message-setting/message-setting' })
     }
   },
 

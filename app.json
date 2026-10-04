@@ -7,6 +7,7 @@
     "pages/schedule/schedule",
     "pages/notice-detail/notice-detail",
     "pages/notices/notices",
+    "pages/message-setting/message-setting",
     "pages/preview/preview",
     "pages/seat/seat",
     "pages/hotel/hotel",
