@@ -41,19 +41,14 @@ Page({
       wx.navigateTo({ url: '/pages/leave/leave?tab=records' })
       return
     }
-    if (id === 'guide') {
+    // 会议指南、联系秘书处均与会务服务 Tab 内容一致，直接切 Tab
+    if (id === 'guide' || id === 'contact') {
       wx.switchTab({ url: '/pages/services/services' })
       return
     }
-    const map = {
-      msg: '消息设置',
-      guide: '会议指南',
-      contact: '联系秘书处'
+    if (id === 'msg') {
+      wx.showToast({ title: '消息设置开发中', icon: 'none' })
     }
-    wx.showToast({
-      title: `${map[id] || ''}开发中`,
-      icon: 'none'
-    })
   },
 
   onLogout() {
