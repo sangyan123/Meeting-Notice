@@ -17,5 +17,9 @@ Page({
 
   onBack() {
     wx.navigateBack({ delta: 1 })
+  },
+
+  onGoFill() {
+    wx.navigateTo({ url: '/pages/info-form/info-form' })
   }
 })

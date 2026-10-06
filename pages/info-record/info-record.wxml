@@ -9,24 +9,32 @@
   </view>
 
   <view class="body">
-    <view class="card">
-      <view class="record-head">
-        <view class="record-head-left">
-          <text class="record-title">参会人员信息填报</text>
-          <text class="record-time">提交时间：{{submitTime}}</text>
+    <block wx:if="{{rows.length}}">
+      <view class="card">
+        <view class="record-head">
+          <view class="record-head-left">
+            <text class="record-title">参会人员信息填报</text>
+            <text class="record-time">提交时间：{{submitTime}}</text>
+          </view>
+          <view class="status-badge">已提交</view>
         </view>
-        <view class="status-badge">已提交</view>
+
+        <view class="row" wx:for="{{rows}}" wx:key="label">
+          <text class="row-label">{{item.label}}</text>
+          <text class="row-value">{{item.value}}</text>
+        </view>
       </view>
 
-      <view class="row" wx:for="{{rows}}" wx:key="label">
-        <text class="row-label">{{item.label}}</text>
-        <text class="row-value">{{item.value}}</text>
+      <view class="notice">
+        <text class="notice-icon">!</text>
+        <text class="notice-text">如需修改填报信息，请联系秘书处</text>
       </view>
-    </view>
+    </block>
 
-    <view class="notice">
-      <text class="notice-icon">!</text>
-      <text class="notice-text">如需修改填报信息，请联系秘书处</text>
+    <view class="empty" wx:else>
+      <text class="empty-title">暂无填报记录</text>
+      <text class="empty-desc">完成「参会信息填报」后，回执会显示在这里</text>
+      <view class="empty-btn" bindtap="onGoFill">去填报</view>
     </view>
   </view>
 </view>

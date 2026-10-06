@@ -34,7 +34,7 @@ Page({
   onMenuTap(e) {
     const id = e.currentTarget.dataset.id
     if (id === 'rsvp') {
-      wx.navigateTo({ url: '/pages/notices/notices' })
+      wx.navigateTo({ url: '/pages/info-record/info-record' })
       return
     }
     if (id === 'leave') {
