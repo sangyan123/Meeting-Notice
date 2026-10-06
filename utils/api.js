@@ -45,5 +45,11 @@ module.exports = {
   appMySeat: (meetingId) => `/meeting/person/appMySeat/${meetingId}`,
 
   /** 座位图 GET → {layoutName, rowCount, colCount, mySeatId, seats:[{id,r,c,no,name,mine,disabled,aisle,blank}]} */
-  appSeatMap: (meetingId) => `/meeting/person/appSeatMap/${meetingId}`
+  appSeatMap: (meetingId) => `/meeting/person/appSeatMap/${meetingId}`,
+
+  /** 我的参会信息填报 GET → {submitted, phone, hotelNeed(0/1), dietType, transport, arriveDate, leaveDate, remark, submitTime}（TMeetingPersonInfoController） */
+  appMyInfo: (meetingId) => `/meeting/personInfo/appMyInfo/${meetingId}`,
+
+  /** 提交参会信息填报 POST {phone, hotelNeed, dietType, transport, arriveDate, leaveDate, remark} → {submitTime}，重复提交覆盖 */
+  appSubmitPersonInfo: (meetingId) => `/meeting/personInfo/appSubmit/${meetingId}`
 }

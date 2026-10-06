@@ -9,7 +9,7 @@
   </view>
 
   <view class="body">
-    <block wx:if="{{rows.length}}">
+    <block wx:if="{{!loading && rows.length}}">
       <view class="card">
         <view class="record-head">
           <view class="record-head-left">
@@ -27,11 +27,11 @@
 
       <view class="notice">
         <text class="notice-icon">!</text>
-        <text class="notice-text">如需修改填报信息，请联系秘书处</text>
+        <text class="notice-text">如需修改填报信息，可重新填报提交，以最新一次为准</text>
       </view>
     </block>
 
-    <view class="empty" wx:else>
+    <view class="empty" wx:if="{{!loading && !rows.length}}">
       <text class="empty-title">暂无填报记录</text>
       <text class="empty-desc">完成「参会信息填报」后，回执会显示在这里</text>
       <view class="empty-btn" bindtap="onGoFill">去填报</view>
