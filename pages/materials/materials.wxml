@@ -63,7 +63,12 @@
             <text class="file-title">{{file.title}}</text>
             <text class="file-meta">{{file.meta}}</text>
           </view>
-          <view class="eye-btn" catchtap="onPreview" data-id="{{file.id}}">👁</view>
+          <image
+            class="eye-btn"
+            src="/assets/icons/eyes.png"
+            catchtap="onPreview"
+            data-id="{{file.id}}"
+          />
         </view>
       </view>
     </block>
