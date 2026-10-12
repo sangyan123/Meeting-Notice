@@ -9,33 +9,57 @@
   </view>
 
   <scroll-view class="body" scroll-y style="height: {{scrollHeight}}px;">
-    <view class="meta">
-      <view class="meta-top">
-        <text class="tag tag-{{notice.tagType}}">{{notice.tag}}</text>
-        <text class="meta-time">{{notice.datetime}}</text>
+    <view class="detail-loading" wx:if="{{loading}}">加载中...</view>
+    <block wx:if="{{notice}}">
+      <view class="meta">
+        <view class="meta-top">
+          <text class="tag tag-{{notice.tagType}}">{{notice.tag}}</text>
+          <text class="meta-time">{{notice.datetime}}</text>
+        </view>
+        <text class="meta-title">{{notice.title}}</text>
+        <text class="meta-issuer">发行方：{{notice.issuer || '—'}}</text>
+        <text class="meta-issuer" wx:if="{{notice.meetingName}}">所属会议：{{notice.meetingName}}</text>
       </view>
-      <text class="meta-title">{{notice.title}}</text>
-      <text class="meta-issuer">发行方：{{notice.issuer}}</text>
-    </view>
 
-    <view class="divider"></view>
+      <view class="divider"></view>
 
-    <view class="content">
-      <text class="content-text">{{notice.content}}</text>
-      <view class="sign">
-        <text class="sign-org">{{notice.issuer}}</text>
-        <text class="sign-date">{{notice.signDate}}</text>
+      <view class="content">
+        <rich-text wx:if="{{notice.isHtml}}" class="content-rich" nodes="{{notice.content}}"></rich-text>
+        <text wx:else class="content-text">{{notice.content}}</text>
+        <view class="sign">
+          <text class="sign-org">{{notice.issuer}}</text>
+          <text class="sign-date">{{notice.signDate}}</text>
+        </view>
       </view>
-    </view>
-
+    </block>
     <view class="body-spacer"></view>
   </scroll-view>
 
-  <view class="footer" style="padding-bottom: {{safeBottom}}px;">
-    <text class="footer-tip">请选择您对此通知的回执状态</text>
-    <view class="footer-btns">
-      <view class="btn btn-attend {{replyStatus === 'attend' ? 'selected' : ''}}" bindtap="onAttend">✓ 出席</view>
-      <view class="btn btn-leave {{replyStatus === 'leave' ? 'selected' : ''}}" bindtap="onLeave">✕ 请假</view>
-    </view>
+  <view class="footer" style="padding-bottom: {{safeBottom}}px;" wx:if="{{notice && notice.requireReceipt}}">
+    <block wx:if="{{!reasonOpen}}">
+      <text class="footer-tip" wx:if="{{replyStatus === 'attend'}}">您已确认出席</text>
+      <text class="footer-tip" wx:elif="{{replyStatus === 'leave'}}">您已提交请假回执</text>
+      <text class="footer-tip" wx:else>请选择您对此通知的回执状态</text>
+      <view class="footer-btns">
+        <view class="btn btn-attend {{replyStatus === 'attend' ? 'selected' : ''}} {{submitting ? 'disabled' : ''}}" bindtap="onAttend">✓ {{replyStatus === 'attend' ? '已确认出席' : '出席'}}</view>
+        <view class="btn btn-leave {{replyStatus === 'leave' ? 'selected' : ''}}" bindtap="onLeave">✕ {{replyStatus === 'leave' ? '已提交请假' : '请假'}}</view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="reason-box">
+        <text class="reason-label">请假原因</text>
+        <textarea
+          class="reason-textarea"
+          placeholder="请填写请假原因（必填）"
+          maxlength="200"
+          value="{{reason}}"
+          bindinput="onReasonInput"
+        ></textarea>
+        <view class="reason-btns">
+          <view class="reason-btn cancel" bindtap="onCancelLeave">取消</view>
+          <view class="reason-btn confirm {{submitting ? 'disabled' : ''}}" bindtap="onConfirmLeave">{{submitting ? '提交中...' : '确认请假'}}</view>
+        </view>
+      </view>
+    </block>
   </view>
 </view>

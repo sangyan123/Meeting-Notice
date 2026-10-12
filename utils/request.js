@@ -39,6 +39,23 @@ function logout() {
   }
 }
 
+/** 退出登录：先通知服务端销毁 Redis 会话（POST /logout，失败忽略），再清理本地并回登录页 */
+function serverLogout() {
+  const hadToken = !!getToken()
+  return request(API.serverLogout, { method: 'POST', silent: true })
+    .catch(() => {})
+    .then(() => {
+      wx.removeStorageSync(TOKEN_KEY)
+      const app = getApp()
+      if (app) {
+        app.globalData.userInfo = null
+      }
+      if (hadToken) {
+        goLogin()
+      }
+    })
+}
+
 /**
  * 基础请求封装（Promise）
  * - 自动携带 Authorization: Bearer <token>
@@ -212,6 +229,7 @@ module.exports = {
   setToken,
   goLogin,
   logout,
+  serverLogout,
   request,
   login,
   getUserInfo,

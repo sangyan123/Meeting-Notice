@@ -78,6 +78,17 @@
   color: #C82439;
 }
 
+.status.stopped {
+  background: #F0F0F0;
+  color: #999999;
+}
+
+.bus-date {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-left: 16rpx;
+}
+
 .bus-route {
   display: flex;
   align-items: center;
@@ -122,4 +133,74 @@
   height: 24rpx;
   margin-right: 8rpx;
   flex-shrink: 0;
+}
+
+.bus-remark {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-top: 12rpx;
+  line-height: 1.5;
+}
+
+.bus-actions {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #F0EEE8;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.book-btn {
+  font-size: 26rpx;
+  padding: 14rpx 44rpx;
+  border-radius: 36rpx;
+  text-align: center;
+}
+
+.book-btn.ready {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.book-btn.booked {
+  background: #E8F7EF;
+  color: #3DAA6D;
+  border: 1rpx solid #BFE6CF;
+  box-sizing: border-box;
+}
+
+.book-btn.disabled {
+  background: #F0EEE8;
+  color: var(--text-muted);
+}
+
+.loading {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 26rpx;
+  padding: 120rpx 0;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 40rpx;
+}
+
+.empty-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12rpx;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.bus-card.stopped {
+  opacity: 0.65;
 }

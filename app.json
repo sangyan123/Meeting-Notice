@@ -14,6 +14,7 @@
     "pages/meal/meal",
     "pages/bus/bus",
     "pages/leave/leave",
+    "pages/receipt-record/receipt-record",
     "pages/info-form/info-form",
     "pages/info-record/info-record",
     "pages/meeting-detail/meeting-detail",

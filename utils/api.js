@@ -51,5 +51,64 @@ module.exports = {
   appMyInfo: (meetingId) => `/meeting/personInfo/appMyInfo/${meetingId}`,
 
   /** 提交参会信息填报 POST {phone, hotelNeed, dietType, transport, arriveDate, leaveDate, remark} → {submitTime}，重复提交覆盖 */
-  appSubmitPersonInfo: (meetingId) => `/meeting/personInfo/appSubmit/${meetingId}`
+  appSubmitPersonInfo: (meetingId) => `/meeting/personInfo/appSubmit/${meetingId}`,
+
+  // ===== 以下为「代表端会务服务」接口（nopaper-backend doc/代表端会务服务接口文档.md，2026-10-10）=====
+
+  /** 通知列表 GET ?meetingId=&category=&pageNum=&pageSize= → {total, pageNum, pageSize, rows, unreadCount} */
+  appNoticeList: '/meeting/appNotice/list',
+
+  /** 最新通知 GET ?meetingId=&limit= → {rows, unreadCount}（limit 默认5，最大50） */
+  appNoticeLatest: '/meeting/appNotice/latest',
+
+  /** 通知详情 GET → {noticeId, meetingId, meetingName, category, title, content, publisher, publishTime, requireReceipt, myReceipt}；打开即自动标记已读 */
+  appNoticeDetail: (noticeId) => `/meeting/appNotice/${noticeId}`,
+
+  /** 标记已读（幂等）POST → {marked, firstMark, unreadCount} */
+  appNoticeRead: (noticeId) => `/meeting/appNotice/${noticeId}/read`,
+
+  /** 未读数 GET ?meetingId= → {unreadCount}（不传=本人全部会议） */
+  appNoticeUnreadCount: '/meeting/appNotice/unreadCount',
+
+  /** 提交通知回执 POST {receiptType: 'attend'|'leave', reason: 'leave必填'} → 本人回执，重复提交覆盖 */
+  appNoticeReceipt: (noticeId) => `/meeting/appNotice/${noticeId}/receipt`,
+
+  /** 本人当前回执 GET → {receiptId, receiptType, reason, submitTime} 或 null */
+  appNoticeMyReceipt: (noticeId) => `/meeting/appNotice/${noticeId}/myReceipt`,
+
+  /** 本人通知回执历史 GET ?meetingId=&pageNum=&pageSize= → {total, rows} */
+  appNoticeMyReceipts: '/meeting/appNotice/myReceipts',
+
+  /** 提交请假申请 POST {meetingId, reason} → {id, meetingId, status(0=待处理), submitTime} */
+  appLeaveApply: '/meeting/appLeave/apply',
+
+  /** 本人请假历史 GET ?meetingId=&pageNum=&pageSize= → {total, rows: [{id, meetingName, reason, status, approveAccountName, approveTime, approveOpinion, submitTime}]} */
+  appLeaveMyList: '/meeting/appLeave/myList',
+
+  /** 本人住宿安排 GET ?meetingId= → {arranged, hotelName, roomNo, checkinTime, checkoutTime, address, phone, remind, remark, latitude, longitude} */
+  appHotel: '/meeting/appArrangement/hotel',
+
+  /** 用餐安排 GET ?meetingId= → {rows: [{id, mealDate, mealType, startTime, endTime, location, description, remind, sortNum}], dietReminder} */
+  appMealList: '/meeting/appArrangement/meal/list',
+
+  /** 班车安排 GET ?meetingId= → {rows: [{id, busDate, shiftName, departTime, origin, destination, capacity(0=不限), status(1=正常/0=停运), remark, occupied, myBooked}]} */
+  appBusList: '/meeting/appArrangement/bus/list',
+
+  /** 预约班车 POST（幂等；满员/停运返回错误） */
+  appBusBook: (busId) => `/meeting/appArrangement/bus/${busId}/book`,
+
+  /** 取消班车预约 DELETE（幂等；取消即时释放名额） */
+  appBusCancelBook: (busId) => `/meeting/appArrangement/bus/${busId}/book`,
+
+  /** 会务配置 GET ?meetingId= → {orgName, servicePhone, serviceDeskLocation, emergencyPhone, noticeEnabled, leaveEnabled, hotelEnabled, mealEnabled, busEnabled, serviceCallEnabled} */
+  appServiceConfig: '/meeting/appService/config',
+
+  /** 消息偏好 GET → {masterEnabled, preEnabled, midEnabled, postEnabled, updateTime}；POST 保存 {masterEnabled...} 取值 0/1 */
+  appMessagePref: '/meeting/appMessagePref',
+
+  /** 代表身份 GET ?meetingId= → {accountId, name, account, phone, position, company, avatar, delegateNo, delegation, committee, roleType, seatNo, tableCard, groupName} */
+  appDelegateIdentity: '/meeting/appDelegate/identity',
+
+  /** 服务端会话注销 POST（销毁 Redis 登录态，配套 /appLogin 签发的令牌） */
+  serverLogout: '/logout'
 }

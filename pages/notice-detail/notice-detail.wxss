@@ -71,6 +71,18 @@
   color: #C82439;
 }
 
+.tag-post {
+  background: #F5F0E6;
+  color: #A67C52;
+}
+
+.detail-loading {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 26rpx;
+  padding: 120rpx 0;
+}
+
 .meta-time {
   font-size: 24rpx;
   color: var(--text-muted);
@@ -86,8 +98,10 @@
 }
 
 .meta-issuer {
+  display: block;
   font-size: 24rpx;
   color: var(--text-secondary);
+  margin-top: 8rpx;
 }
 
 .divider {
@@ -105,6 +119,13 @@
   color: var(--text);
   line-height: 1.85;
   white-space: pre-wrap;
+}
+
+.content-rich {
+  font-size: 28rpx;
+  color: var(--text);
+  line-height: 1.85;
+  word-break: break-all;
 }
 
 .sign {
@@ -173,4 +194,60 @@
 .btn-leave.selected {
   background: #2160D9;
   color: #ffffff;
+}
+
+.btn.disabled {
+  opacity: 0.6;
+}
+
+.reason-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.reason-label {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-bottom: 12rpx;
+}
+
+.reason-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 140rpx;
+  border: 1rpx solid #E5E5E5;
+  border-radius: 12rpx;
+  padding: 16rpx 20rpx;
+  font-size: 26rpx;
+  background: #FAFAFA;
+}
+
+.reason-btns {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 20rpx;
+}
+
+.reason-btn {
+  flex: 1;
+  height: 76rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+}
+
+.reason-btn.cancel {
+  background: #F0EEE8;
+  color: var(--text-secondary);
+}
+
+.reason-btn.confirm {
+  background: #2160D9;
+  color: #ffffff;
+}
+
+.reason-btn.disabled {
+  opacity: 0.6;
 }

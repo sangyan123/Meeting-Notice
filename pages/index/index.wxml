@@ -87,6 +87,7 @@
       </view>
       <text class="chevron">›</text>
     </view>
+    <view class="empty-tip" wx:if="{{!loading && notices.length === 0}}">暂无通知</view>
   </view>
 
   <view class="safe-bottom"></view>

@@ -212,6 +212,17 @@
   color: #C9A227;
 }
 
+.status-rejected {
+  background: #FDECED;
+  color: #C82439;
+}
+
+.record-opinion {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
 .record-row {
   display: flex;
   align-items: center;

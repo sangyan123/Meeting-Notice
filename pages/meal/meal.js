@@ -1,45 +1,65 @@
+const { request, getToken, goLogin } = require('../../utils/request')
+const API = require('../../utils/api')
+const { ensureCurrentMeeting } = require('../../utils/meeting')
+
+/** 餐次类型 → 展示文案（与 t_meeting_meal_arrangement.meal_type 取值对应） */
+const MEAL_TYPE_NAMES = {
+  breakfast: '早餐',
+  lunch: '午餐',
+  dinner: '晚餐'
+}
+
 Page({
   data: {
     statusBarHeight: 20,
-    meals: [
-      {
-        id: 1,
-        name: '早餐',
-        time: '06:30—08:30',
-        place: '北京饭店 二楼餐厅',
-        note: '自助形式，中西餐均有',
-        highlight: false
-      },
-      {
-        id: 2,
-        name: '午餐',
-        time: '12:00—13:30',
-        place: '人民大会堂 宴会厅',
-        note: '按代表团安排，凭证就餐',
-        highlight: false
-      },
-      {
-        id: 3,
-        name: '晚餐',
-        time: '18:00—20:00',
-        place: '北京饭店 二楼餐厅',
-        note: '自助形式，提供素食选项',
-        highlight: false
-      },
-      {
-        id: 4,
-        name: '开幕晚宴',
-        time: '18:30—21:00 (3/5)',
-        place: '人民大会堂 北大厅',
-        note: '正式宴请，着正装出席',
-        highlight: true
-      }
-    ]
+    loading: true,
+    meals: [],
+    dietReminder: ''
   },
 
   onLoad() {
     const sys = wx.getSystemInfoSync()
     this.setData({ statusBarHeight: sys.statusBarHeight || 20 })
+  },
+
+  onShow() {
+    if (!getToken()) {
+      goLogin()
+      return
+    }
+    this.fetchMeals()
+  },
+
+  fetchMeals() {
+    this.setData({ loading: true })
+    ensureCurrentMeeting()
+      .then((meeting) =>
+        request(API.appMealList, { data: { meetingId: meeting.id } })
+      )
+      .then((body) => {
+        const d = body.data || {}
+        const rows = Array.isArray(d.rows) ? d.rows : []
+        const meals = rows.map((row) => ({
+          id: row.id,
+          name: MEAL_TYPE_NAMES[row.mealType] || row.mealType || '餐次',
+          time: [row.mealDate, [row.startTime, row.endTime].filter(Boolean).join('—')]
+            .filter(Boolean)
+            .join(' '),
+          place: row.location || '—',
+          note: row.description || ''
+        }))
+        this.setData({
+          loading: false,
+          meals,
+          dietReminder: d.dietReminder || ''
+        })
+      })
+      .catch((err) => {
+        this.setData({ loading: false })
+        if (err.message !== 'unauthorized') {
+          wx.showToast({ title: err.message || '加载失败', icon: 'none' })
+        }
+      })
   },
 
   onBack() {

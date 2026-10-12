@@ -121,3 +121,7 @@
   text-align: right;
   margin-left: 24rpx;
 }
+
+.contact-value.callable {
+  color: #2160D9;
+}

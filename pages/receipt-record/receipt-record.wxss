@@ -1,0 +1,117 @@
+@import "../../styles/service-page.wxss";
+
+.record-card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+.record-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14rpx;
+}
+
+.record-title {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  margin-right: 16rpx;
+}
+
+.record-status {
+  flex-shrink: 0;
+  font-size: 22rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 8rpx;
+}
+
+.record-status.attend {
+  background: #E8F7EF;
+  color: #3DAA6D;
+}
+
+.record-status.leave {
+  background: #FFF6E5;
+  color: #C9A227;
+}
+
+.record-meta {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 10rpx;
+}
+
+.tag {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+}
+
+.tag-pre {
+  background: #E8F3FC;
+  color: #3A8FD6;
+}
+
+.tag-mid {
+  background: #FDECED;
+  color: #C82439;
+}
+
+.tag-post {
+  background: #F5F0E6;
+  color: #A67C52;
+}
+
+.record-meeting {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.record-reason {
+  font-size: 26rpx;
+  color: #555555;
+  line-height: 1.5;
+  margin-bottom: 10rpx;
+}
+
+.record-time {
+  font-size: 22rpx;
+  color: var(--text-muted);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 140rpx 40rpx;
+}
+
+.empty-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12rpx;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.load-tip {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 24rpx;
+  padding: 24rpx 0 40rpx;
+}

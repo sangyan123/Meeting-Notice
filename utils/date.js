@@ -68,6 +68,24 @@ function formatMeetingTimeFull(start, end) {
   return `${fmtDate(d)} ${fmtHM(d)}`
 }
 
+/** 通用时间点展示："yyyy-MM-dd HH:mm"（通知发布时间、回执/请假提交时间等） */
+function formatDateTime(value) {
+  const d = parseDate(value)
+  if (!d) {
+    return ''
+  }
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`
+}
+
+/** 通用日期展示："yyyy年M月d日"（通知落款日期等） */
+function formatDateCn(value) {
+  const d = parseDate(value)
+  if (!d) {
+    return ''
+  }
+  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`
+}
+
 /** 大会日期区间展示："2024年3月5日—3月11日" */
 function formatMeetingRange(start, end) {
   const s = parseDate(start)
@@ -90,6 +108,8 @@ function formatMeetingRange(start, end) {
 
 module.exports = {
   parseDate,
+  formatDateTime,
+  formatDateCn,
   formatMeetingTime,
   formatMeetingTimeFull,
   formatMeetingRange

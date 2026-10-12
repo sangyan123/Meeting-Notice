@@ -53,7 +53,7 @@
       </view>
 
       <view class="submit-btn {{canSubmit && !submitting ? 'ready' : ''}}" bindtap="onSubmit">{{submitting ? '提交中...' : '提交请假申请'}}</view>
-      <text class="submit-tip">提交后将更新您的参会状态为「请假」（当前状态：{{statusText || '加载中'}}）</text>
+      <text class="submit-tip">提交后由会务组审批，审批进度可在「请假记录」中查看</text>
     </view>
   </view>
 
@@ -66,12 +66,15 @@
       </view>
       <view class="record-row">
         <image class="record-icon" src="/assets/icons/date.png" mode="aspectFit" />
-        <text>{{item.date}}</text>
+        <text>申请时间：{{item.date}}</text>
       </view>
       <view class="record-reason">{{item.reason}}</view>
       <view class="record-row">
         <image class="record-icon" src="/assets/icons/people.png" mode="aspectFit" />
         <text>审批人：{{item.approver}}</text>
+      </view>
+      <view class="record-row" wx:if="{{item.opinion}}">
+        <text class="record-opinion">审批意见：{{item.opinion}}</text>
       </view>
     </view>
     <view class="empty" wx:if="{{!records.length}}">暂无请假记录</view>

@@ -36,9 +36,15 @@
           <text class="tag tag-{{item.tagType}}">{{item.tag}}</text>
           <text class="notice-time">{{item.datetime}}</text>
         </view>
+        <view class="sub-row" wx:if="{{item.meetingName}}">
+          <text class="notice-meeting">{{item.meetingName}}</text>
+          <text class="receipt-badge {{item.myReceiptType}}" wx:if="{{item.requireReceipt && item.myReceiptType}}">{{item.myReceiptType === 'attend' ? '已回执：出席' : '已回执：请假'}}</text>
+        </view>
       </view>
       <text class="chevron">›</text>
     </view>
-    <view class="empty" wx:if="{{filteredList.length === 0}}">暂无相关通知</view>
+    <view class="empty" wx:if="{{!loading && filteredList.length === 0}}">暂无相关通知</view>
+    <view class="load-tip" wx:if="{{loading || loadingMore}}">加载中...</view>
+    <view class="load-tip" wx:if="{{!loading && !loadingMore && filteredList.length > 0 && finished}}">没有更多了</view>
   </view>
 </view>

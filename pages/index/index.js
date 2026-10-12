@@ -1,13 +1,14 @@
 const { request, getToken, goLogin } = require('../../utils/request')
 const API = require('../../utils/api')
 const { formatMeetingTime, formatMeetingRange, parseDate } = require('../../utils/date')
+const { mapNoticeRow } = require('../../utils/notices')
 
 Page({
   data: {
     statusBarHeight: 20,
     headerPaddingTop: 20,
     meetingInfo: {},
-    unreadCount: 2,
+    unreadCount: 0,
     loading: true,
     quickNav: [
       { id: 'schedule', label: '会议日程', img: '/assets/icons/nav-calendar.png' },
@@ -15,23 +16,7 @@ Page({
       { id: 'refs', label: '参阅材料', img: '/assets/icons/nav-docs.png' }
     ],
     todayMeetings: [],
-    // 后端暂无面向代表的通知接口，最新通知暂保留静态演示数据
-    notices: [
-      {
-        id: 1,
-        title: '关于大会开幕式有关事项的通知',
-        tag: '会前通知',
-        tagType: 'pre',
-        time: '16:00'
-      },
-      {
-        id: 2,
-        title: '关于分组审议政府工作报告的通知',
-        tag: '会中通知',
-        tagType: 'mid',
-        time: '12:00'
-      }
-    ]
+    notices: []
   },
 
   onLoad() {
@@ -64,11 +49,16 @@ Page({
 
   fetchHome() {
     this.setData({ loading: true })
+    // 最新通知拉取失败不阻塞首页主体（会议信息）展示
+    const latestNotices = request(API.appNoticeLatest, { data: { limit: 5 }, silent: true })
+      .then((body) => body)
+      .catch(() => null)
     Promise.all([
       request(API.currentMeeting),
-      request(API.appInfoList)
+      request(API.appInfoList),
+      latestNotices
     ])
-      .then(([currentRes, listRes]) => {
+      .then(([currentRes, listRes, noticeRes]) => {
         const app = getApp()
         const current = currentRes.data || null
         const all = Array.isArray(listRes.data) ? listRes.data : []
@@ -101,9 +91,19 @@ Page({
               (parseDate(b.startTime) || parseDate(b.endTime)).getTime()
           )
 
+        const noticeData = (noticeRes && noticeRes.data) || {}
+        const noticeRows = Array.isArray(noticeData.rows) ? noticeData.rows : []
+        // 首页时间列只展示 "MM-DD HH:mm"
+        const notices = noticeRows
+          .map(mapNoticeRow)
+          .filter(Boolean)
+          .map((n) => ({ ...n, time: (n.datetime || '').slice(5, 16) }))
+
         this.setData({
           loading: false,
           meetingInfo: app.globalData.meetingInfo,
+          unreadCount: noticeData.unreadCount || 0,
+          notices,
           todayMeetings: meetings.map((m) => ({
             id: m.id,
             noticeId: null,

@@ -159,3 +159,44 @@
   font-size: 26rpx;
   padding: 80rpx 0;
 }
+
+.sub-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 24rpx;
+  margin-top: 10rpx;
+}
+
+.notice-meeting {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 16rpx;
+}
+
+.receipt-badge {
+  font-size: 20rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 6rpx;
+  flex-shrink: 0;
+}
+
+.receipt-badge.attend {
+  background: #E8F7EF;
+  color: #3DAA6D;
+}
+
+.receipt-badge.leave {
+  background: #FFF6E5;
+  color: #C9A227;
+}
+
+.load-tip {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 24rpx;
+  padding: 24rpx 0 40rpx;
+}

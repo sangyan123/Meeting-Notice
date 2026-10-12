@@ -80,3 +80,30 @@
   color: var(--text);
   line-height: 1.5;
 }
+
+.loading {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 26rpx;
+  padding: 120rpx 0;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 140rpx 40rpx;
+}
+
+.empty-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12rpx;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: var(--text-muted);
+  text-align: center;
+}

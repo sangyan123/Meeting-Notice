@@ -38,7 +38,7 @@
 
     <view class="notice">
       <text class="notice-icon">!</text>
-      <text class="notice-text">设置将保存在本机，如需协助请联系秘书处</text>
+      <text class="notice-text">设置将实时同步到服务器，通知发送前会按此过滤；如需协助请联系秘书处</text>
     </view>
   </view>
 </view>

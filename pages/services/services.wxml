@@ -31,9 +31,15 @@
     <view class="card contact-card">
       <text class="contact-title">大会秘书处联系方式</text>
       <view class="contact-list">
-        <view class="contact-row" wx:for="{{contacts}}" wx:key="label">
+        <view
+          class="contact-row"
+          wx:for="{{contacts}}"
+          wx:key="label"
+          data-phone="{{item.phone}}"
+          bindtap="onContactTap"
+        >
           <text class="contact-label">{{item.label}}</text>
-          <text class="contact-value">{{item.value}}</text>
+          <text class="contact-value {{item.phone ? 'callable' : ''}}">{{item.value}}</text>
         </view>
       </view>
     </view>
