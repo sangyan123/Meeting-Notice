@@ -8,7 +8,7 @@ Page({
     userInfo: {},
     infoRows: [],
     recordMenus: [
-      { id: 'noticeRsvp', label: '通知回执记录', img: '/assets/icons/nav-bell.png' },
+      { id: 'noticeRsvp', label: '通知回执记录', img: '/assets/icons/lingdang.png' },
       { id: 'rsvp', label: '参会填报记录', img: '/assets/icons/menu-rsvp.png' },
       { id: 'leave', label: '我的请假记录', img: '/assets/icons/menu-leave.png' }
     ],

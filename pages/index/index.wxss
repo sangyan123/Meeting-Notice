@@ -35,8 +35,8 @@
 }
 
 .emblem {
-  width: 176rpx;
-  height: 176rpx;
+  width: 128rpx;
+  height: 128rpx;
   border-radius: 50%;
   flex-shrink: 0;
   margin-right: 24rpx;

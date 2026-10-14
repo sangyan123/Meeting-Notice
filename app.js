@@ -43,7 +43,7 @@ App({
   globalData: {
     userInfo: null,
     meetingInfo: {
-      org: '会务通知',
+      org: '攀会通',
       title: '',
       dateRange: ''
     },
