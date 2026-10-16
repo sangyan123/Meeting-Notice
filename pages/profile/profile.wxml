@@ -1,7 +1,7 @@
 <!--pages/profile/profile.wxml-->
 <view class="page">
   <view class="header" style="padding-top: {{headerPaddingTop}}px;">
-    <image class="header-bg" src="/assets/icons/back.png" mode="aspectFill" />
+    <image class="header-bg" src="/assets/icons/back.jpg" mode="aspectFill" />
     <view class="user-row">
       <view class="avatar">
         <text class="avatar-text">{{userInfo.avatarText || '客'}}</text>

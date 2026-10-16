@@ -1,7 +1,7 @@
 <!--pages/index/index.wxml-->
 <view class="page">
   <view class="header" style="padding-top: {{headerPaddingTop}}px;">
-    <image class="header-bg" src="/assets/icons/back.png" mode="aspectFill" />
+    <image class="header-bg" src="/assets/icons/back.jpg" mode="aspectFill" />
     <view class="header-top">
       <view class="brand">
         <view class="emblem">
