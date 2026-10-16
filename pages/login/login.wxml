@@ -1,9 +1,6 @@
 <!--pages/login/login.wxml-->
 <view class="page" style="padding-top: {{statusBarHeight}}px;">
   <view class="hero">
-    <view class="logo-wrap">
-      <image class="logo" src="/assets/icons/guohui.png" mode="aspectFit" />
-    </view>
     <text class="title">攀会通</text>
   </view>
 

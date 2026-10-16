@@ -87,6 +87,18 @@ Page({
       .catch(() => {})
   },
 
+  /** 我的记录菜单：回执记录 / 请假记录 */
+  onRecordTap(e) {
+    const id = e.currentTarget.dataset.id
+    if (id === 'noticeRsvp') {
+      wx.navigateTo({ url: '/pages/receipt-record/receipt-record' })
+      return
+    }
+    if (id === 'leave') {
+      wx.navigateTo({ url: '/pages/leave-record/leave-record' })
+    }
+  },
+
   onManageTap() {
     wx.navigateTo({ url: '/pages/services/services' })
   },

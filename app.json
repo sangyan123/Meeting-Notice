@@ -20,7 +20,8 @@
     "pages/info-form/info-form",
     "pages/info-record/info-record",
     "pages/meeting-detail/meeting-detail",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/leave-record/leave-record"
   ],
   "window": {
     "navigationBarBackgroundColor": "#1A6DFF",

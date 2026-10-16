@@ -1,36 +1,28 @@
 const { request, getToken, goLogin } = require('../../utils/request')
 const API = require('../../utils/api')
 const { ensureCurrentMeeting } = require('../../utils/meeting')
-const { formatDateTime } = require('../../utils/date')
-
-/** 请假申请状态（t_meeting_leave.status）→ 页面徽标 */
-const STATUS_MAP = {
-  0: { cls: 'pending', text: '待处理' },
-  1: { cls: 'approved', text: '已同意' },
-  2: { cls: 'rejected', text: '已驳回' }
-}
 
 Page({
   data: {
     statusBarHeight: 20,
-    activeTab: 'apply',
-    meetings: [],
-    meetingIndex: -1,
-    meetingOpen: false,
+    applicant: '',
+    startDate: '',
+    endDate: '',
     reason: '',
-    reasonLength: 0,
     canSubmit: false,
-    submitting: false,
-    records: []
+    submitting: false
   },
 
-  onLoad(options) {
+  onLoad() {
     const sys = wx.getSystemInfoSync()
+    const app = getApp()
+    const user = app.globalData.userInfo || {}
+    const applicant = user.delegation
+      ? `${user.name || ''} · ${user.delegation}`.trim()
+      : user.name || ''
     this.meetingId = null
-    this.setData({
-      statusBarHeight: sys.statusBarHeight || 20,
-      activeTab: options.tab === 'records' ? 'records' : 'apply'
-    })
+    this.setData({ statusBarHeight: sys.statusBarHeight || 20, applicant })
+    this.checkSubmit()
   },
 
   onShow() {
@@ -38,113 +30,66 @@ Page({
       goLogin()
       return
     }
-    this.loadContext()
-  },
-
-  /** 请假针对当前会议：展示会议名，并拉取本人申请历史（含审批人/意见） */
-  loadContext() {
+    // 请假针对当前进行中的会议，页面不展示会议选择
     ensureCurrentMeeting()
       .then((meeting) => {
         this.meetingId = meeting.id
-        const name = meeting.meetingName || meeting.title || '当前会议'
-        this.setData({ meetings: [name], meetingIndex: 0 })
         this.checkSubmit()
-        return request(API.appLeaveMyList, {
-          data: { meetingId: meeting.id },
-          silent: true
-        })
       })
-      .then((body) => {
-        const rows = (body.data && body.data.rows) || []
-        this.setData({ records: rows.map((row) => this.mapLeaveRow(row)) })
-      })
-      .catch((err) => {
-        if (err && err.message !== 'unauthorized') {
-          wx.showToast({ title: err.message || '加载失败', icon: 'none' })
-        }
-      })
+      .catch(() => {})
   },
 
-  mapLeaveRow(row) {
-    const status = STATUS_MAP[row.status] || STATUS_MAP[0]
-    return {
-      id: row.id,
-      title: row.meetingName || this.data.meetings[0] || '当前会议',
-      status: status.cls,
-      statusText: status.text,
-      date: formatDateTime(row.submitTime),
-      reason: row.reason || '—',
-      approver: row.approveAccountName || '—',
-      opinion: row.approveOpinion || ''
-    }
+  onStartChange(e) {
+    this.setData({ startDate: e.detail.value })
+    this.checkSubmit()
   },
 
-  onTab(e) {
-    this.setData({
-      activeTab: e.currentTarget.dataset.tab,
-      meetingOpen: false
-    })
-  },
-
-  onToggleMeeting() {
-    this.setData({ meetingOpen: !this.data.meetingOpen })
-  },
-
-  onSelectMeeting(e) {
-    this.setData({
-      meetingIndex: Number(e.currentTarget.dataset.index),
-      meetingOpen: false
-    })
+  onEndChange(e) {
+    this.setData({ endDate: e.detail.value })
     this.checkSubmit()
   },
 
   onReasonInput(e) {
-    const reason = e.detail.value
-    this.setData({
-      reason,
-      reasonLength: reason.length,
-      meetingOpen: false
-    })
+    this.setData({ reason: e.detail.value })
     this.checkSubmit()
   },
 
   checkSubmit() {
-    const canSubmit =
-      this.data.meetingIndex >= 0 && this.data.reasonLength >= 10
-    this.setData({ canSubmit })
+    const { startDate, endDate, reason } = this.data
+    const datesOk = !!(startDate && endDate && endDate >= startDate)
+    this.setData({ canSubmit: !!(datesOk && reason.trim()) })
   },
 
   onSubmit() {
-    if (!this.data.canSubmit) {
-      wx.showToast({ title: '请完善必填项', icon: 'none' })
-      return
-    }
     if (this.data.submitting) {
       return
     }
+    const { startDate, endDate, reason } = this.data
+    if (!startDate || !endDate || endDate < startDate) {
+      wx.showToast({ title: '请选择请假起止日期', icon: 'none' })
+      return
+    }
+    if (!reason.trim()) {
+      wx.showToast({ title: '请填写请假原因', icon: 'none' })
+      return
+    }
+    if (!this.meetingId) {
+      wx.showToast({ title: '当前没有进行中的会议', icon: 'none' })
+      return
+    }
+
     this.setData({ submitting: true })
     request(API.appLeaveApply, {
       method: 'POST',
-      data: { meetingId: this.meetingId, reason: this.data.reason.trim() }
+      data: {
+        meetingId: this.meetingId,
+        reason: reason.trim(),
+        startDate,
+        endDate
+      }
     })
-      .then((body) => {
-        const saved = body.data || {}
-        const record = this.mapLeaveRow({
-          id: saved.id,
-          meetingName: this.data.meetings[this.data.meetingIndex],
-          status: saved.status,
-          reason: this.data.reason,
-          submitTime: saved.submitTime
-        })
-        this.setData({
-          records: [record, ...this.data.records],
-          reason: '',
-          reasonLength: 0,
-          canSubmit: false,
-          submitting: false,
-          activeTab: 'records'
-        })
-        wx.showToast({ title: '已提交，等待审批', icon: 'success' })
+      .then(() => {
+        wx.redirectTo({ url: '/pages/leave-record/leave-record' })
       })
       .catch((err) => {
         this.setData({ submitting: false })

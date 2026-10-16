@@ -1,0 +1,126 @@
+/* pages/leave-record/leave-record.wxss */
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* ---- 顶部导航 ---- */
+.nav {
+  background: var(--primary);
+}
+
+.nav-bar {
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24rpx;
+}
+
+.nav-back {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  color: #ffffff;
+}
+
+.nav-title {
+  flex: 1;
+  text-align: center;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* 右上角「+ 新申请」胶囊 */
+.new-btn {
+  min-width: 128rpx;
+  padding: 10rpx 22rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.22);
+  font-size: 24rpx;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* ---- 记录列表 ---- */
+.body {
+  padding: 24rpx;
+}
+
+.record-card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 6rpx 20rpx rgba(31, 66, 135, 0.06);
+}
+
+.record-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18rpx;
+}
+
+.record-title {
+  flex: 1;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+  margin-right: 16rpx;
+}
+
+.record-status {
+  flex-shrink: 0;
+  font-size: 22rpx;
+  padding: 6rpx 18rpx;
+  border-radius: 999rpx;
+}
+
+.status-approved {
+  background: #E8F7EF;
+  color: #3DAA6D;
+}
+
+.status-pending {
+  background: #FFF6E5;
+  color: #C9A227;
+}
+
+.status-rejected {
+  background: #FDECEC;
+  color: #E05252;
+}
+
+.record-row {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.record-icon {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 8rpx;
+  flex-shrink: 0;
+}
+
+.record-reason {
+  font-size: 26rpx;
+  color: #555555;
+  line-height: 1.5;
+  margin-top: 12rpx;
+}
+
+.empty {
+  padding: 80rpx 0;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--text-muted);
+}
