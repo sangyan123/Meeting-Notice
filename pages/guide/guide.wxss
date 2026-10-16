@@ -1,0 +1,80 @@
+/* pages/guide/guide.wxss */
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.nav {
+  background: var(--primary);
+}
+
+.nav-bar {
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24rpx;
+}
+
+.nav-back,
+.nav-placeholder {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 56rpx;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.nav-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.body {
+  padding: 24rpx 24rpx 48rpx;
+}
+
+.section-title {
+  padding: 12rpx 8rpx 16rpx;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  padding: 10rpx 28rpx;
+  box-shadow: 0 6rpx 20rpx rgba(31, 66, 135, 0.06);
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  padding: 26rpx 0;
+  border-bottom: 1rpx solid var(--border);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: var(--primary);
+  margin: 16rpx 18rpx 0 0;
+  flex-shrink: 0;
+}
+
+.text {
+  flex: 1;
+  font-size: 27rpx;
+  line-height: 1.6;
+  color: var(--text);
+}

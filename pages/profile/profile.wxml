@@ -24,7 +24,7 @@
 
     <view class="group-label">会务管理</view>
     <view class="card menu-card">
-      <view class="menu-item" wx:for="{{manageMenus}}" wx:key="id">
+      <view class="menu-item" wx:for="{{manageMenus}}" wx:key="id" data-id="{{item.id}}" bindtap="onManageTap">
         <image class="menu-img" src="{{item.img}}" mode="aspectFit" />
         <text class="menu-label">{{item.label}}</text>
         <text class="chevron">›</text>
@@ -44,7 +44,7 @@
 
     <view class="group-label">其他</view>
     <view class="card menu-card">
-      <view class="menu-item" wx:for="{{settingMenus}}" wx:key="id">
+      <view class="menu-item" wx:for="{{settingMenus}}" wx:key="id" data-id="{{item.id}}" bindtap="onSettingTap">
         <image class="menu-img {{item.id === 'contact' ? 'menu-img-contact' : ''}}" src="{{item.img}}" mode="aspectFit" />
         <text class="menu-label">{{item.label}}</text>
         <text class="chevron">›</text>

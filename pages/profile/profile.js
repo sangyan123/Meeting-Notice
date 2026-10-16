@@ -87,6 +87,21 @@ Page({
       .catch(() => {})
   },
 
+  onManageTap() {
+    wx.navigateTo({ url: '/pages/services/services' })
+  },
+
+  onSettingTap(e) {
+    const id = e.currentTarget.dataset.id
+    if (id === 'msg') {
+      wx.navigateTo({ url: '/pages/message-setting/message-setting' })
+      return
+    }
+    if (id === 'contact') {
+      wx.navigateTo({ url: '/pages/contact-secretary/contact-secretary' })
+    }
+  },
+
   onLogout() {
     wx.showModal({
       title: '提示',

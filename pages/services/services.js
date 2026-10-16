@@ -12,12 +12,12 @@ const SWITCH_OF = {
 }
 
 const DEFAULT_SERVICES = [
-  { id: 'seat', label: '电子排座', img: '/assets/icons/grid-seat.png', bg: '#FBE9EB' },
-  { id: 'hotel', label: '住宿安排', img: '/assets/icons/svc-hotel.png', bg: '#E6ECFC' },
-  { id: 'meal', label: '用餐安排', img: '/assets/icons/svc-meal.png', bg: '#E2F6EC' },
-  { id: 'bus', label: '班车安排', img: '/assets/icons/svc-bus.png', bg: '#FEEEDF' },
-  { id: 'leave', label: '请假申请', img: '/assets/icons/svc-leave.png', bg: '#EFE7FC' },
-  { id: 'info', label: '参会信息填报', img: '/assets/icons/svc-info.png', bg: '#DDF3F6' }
+  { id: 'info', label: '参会信息填报', img: '/assets/icons/svc-info-blue.png', bg: '#DFF5F0' },
+  { id: 'guide', label: '会议指南', img: '/assets/icons/svc-guide-blue.png', bg: '#E6F0FF' },
+  { id: 'leave', label: '请假申请', img: '/assets/icons/svc-leave.png', bg: '#F0E9FF' },
+  { id: 'meal', label: '用餐安排', img: '/assets/icons/svc-meal.png', bg: '#E7F8EF' },
+  { id: 'hotel', label: '住宿安排', img: '/assets/icons/svc-hotel.png', bg: '#E8F0FF' },
+  { id: 'bus', label: '班车安排', img: '/assets/icons/svc-bus.png', bg: '#FFF0E2' }
 ]
 
 Page({
@@ -79,6 +79,10 @@ Page({
       rows.push({ label: '紧急联系', value: d.emergencyPhone || '—', phone: d.emergencyPhone || '' })
     }
     return rows
+  },
+
+  onBack() {
+    wx.navigateBack({ delta: 1 })
   },
 
   onContactTap(e) {

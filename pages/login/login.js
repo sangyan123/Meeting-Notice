@@ -41,7 +41,7 @@ Page({
     this.setData({ submitting: true })
     wx.showLoading({ title: '登录中...', mask: true })
     login(account, password)
-      .then(() => getApp().fetchUserInfo())
+      .then(() => getApp().fetchUserInfo(true))
       .then(() => {
         wx.hideLoading()
         wx.switchTab({ url: '/pages/index/index' })

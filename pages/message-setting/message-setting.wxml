@@ -10,35 +10,19 @@
 
   <view class="body">
     <view class="card">
-      <view class="setting-row">
-        <view class="setting-info">
-          <text class="setting-name">接收会议通知</text>
-          <text class="setting-desc">关闭后将不再接收任何会议消息提醒</text>
-        </view>
-        <switch checked="{{settings.master}}" color="#1A6DFF" bindchange="onMasterChange" />
-      </view>
-      <view
-        class="setting-row {{settings.master ? '' : 'disabled'}}"
-        wx:for="{{categories}}"
-        wx:key="id"
-      >
+      <view class="setting-row" wx:for="{{options}}" wx:key="id">
         <view class="setting-info">
           <text class="setting-name">{{item.name}}</text>
           <text class="setting-desc">{{item.desc}}</text>
         </view>
         <switch
           checked="{{settings[item.id]}}"
-          disabled="{{!settings.master}}"
           color="#1A6DFF"
           data-id="{{item.id}}"
-          bindchange="onCategoryChange"
+          bindchange="onToggle"
         />
       </view>
     </view>
-
-    <view class="notice">
-      <text class="notice-icon">!</text>
-      <text class="notice-text">设置将实时同步到服务器，通知发送前会按此过滤；如需协助请联系秘书处</text>
-    </view>
+    <view class="safe-bottom"></view>
   </view>
 </view>

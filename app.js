@@ -2,20 +2,34 @@ const { getToken, getUserInfo } = require('./utils/request')
 
 App({
   onLaunch() {
-    // 有历史 token 时静默恢复会话并刷新用户信息
+    // 有历史 token 时静默恢复会话并刷新用户信息；
+    // 缓存 Promise，让首页等页面能等待同一个请求完成。
     if (getToken()) {
-      this.fetchUserInfo()
+      this.userInfoPromise = this.fetchUserInfo()
     }
   },
 
   /** 拉取当前登录用户信息，映射后写入 globalData.userInfo */
-  fetchUserInfo() {
-    return getUserInfo()
+  fetchUserInfo(force = false) {
+    if (!force && this.userInfoPromise) {
+      return this.userInfoPromise
+    }
+    const request = getUserInfo()
       .then((body) => {
-        this.globalData.userInfo = this.mapUserInfo(body.user || body)
-        return this.globalData.userInfo
+        const user = this.mapUserInfo(body.user || body)
+        this.globalData.userInfo = user
+        return user
       })
-      .catch(() => null)
+      .catch(() => {
+        if (this.userInfoPromise === request) {
+          this.userInfoPromise = null
+        }
+        return null
+      })
+    if (!force) {
+      this.userInfoPromise = request
+    }
+    return request
   },
 
   /** 将后端 SysAccount/PlosUser 映射为页面使用的用户信息 */

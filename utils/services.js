@@ -1,6 +1,7 @@
 /** 会务服务子页路由 */
 const SERVICE_ROUTES = {
   seat: '/pages/seat/seat',
+  guide: '/pages/guide/guide',
   hotel: '/pages/hotel/hotel',
   meal: '/pages/meal/meal',
   bus: '/pages/bus/bus',

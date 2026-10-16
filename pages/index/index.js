@@ -40,8 +40,21 @@ Page({
       goLogin()
       return
     }
-    const user = getApp().globalData.userInfo || {}
+    const app = getApp()
+    const user = app.globalData.userInfo || {}
     this.setData({ userName: user.name || user.account || '' })
+
+    // 首页 onShow 可能早于 onLaunch 中的用户信息请求完成；
+    // 这里等待同一个 Promise，回来后立即补显示姓名。
+    if (!user.name && !user.account) {
+      const ready = app.userInfoPromise || app.fetchUserInfo()
+      ready.then((info) => {
+        if (info && (info.name || info.account) && !this.data.userName) {
+          this.setData({ userName: info.name || info.account })
+        }
+      })
+    }
+
     this.fetchHome()
   },
 
