@@ -74,8 +74,8 @@
 }
 
 .status.full {
-  background: #FDECED;
-  color: #C82439;
+  background: #EAF2FF;
+  color: #1A6DFF;
 }
 
 .status.stopped {

@@ -7,14 +7,10 @@ Page({
   data: {
     statusBarHeight: 20,
     headerPaddingTop: 20,
+    userName: '',
     meetingInfo: {},
     unreadCount: 0,
     loading: true,
-    quickNav: [
-      { id: 'schedule', label: '会议日程', img: '/assets/icons/nav-calendar.png' },
-      { id: 'guide', label: '会议指南', img: '/assets/icons/nav-guide.png' },
-      { id: 'refs', label: '参阅材料', img: '/assets/icons/nav-docs.png' }
-    ],
     todayMeetings: [],
     notices: []
   },
@@ -23,8 +19,6 @@ Page({
     const sys = wx.getSystemInfoSync()
     const app = getApp()
     const statusBarHeight = sys.statusBarHeight || 20
-    // 自定义导航下，头部内容需下移到微信胶囊按钮下方：
-    // 胶囊底边 + 胶囊与状态栏之间的间距（上下间距对称）
     let headerPaddingTop = statusBarHeight
     if (wx.getMenuButtonBoundingClientRect) {
       const rect = wx.getMenuButtonBoundingClientRect()
@@ -32,9 +26,11 @@ Page({
         headerPaddingTop = rect.bottom + (rect.top - statusBarHeight)
       }
     }
+    const user = app.globalData.userInfo || {}
     this.setData({
       statusBarHeight,
       headerPaddingTop,
+      userName: user.name || user.account || '',
       meetingInfo: app.globalData.meetingInfo
     })
   },
@@ -44,12 +40,13 @@ Page({
       goLogin()
       return
     }
+    const user = getApp().globalData.userInfo || {}
+    this.setData({ userName: user.name || user.account || '' })
     this.fetchHome()
   },
 
   fetchHome() {
     this.setData({ loading: true })
-    // 最新通知拉取失败不阻塞首页主体（会议信息）展示
     const latestNotices = request(API.appNoticeLatest, { data: { limit: 5 }, silent: true })
       .then((body) => body)
       .catch(() => null)
@@ -66,13 +63,12 @@ Page({
         if (current && current.id) {
           app.globalData.meetingId = current.id
           app.globalData.meetingInfo = {
-            org: app.globalData.meetingInfo.org,
+            ...app.globalData.meetingInfo,
             title: current.meetingName || '',
             dateRange: formatMeetingRange(current.startTime, current.endTime)
           }
         }
 
-        // 今日会议与Web会议信息页同口径：数据范围内、会期覆盖今天的会议
         const today0 = new Date()
         today0.setHours(0, 0, 0, 0)
         const tomorrow0 = today0.getTime() + 86400000
@@ -80,9 +76,7 @@ Page({
           .filter((m) => {
             const s = parseDate(m.startTime)
             const e = parseDate(m.endTime)
-            if (!s && !e) {
-              return false
-            }
+            if (!s && !e) return false
             return (s || e).getTime() < tomorrow0 && (e || s).getTime() >= today0.getTime()
           })
           .sort(
@@ -93,7 +87,6 @@ Page({
 
         const noticeData = (noticeRes && noticeRes.data) || {}
         const noticeRows = Array.isArray(noticeData.rows) ? noticeData.rows : []
-        // 首页时间列只展示 "MM-DD HH:mm"
         const notices = noticeRows
           .map(mapNoticeRow)
           .filter(Boolean)
@@ -106,7 +99,6 @@ Page({
           notices,
           todayMeetings: meetings.map((m) => ({
             id: m.id,
-            noticeId: null,
             title: m.meetingName || '未命名会议',
             time: formatMeetingTime(m.startTime, m.endTime),
             place: m.meetingLocation || '地点待定'
@@ -123,35 +115,18 @@ Page({
     wx.navigateTo({ url: '/pages/notices/notices' })
   },
 
-  onQuickNav(e) {
-    const { id } = e.currentTarget.dataset
-    if (id === 'schedule') {
-      wx.navigateTo({ url: '/pages/schedule/schedule' })
-      return
-    }
-    if (id === 'guide') {
-      // 会议指南与会务服务 Tab 内容一致，直接切 Tab
-      wx.switchTab({ url: '/pages/services/services' })
-      return
-    }
-    if (id === 'refs') {
-      // 参阅材料与会议材料 Tab 内容一致，直接切 Tab
-      wx.switchTab({ url: '/pages/materials/materials' })
-    }
+  onInfoForm() {
+    wx.navigateTo({ url: '/pages/info-form/info-form' })
   },
 
   onAllSchedule() {
-    wx.navigateTo({ url: '/pages/schedule/schedule' })
+    wx.switchTab({ url: '/pages/schedule/schedule' })
   },
 
   onMeetingDetail(e) {
     const id = Number(e.currentTarget.dataset.id)
-    if (!id) {
-      return
-    }
-    wx.navigateTo({
-      url: `/pages/meeting-detail/meeting-detail?id=${id}`
-    })
+    if (!id) return
+    wx.navigateTo({ url: `/pages/meeting-detail/meeting-detail?id=${id}` })
   },
 
   onAllNotices() {
@@ -160,8 +135,6 @@ Page({
 
   onNoticeTap(e) {
     const { id } = e.currentTarget.dataset
-    wx.navigateTo({
-      url: `/pages/notice-detail/notice-detail?id=${id}`
-    })
+    wx.navigateTo({ url: `/pages/notice-detail/notice-detail?id=${id}` })
   }
 })

@@ -1,16 +1,16 @@
 <!--pages/index/index.wxml-->
 <view class="page">
-  <!-- 顶部红头 -->
   <view class="header" style="padding-top: {{headerPaddingTop}}px;">
+    <image class="header-bg" src="/assets/icons/back.png" mode="aspectFill" />
     <view class="header-top">
       <view class="brand">
         <view class="emblem">
-          <image class="emblem-img" src="/assets/icons/logo.png" mode="aspectFit" />
+          <image class="emblem-img" src="/assets/icons/logo-white.png" mode="aspectFit" />
         </view>
         <view class="brand-text">
-          <text class="brand-org">{{meetingInfo.org}}</text>
-          <text class="brand-title">{{meetingInfo.title}}</text>
-          <text class="brand-date">{{meetingInfo.dateRange}}</text>
+          <text class="brand-user">{{userName || '代表'}}</text>
+          <text class="brand-org">{{meetingInfo.org || '攀枝花市人民政府'}}</text>
+          <text class="brand-date">{{meetingInfo.dateRange || meetingInfo.month || ''}}</text>
         </view>
       </view>
       <view class="bell-wrap" bindtap="onBellTap">
@@ -18,77 +18,77 @@
         <view class="bell-badge" wx:if="{{unreadCount > 0}}">{{unreadCount}}</view>
       </view>
     </view>
-
-    <view class="quick-nav">
-      <view class="quick-item" wx:for="{{quickNav}}" wx:key="id" data-id="{{item.id}}" bindtap="onQuickNav">
-        <image class="quick-img" src="{{item.img}}" mode="aspectFit" />
-        <text class="quick-label">{{item.label}}</text>
-      </view>
-    </view>
     <view class="header-line"></view>
   </view>
 
-  <!-- 今日会议 -->
-  <view class="section-header">
-    <view class="section-title">今日会议</view>
-    <view class="section-link" bindtap="onAllSchedule">全部日程 ></view>
-  </view>
-  <view class="card">
-    <view
-      class="meeting-item"
-      wx:for="{{todayMeetings}}"
-      wx:key="id"
-      data-id="{{item.id}}"
-      bindtap="onMeetingDetail"
-    >
-      <view class="meeting-main">
-        <view class="dot"></view>
-        <view class="meeting-info">
-          <text class="meeting-title">{{item.title}}</text>
-          <view class="meeting-meta">
-            <view class="meta-line">
-              <image class="meta-icon" src="/assets/icons/meta-clock.png" mode="aspectFit" />
-              <text>{{item.time}}</text>
-            </view>
-            <view class="meta-line">
-              <image class="meta-icon" src="/assets/icons/meta-location.png" mode="aspectFit" />
-              <text>{{item.place}}</text>
-            </view>
-          </view>
-        </view>
-      </view>
-      <view class="detail-btn" catchtap="onMeetingDetail" data-id="{{item.id}}">详情</view>
-    </view>
-    <view class="empty-tip" wx:if="{{!loading && todayMeetings.length === 0}}">今日暂无会议安排</view>
-  </view>
-
-  <!-- 最新通知 -->
-  <view class="section-header">
-    <view class="section-title">最新通知</view>
-    <view class="section-link" bindtap="onAllNotices">查看全部 ></view>
-  </view>
-  <view class="card notice-card">
-    <view
-      class="notice-item"
-      wx:for="{{notices}}"
-      wx:key="id"
-      data-id="{{item.id}}"
-      bindtap="onNoticeTap"
-    >
-      <view class="notice-main">
-        <view class="dot"></view>
-        <view class="notice-info">
-          <text class="notice-title">{{item.title}}</text>
-          <view class="notice-meta">
-            <text class="tag tag-{{item.tagType}}">{{item.tag}}</text>
-            <text class="notice-time">{{item.time}}</text>
-          </view>
-        </view>
+  <view class="body">
+    <view class="form-entry" bindtap="onInfoForm">
+      <view class="entry-left">
+        <image class="entry-icon" src="/assets/icons/svc-info-blue.png" mode="aspectFit" />
+        <text class="entry-label">参会信息填报</text>
       </view>
       <text class="chevron">›</text>
     </view>
-    <view class="empty-tip" wx:if="{{!loading && notices.length === 0}}">暂无通知</view>
-  </view>
 
+    <view class="section-header">
+      <view class="section-title">今日会议</view>
+      <view class="section-link" bindtap="onAllSchedule">全部日程 ›</view>
+    </view>
+    <view class="card">
+      <view
+        class="meeting-item"
+        wx:for="{{todayMeetings}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onMeetingDetail"
+      >
+        <view class="meeting-main">
+          <view class="dot"></view>
+          <view class="meeting-info">
+            <text class="meeting-title">{{item.title}}</text>
+            <view class="meeting-meta">
+              <view class="meta-line">
+                <image class="meta-icon" src="/assets/icons/meta-clock.png" mode="aspectFit" />
+                <text>{{item.time}}</text>
+              </view>
+              <view class="meta-line">
+                <image class="meta-icon" src="/assets/icons/meta-location.png" mode="aspectFit" />
+                <text>{{item.place}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="detail-btn" catchtap="onMeetingDetail" data-id="{{item.id}}">详情</view>
+      </view>
+      <view class="empty-tip" wx:if="{{!loading && todayMeetings.length === 0}}">今日暂无会议安排</view>
+    </view>
+
+    <view class="section-header">
+      <view class="section-title">最新通知</view>
+      <view class="section-link" bindtap="onAllNotices">查看全部 ›</view>
+    </view>
+    <view class="card notice-card">
+      <view
+        class="notice-item"
+        wx:for="{{notices}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onNoticeTap"
+      >
+        <view class="notice-main">
+          <view class="dot"></view>
+          <view class="notice-info">
+            <text class="notice-title">{{item.title}}</text>
+            <view class="notice-meta">
+              <text class="tag tag-{{item.tagType}}">{{item.tag}}</text>
+              <text class="notice-time">{{item.time}}</text>
+            </view>
+          </view>
+        </view>
+        <text class="chevron">›</text>
+      </view>
+      <view class="empty-tip" wx:if="{{!loading && notices.length === 0}}">暂无通知</view>
+    </view>
+  </view>
   <view class="safe-bottom"></view>
 </view>

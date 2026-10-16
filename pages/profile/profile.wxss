@@ -5,32 +5,43 @@
 }
 
 .header {
-  background: var(--primary);
-  padding: 0 40rpx 48rpx;
+  position: relative;
+  overflow: hidden;
+  background-color: #155FE6;
+  padding: 24rpx 40rpx 56rpx;
+}
+
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 .user-row {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
-  padding-top: 24rpx;
 }
 
 .avatar {
-  width: 120rpx;
-  height: 120rpx;
+  width: 116rpx;
+  height: 116rpx;
   border-radius: 50%;
-  background: var(--primary);
-  border: 4rpx solid #D4AF37;
+  background: rgba(255, 255, 255, 0.2);
+  border: 4rpx solid rgba(255, 255, 255, 0.48);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   margin-right: 28rpx;
-  box-shadow: 0 0 0 4rpx rgba(212, 175, 55, 0.25);
 }
 
 .avatar-text {
-  font-size: 48rpx;
+  font-size: 46rpx;
   color: #ffffff;
   font-weight: 600;
 }
@@ -38,23 +49,24 @@
 .user-info {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .user-name {
   font-size: 40rpx;
   font-weight: 700;
   color: #ffffff;
-  margin-bottom: 10rpx;
+  margin-bottom: 8rpx;
 }
 
 .user-meta {
-  font-size: 24rpx;
-  color: rgba(255, 255, 255, 0.85);
-  line-height: 1.5;
+  font-size: 23rpx;
+  color: rgba(255, 255, 255, 0.86);
+  line-height: 1.55;
 }
 
 .body {
-  margin-top: -20rpx;
+  margin-top: -24rpx;
   padding: 0 24rpx 48rpx;
   position: relative;
   z-index: 1;
@@ -62,7 +74,7 @@
 
 .info-card {
   margin: 0;
-  padding: 8rpx 28rpx;
+  padding: 6rpx 28rpx;
 }
 
 .info-row {
@@ -70,7 +82,7 @@
   align-items: flex-start;
   justify-content: space-between;
   padding: 28rpx 0;
-  border-bottom: 1rpx solid #F0EEE8;
+  border-bottom: 1rpx solid var(--border);
 }
 
 .info-row:last-child {
@@ -92,16 +104,34 @@
   flex: 1;
 }
 
+.group-label {
+  margin: 30rpx 8rpx 16rpx;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
 .menu-card {
-  margin: 24rpx 0 0;
-  padding: 0 8rpx 0 28rpx;
+  margin: 0;
+  padding: 0 8rpx 0 24rpx;
+}
+
+.record-list {
+  display: block;
+}
+
+.record-item {
+  margin-bottom: 16rpx;
+}
+
+.record-item:last-child {
+  margin-bottom: 0;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
-  padding: 30rpx 20rpx 30rpx 0;
-  border-bottom: 1rpx solid #F0EEE8;
+  padding: 28rpx 20rpx 28rpx 0;
+  border-bottom: 1rpx solid var(--border);
 }
 
 .menu-item:last-child {
@@ -109,34 +139,28 @@
 }
 
 .menu-img {
-  width: 84rpx;
-  height: 84rpx;
-  margin-right: 24rpx;
+  width: 52rpx;
+  height: 52rpx;
+  margin-right: 22rpx;
   flex-shrink: 0;
 }
 
-/* lingdang.png 自带更多透明留白，按可见图标区域补偿尺寸 */
-.menu-img-notice {
-  transform: scale(1.13, 1.08);
-}
-
-
 .menu-label {
   flex: 1;
+  text-align: center;
   font-size: 28rpx;
   color: var(--text);
-  text-align: center;
 }
 
 .logout-btn {
-  margin-top: 32rpx;
+  margin-top: 34rpx;
   background: #ffffff;
   border-radius: 20rpx;
-  height: 96rpx;
+  height: 94rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 30rpx;
-  color: #888888;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+  color: var(--text-secondary);
+  box-shadow: 0 6rpx 20rpx rgba(31, 66, 135, 0.06);
 }

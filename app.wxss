@@ -1,14 +1,15 @@
 /**app.wxss — 全局样式**/
 page {
-  --primary: #B31A21;
-  --primary-dark: #9A151C;
-  --bg: #F6F4EE;
+  --primary: #1A6DFF;
+  --primary-dark: #155FE6;
+  --primary-light: #EAF2FF;
+  --bg: #F3F7FF;
   --card: #ffffff;
-  --text: #222222;
-  --text-secondary: #888888;
-  --text-muted: #AAAAAA;
-  --border: #F0EEE8;
-  --gold: #D4AF37;
+  --text: #1F2A37;
+  --text-secondary: #708095;
+  --text-muted: #9AA6B6;
+  --border: #EDF2F9;
+  --gold: #FFC845;
   background-color: var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
@@ -31,7 +32,7 @@ view, text, image, button, scroll-view {
   display: flex;
   align-items: center;
   font-size: 32rpx;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text);
 }
 
@@ -54,11 +55,11 @@ view, text, image, button, scroll-view {
   background: var(--card);
   border-radius: 20rpx;
   overflow: hidden;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+  box-shadow: 0 6rpx 20rpx rgba(31, 66, 135, 0.06);
 }
 
 .chevron {
-  color: #CCCCCC;
+  color: #C3CDDA;
   font-size: 28rpx;
   margin-left: 12rpx;
 }

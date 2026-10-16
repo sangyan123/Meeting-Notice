@@ -62,7 +62,7 @@
 
 .zone-name {
   font-size: 28rpx;
-  color: #C82439;
+  color: #1A6DFF;
   font-weight: 600;
 }
 

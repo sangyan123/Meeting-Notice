@@ -14,6 +14,10 @@
     <!-- 基本信息 -->
     <view class="hero-card">
       <view class="hero-title-row">
+        <text
+          class="status-tag status-{{meeting.statusType}}"
+          wx:if="{{meeting.statusText}}"
+        >{{meeting.statusText}}</text>
         <text class="hero-title">{{meeting.title}}</text>
         <text class="type-tag" wx:if="{{meeting.type}}">{{meeting.type}}</text>
       </view>

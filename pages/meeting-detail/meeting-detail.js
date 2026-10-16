@@ -2,6 +2,13 @@ const { request, getToken, goLogin } = require('../../utils/request')
 const API = require('../../utils/api')
 const { formatMeetingRange } = require('../../utils/date')
 
+/** 会议状态：与后端 t_meeting_main.status 保持一致 */
+const STATUS = {
+  0: { text: '预备', type: 'pending' },
+  1: { text: '发布', type: 'published' },
+  2: { text: '结束', type: 'ended' }
+}
+
 Page({
   data: {
     statusBarHeight: 20,
@@ -72,6 +79,8 @@ Page({
     this.setData({
       meeting: {
         title: m.meetingName || '未命名会议',
+        statusText: (STATUS[Number(m.status)] || {}).text || '',
+        statusType: (STATUS[Number(m.status)] || {}).type || '',
         type: m.meetingTypeName || '',
         time: formatMeetingRange(m.startTime, m.endTime) || '时间待定',
         location: m.meetingLocation || '地点待定'

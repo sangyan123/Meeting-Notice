@@ -5,25 +5,37 @@ const { ensureCurrentMeeting } = require('../../utils/meeting')
 Page({
   data: {
     statusBarHeight: 20,
+    headerPaddingTop: 20,
     userInfo: {},
     infoRows: [],
+    manageMenus: [
+      { id: 'manage', label: '会务管理', img: '/assets/icons/svc-info-blue.png' }
+    ],
     recordMenus: [
-      { id: 'noticeRsvp', label: '通知回执记录', img: '/assets/icons/lingdang.png' },
-      { id: 'rsvp', label: '参会填报记录', img: '/assets/icons/menu-rsvp.png' },
-      { id: 'leave', label: '我的请假记录', img: '/assets/icons/menu-leave.png' }
+      { id: 'noticeRsvp', label: '我的回执记录', img: '/assets/icons/menu-rsvp-blue.png' },
+      { id: 'leave', label: '我的请假记录', img: '/assets/icons/menu-leave-blue.png' }
     ],
     settingMenus: [
-      { id: 'msg', label: '消息设置', img: '/assets/icons/menu-setting.png' },
-      { id: 'guide', label: '会议指南', img: '/assets/icons/menu-guide.png' },
-      { id: 'contact', label: '联系秘书处', img: '/assets/icons/menu-phone.png' }
+      { id: 'msg', label: '消息设置', img: '/assets/icons/menu-setting-blue.png' },
+      { id: 'contact', label: '联系秘书处', img: '/assets/icons/menu-phone-blue.png' }
     ]
   },
 
   onLoad() {
     const sys = wx.getSystemInfoSync()
-    const user = getApp().globalData.userInfo || {}
+    const app = getApp()
+    const user = app.globalData.userInfo || {}
+    const statusBarHeight = sys.statusBarHeight || 20
+    let headerPaddingTop = statusBarHeight + 24
+    if (wx.getMenuButtonBoundingClientRect) {
+      const rect = wx.getMenuButtonBoundingClientRect()
+      if (rect && rect.bottom) {
+        headerPaddingTop = rect.bottom + (rect.top - statusBarHeight)
+      }
+    }
     this.setData({
-      statusBarHeight: sys.statusBarHeight || 20,
+      statusBarHeight,
+      headerPaddingTop,
       userInfo: user,
       infoRows: this.buildInfoRows(user)
     })
@@ -75,37 +87,12 @@ Page({
       .catch(() => {})
   },
 
-  onMenuTap(e) {
-    const id = e.currentTarget.dataset.id
-    if (id === 'noticeRsvp') {
-      wx.navigateTo({ url: '/pages/receipt-record/receipt-record' })
-      return
-    }
-    if (id === 'rsvp') {
-      wx.navigateTo({ url: '/pages/info-record/info-record' })
-      return
-    }
-    if (id === 'leave') {
-      wx.navigateTo({ url: '/pages/leave/leave?tab=records' })
-      return
-    }
-    // 会议指南、联系秘书处均与会务服务 Tab 内容一致，直接切 Tab
-    if (id === 'guide' || id === 'contact') {
-      wx.switchTab({ url: '/pages/services/services' })
-      return
-    }
-    if (id === 'msg') {
-      wx.navigateTo({ url: '/pages/message-setting/message-setting' })
-    }
-  },
-
   onLogout() {
     wx.showModal({
       title: '提示',
       content: '确认退出登录？',
       success(res) {
         if (res.confirm) {
-          // 同时通知服务端销毁会话，避免旧 token 继续有效
           serverLogout()
         }
       }

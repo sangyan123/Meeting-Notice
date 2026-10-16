@@ -1,20 +1,20 @@
 <!--pages/profile/profile.wxml-->
 <view class="page">
-  <view class="header" style="padding-top: {{statusBarHeight}}px;">
+  <view class="header" style="padding-top: {{headerPaddingTop}}px;">
+    <image class="header-bg" src="/assets/icons/back.png" mode="aspectFill" />
     <view class="user-row">
       <view class="avatar">
-        <text class="avatar-text">{{userInfo.avatarText}}</text>
+        <text class="avatar-text">{{userInfo.avatarText || '客'}}</text>
       </view>
       <view class="user-info">
-        <text class="user-name">{{userInfo.name}}</text>
-        <text class="user-meta">代表编号 {{userInfo.delegateNo}}</text>
-        <text class="user-meta">{{userInfo.delegation}}</text>
+        <text class="user-name">{{userInfo.name || '未登录'}}</text>
+        <text class="user-meta">代表编号 {{userInfo.delegateNo || userInfo.account || '—'}}</text>
+        <text class="user-meta">{{userInfo.delegation || userInfo.deptName || userInfo.company || '—'}}</text>
       </view>
     </view>
   </view>
 
   <view class="body">
-    <!-- 代表信息 -->
     <view class="card info-card">
       <view class="info-row" wx:for="{{infoRows}}" wx:key="label">
         <text class="info-label">{{item.label}}</text>
@@ -22,31 +22,30 @@
       </view>
     </view>
 
-    <!-- 记录入口 -->
+    <view class="group-label">会务管理</view>
     <view class="card menu-card">
-      <view
-        class="menu-item"
-        wx:for="{{recordMenus}}"
-        wx:key="id"
-        data-id="{{item.id}}"
-        bindtap="onMenuTap"
-      >
-        <image class="menu-img {{item.id === 'noticeRsvp' ? 'menu-img-notice' : ''}}" src="{{item.img}}" mode="aspectFit" />
+      <view class="menu-item" wx:for="{{manageMenus}}" wx:key="id">
+        <image class="menu-img" src="{{item.img}}" mode="aspectFit" />
         <text class="menu-label">{{item.label}}</text>
         <text class="chevron">›</text>
       </view>
     </view>
 
-    <!-- 设置入口 -->
+    <view class="group-label">我的记录</view>
+    <view class="record-list">
+      <view class="card menu-card record-item" wx:for="{{recordMenus}}" wx:key="id">
+        <view class="menu-item">
+          <image class="menu-img" src="{{item.img}}" mode="aspectFit" />
+          <text class="menu-label">{{item.label}}</text>
+          <text class="chevron">›</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="group-label">其他</view>
     <view class="card menu-card">
-      <view
-        class="menu-item"
-        wx:for="{{settingMenus}}"
-        wx:key="id"
-        data-id="{{item.id}}"
-        bindtap="onMenuTap"
-      >
-        <image class="menu-img {{item.id === 'noticeRsvp' ? 'menu-img-notice' : ''}}" src="{{item.img}}" mode="aspectFit" />
+      <view class="menu-item" wx:for="{{settingMenus}}" wx:key="id">
+        <image class="menu-img {{item.id === 'contact' ? 'menu-img-contact' : ''}}" src="{{item.img}}" mode="aspectFit" />
         <text class="menu-label">{{item.label}}</text>
         <text class="chevron">›</text>
       </view>

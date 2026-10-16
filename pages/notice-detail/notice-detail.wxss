@@ -67,8 +67,8 @@
 }
 
 .tag-mid {
-  background: #FDECED;
-  color: #C82439;
+  background: #EAF2FF;
+  color: #1A6DFF;
 }
 
 .tag-post {
@@ -107,7 +107,7 @@
 .divider {
   height: 2rpx;
   margin: 0 48rpx;
-  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+  background: linear-gradient(90deg, transparent, #FFC845, transparent);
 }
 
 .content {

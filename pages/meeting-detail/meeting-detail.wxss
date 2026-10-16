@@ -2,6 +2,11 @@
 .page {
   min-height: 100vh;
   padding-bottom: 40rpx;
+  background: var(--bg);
+}
+
+.nav {
+  background: var(--primary);
 }
 
 .nav-bar {
@@ -18,7 +23,7 @@
   align-items: center;
   justify-content: center;
   font-size: 48rpx;
-  color: var(--text);
+  color: #ffffff;
 }
 
 .nav-title {
@@ -26,7 +31,7 @@
   text-align: center;
   font-size: 34rpx;
   font-weight: 600;
-  color: var(--text);
+  color: #ffffff;
 }
 
 .nav-placeholder {
@@ -62,11 +67,34 @@
   line-height: 1.4;
 }
 
+.status-tag {
+  flex-shrink: 0;
+  margin-top: 4rpx;
+  padding: 6rpx 16rpx;
+  font-size: 22rpx;
+  border-radius: 8rpx;
+}
+
+.status-pending {
+  background: #FFF6E5;
+  color: #C9A227;
+}
+
+.status-published {
+  background: #EAF2FF;
+  color: var(--primary);
+}
+
+.status-ended {
+  background: #F1F5FB;
+  color: var(--text-secondary);
+}
+
 .type-tag {
   flex-shrink: 0;
   margin-top: 4rpx;
   padding: 6rpx 16rpx;
-  background: #FDECED;
+  background: #EAF2FF;
   color: var(--primary);
   font-size: 22rpx;
   border-radius: 8rpx;

@@ -15,7 +15,7 @@
           <text class="setting-name">接收会议通知</text>
           <text class="setting-desc">关闭后将不再接收任何会议消息提醒</text>
         </view>
-        <switch checked="{{settings.master}}" color="#B31A21" bindchange="onMasterChange" />
+        <switch checked="{{settings.master}}" color="#1A6DFF" bindchange="onMasterChange" />
       </view>
       <view
         class="setting-row {{settings.master ? '' : 'disabled'}}"
@@ -29,7 +29,7 @@
         <switch
           checked="{{settings[item.id]}}"
           disabled="{{!settings.master}}"
-          color="#B31A21"
+          color="#1A6DFF"
           data-id="{{item.id}}"
           bindchange="onCategoryChange"
         />

@@ -43,7 +43,7 @@ App({
   globalData: {
     userInfo: null,
     meetingInfo: {
-      org: '攀会通',
+      org: '攀枝花市人民政府',
       title: '',
       dateRange: ''
     },
