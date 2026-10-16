@@ -8,6 +8,6 @@
  * 并在小程序后台配置 request 合法域名 + downloadFile 合法域名。
  */
 module.exports = {
-  baseUrl: 'http://117.172.73.111:8888'
-  // baseUrl: 'http://36.139.203.131:8888'
+  // baseUrl: 'http://117.172.73.111:8888'
+  baseUrl: 'http://36.139.203.131:8888'
 }
