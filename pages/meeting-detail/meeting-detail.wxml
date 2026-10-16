@@ -11,63 +11,55 @@
   <view class="loading" wx:if="{{loading}}">加载中...</view>
 
   <block wx:if="{{!loading && meeting}}">
-    <!-- 基本信息 -->
-    <view class="hero-card">
-      <view class="hero-title-row">
-        <text
-          class="status-tag status-{{meeting.statusType}}"
-          wx:if="{{meeting.statusText}}"
-        >{{meeting.statusText}}</text>
-        <text class="hero-title">{{meeting.title}}</text>
-        <text class="type-tag" wx:if="{{meeting.type}}">{{meeting.type}}</text>
+    <!-- 蓝色头图：状态 + 标题 + 时间地点 -->
+    <view class="hero">
+      <view class="status-pill status-{{meeting.statusType}}" wx:if="{{meeting.statusText}}">{{meeting.statusText}}</view>
+      <text class="hero-title">{{meeting.title}}</text>
+      <view class="hero-meta">
+        <view class="meta-icon meta-icon-date"></view>
+        <text class="hero-meta-text">{{meeting.dateText}} {{meeting.timeText}}</text>
       </view>
-      <view class="meta-list">
-        <view class="meta-row">
-          <image class="meta-icon" src="/assets/icons/date.png" mode="aspectFit" />
-          <text class="meta-label">会议时间</text>
-          <text class="meta-value">{{meeting.time}}</text>
-        </view>
-        <view class="meta-row">
-          <image class="meta-icon" src="/assets/icons/meta-location.png" mode="aspectFit" />
-          <text class="meta-label">会议地点</text>
-          <text class="meta-value">{{meeting.location}}</text>
-        </view>
+      <view class="hero-meta">
+        <view class="meta-icon meta-icon-location"></view>
+        <text class="hero-meta-text">{{meeting.location}}</text>
       </view>
-      <view class="stats-row">
-        <view class="stat" wx:for="{{stats}}" wx:key="id">
-          <text class="stat-num">{{item.value}}</text>
-          <text class="stat-label">{{item.label}}</text>
+    </view>
+
+    <!-- 议题 -->
+    <view class="section" wx:if="{{topics.length > 0}}">
+      <text class="section-label">议题</text>
+      <view class="topic-card">
+        <view class="topic-row" wx:for="{{topics}}" wx:key="id">
+          <view class="topic-index">{{index + 1}}</view>
+          <text class="topic-name">{{item.name}}</text>
         </view>
       </view>
     </view>
 
-    <!-- 资料分类 -->
-    <view class="section" wx:if="{{tabs.length > 0}}">
-      <view class="section-title">资料分类</view>
-      <view class="tab-chips">
-        <view class="tab-chip" wx:for="{{tabs}}" wx:key="id">{{item.name}}</view>
-      </view>
-    </view>
-
-    <!-- 参会人员 -->
-    <view class="section" wx:if="{{persons.length > 0}}">
-      <view class="section-title">参会人员</view>
-      <view class="card">
-        <view class="person-row" wx:for="{{persons}}" wx:key="id">
-          <view class="avatar">{{item.avatarText}}</view>
-          <view class="person-main">
-            <text class="person-name">{{item.name}}</text>
-            <text class="person-sub" wx:if="{{item.unit || item.position}}">{{item.unit}}{{item.position ? ' · ' + item.position : ''}}</text>
-          </view>
-          <view class="person-right" wx:if="{{item.seat || item.group}}">
-            <text class="person-seat" wx:if="{{item.seat}}">{{item.seat}}</text>
-            <text class="person-group" wx:if="{{item.group}}">{{item.group}}</text>
-          </view>
+    <!-- 会议信息 -->
+    <view class="section">
+      <text class="section-label">会议信息</text>
+      <view class="info-card">
+        <view class="info-row">
+          <text class="info-label">会议名称</text>
+          <text class="info-value">{{meeting.title}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">会议日期</text>
+          <text class="info-value">{{meeting.dateText}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">会议时间</text>
+          <text class="info-value">{{meeting.timeText}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">会议地点</text>
+          <text class="info-value">{{meeting.location}}</text>
         </view>
       </view>
     </view>
 
-    <view class="empty" wx:if="{{tabs.length === 0 && persons.length === 0}}">暂无更多会议信息</view>
+    <view class="empty" wx:if="{{topics.length === 0}}">暂无议题信息</view>
   </block>
 
   <view class="safe-bottom"></view>

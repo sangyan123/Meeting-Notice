@@ -1,170 +1,41 @@
 @import "../../styles/service-page.wxss";
 
-.section-title {
-  display: block;
-  font-size: 26rpx;
-  font-weight: 600;
-  color: var(--primary);
-  margin-bottom: 20rpx;
+/* ---- 顶部导航 ---- */
+.nav {
+  background: var(--primary);
 }
 
-.section-title.muted {
-  color: var(--text-secondary);
-}
-
-.field {
-  margin-bottom: 24rpx;
-}
-
-.field:last-child {
-  margin-bottom: 0;
-}
-
-.dropdown-field {
-  position: relative;
-  z-index: 20;
-  overflow: visible;
-}
-
-.field-label {
-  display: block;
-  font-size: 26rpx;
-  color: var(--text);
-  margin-bottom: 12rpx;
-}
-
-.req {
-  color: var(--primary);
-}
-
-.input {
-  border: 1rpx solid #E5E5E5;
-  border-radius: 12rpx;
-  padding: 20rpx 24rpx;
-  font-size: 26rpx;
-  background: #FAFAFA;
-}
-
-.input.readonly {
-  color: #666666;
-  background: #F3F1EA;
-}
-
-.dropdown {
-  position: relative;
-  z-index: 30;
-}
-
-.dropdown-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1rpx solid #E5E5E5;
-  border-radius: 12rpx;
-  padding: 22rpx 24rpx;
-  font-size: 26rpx;
-  color: var(--text);
-  background: #ffffff;
-}
-
-.dropdown-trigger.placeholder {
-  color: #AAAAAA;
-}
-
-.dropdown-trigger.open {
-  border-color: var(--primary);
-}
-
-.dropdown-panel {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% + 4rpx);
-  background: #ffffff;
-  border: 1rpx solid #D0D0D0;
-  border-radius: 4rpx;
-  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
-  z-index: 40;
-  overflow: hidden;
-}
-
-.dropdown-item {
-  padding: 22rpx 24rpx;
-  font-size: 26rpx;
-  color: #666666;
-  border-bottom: 1rpx solid #F0EEE8;
-}
-
-.dropdown-item:last-child {
-  border-bottom: none;
-}
-
-.dropdown-item.active {
-  background: #666666;
-  color: #ffffff;
-}
-
-.picker {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1rpx solid #E5E5E5;
-  border-radius: 12rpx;
-  padding: 22rpx 24rpx;
-  font-size: 26rpx;
-  color: var(--text);
-  background: #FAFAFA;
-}
-
-.picker.placeholder {
-  color: #AAAAAA;
-}
-
-.arrow {
-  color: #CCCCCC;
-  font-size: 22rpx;
-  margin-left: 16rpx;
-  flex-shrink: 0;
-}
-
-.radio-item {
-  display: flex;
-  align-items: center;
-  padding: 16rpx 0;
-  font-size: 26rpx;
-  color: var(--text);
-}
-
-.radio-item radio {
-  margin-right: 12rpx;
-  transform: scale(0.9);
-}
-
-.textarea {
-  width: 100%;
-  min-height: 160rpx;
-  border: 1rpx solid #E5E5E5;
-  border-radius: 12rpx;
-  padding: 20rpx 24rpx;
-  font-size: 26rpx;
-  background: #FAFAFA;
-  box-sizing: border-box;
-}
-
-.submit-btn {
-  margin: 8rpx 0 48rpx;
+.nav-bar {
   height: 88rpx;
-  border-radius: 16rpx;
-  background: #C8C4BB;
-  color: #ffffff;
-  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24rpx;
+}
+
+.nav-back,
+.nav-placeholder {
+  width: 64rpx;
+  height: 64rpx;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.submit-btn.ready {
-  background: var(--primary);
+.back-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.nav-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* ---- 页面主体 ---- */
+.body {
+  padding: 24rpx;
 }
 
 .warn-banner {
@@ -178,23 +49,136 @@
   margin-bottom: 24rpx;
 }
 
+/* ---- 单张表单卡片 ---- */
+.form-card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  padding: 12rpx 32rpx;
+  box-shadow: 0 6rpx 20rpx rgba(31, 66, 135, 0.06);
+}
+
+.field {
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #F0F3F8;
+}
+
+.field:last-child {
+  border-bottom: none;
+}
+
+.field-label {
+  display: block;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-bottom: 14rpx;
+}
+
+.field-value {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+/* ---- 日期选择行 ---- */
+.picker-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.picker-row.placeholder {
+  color: #B9C2CE;
+  font-weight: 400;
+}
+
+.date-icon {
+  width: 32rpx;
+  height: 32rpx;
+  flex-shrink: 0;
+}
+
+/* ---- 交通方式胶囊按钮 ---- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.chip {
+  padding: 12rpx 36rpx;
+  border: 1rpx solid #D8DFE8;
+  border-radius: 40rpx;
+  font-size: 26rpx;
+  color: var(--text);
+  background: #ffffff;
+  transition: all 0.15s ease;
+}
+
+.chip.active {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* ---- 住宿开关行 ---- */
+.switch-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.switch-field .field-label {
+  margin-bottom: 0;
+}
+
+.hotel-switch {
+  transform: scale(0.9);
+}
+
+/* ---- 提交按钮 ---- */
 .submitted-tip {
   font-size: 24rpx;
   color: var(--text-muted);
   text-align: center;
-  margin-bottom: 16rpx;
+  margin: 16rpx 0;
 }
 
-.travel-card {
-  overflow: visible;
-  position: relative;
-  z-index: 10;
+.submit-btn {
+  margin-top: 32rpx;
+  height: 92rpx;
+  border-radius: 20rpx;
+  background: #C8C4BB;
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
 }
 
+.submit-btn.ready {
+  background: var(--primary);
+}
 
-.date-icon {
-  width: 28rpx;
-  height: 28rpx;
-  margin-left: 16rpx;
-  flex-shrink: 0;
+/* 纸飞机图标（内嵌 SVG） */
+.btn-icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 12rpx;
+  background-color: #ffffff;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M2.01 21L23 12 2.01 3 2 10l15 2-15 2z'/></svg>");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M2.01 21L23 12 2.01 3 2 10l15 2-15 2z'/></svg>");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
 }

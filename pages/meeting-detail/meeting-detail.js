@@ -1,12 +1,35 @@
 const { request, getToken, goLogin } = require('../../utils/request')
 const API = require('../../utils/api')
-const { formatMeetingRange } = require('../../utils/date')
+const { parseDate, formatMeetingTime } = require('../../utils/date')
 
-/** 会议状态：与后端 t_meeting_main.status 保持一致 */
+/** 会议状态：与后端 t_meeting_main.status 保持一致（1=发布后未开始，对外展示"待开"） */
 const STATUS = {
   0: { text: '预备', type: 'pending' },
-  1: { text: '发布', type: 'published' },
-  2: { text: '结束', type: 'ended' }
+  1: { text: '待开', type: 'pending' },
+  2: { text: '已结束', type: 'ended' }
+}
+
+/** 短日期："10月20日"；跨日 "10月20日—21日" */
+function shortDate(d) {
+  return `${d.getMonth() + 1}月${d.getDate()}日`
+}
+
+function formatDateText(start, end) {
+  const s = parseDate(start)
+  const e = parseDate(end)
+  if (!s && !e) {
+    return '日期待定'
+  }
+  if (s && e) {
+    const sameDay =
+      s.getFullYear() === e.getFullYear() &&
+      s.getMonth() === e.getMonth() &&
+      s.getDate() === e.getDate()
+    if (!sameDay) {
+      return `${shortDate(s)}—${shortDate(e)}`
+    }
+  }
+  return shortDate(s || e)
 }
 
 Page({
@@ -14,9 +37,7 @@ Page({
     statusBarHeight: 20,
     loading: true,
     meeting: null,
-    stats: [],
-    tabs: [],
-    persons: []
+    topics: []
   },
 
   onLoad(options) {
@@ -39,9 +60,13 @@ Page({
       return
     }
     this.setData({ loading: true })
-    request(API.meetingInfo(this.meetingId))
-      .then((res) => {
-        this.applyData(res.data || {})
+    // 议题列表失败不阻塞详情展示（旧后端可能没有该接口）
+    Promise.all([
+      request(API.meetingInfo(this.meetingId)),
+      request(API.meetingFiles(this.meetingId), { silent: true }).catch(() => null)
+    ])
+      .then(([infoRes, filesRes]) => {
+        this.applyData(infoRes.data || {}, filesRes && Array.isArray(filesRes.data) ? filesRes.data : [])
         this.setData({ loading: false })
       })
       .catch((err) => {
@@ -50,51 +75,25 @@ Page({
       })
   },
 
-  applyData(data) {
+  applyData(data, topicList) {
     const m = data.meeting || {}
-    const persons = (data.persons || [])
-      .map((p, i) => {
-        const mp = p.meetingPerson || {}
-        const u = p.userDetail || {}
-        const name = u.name || mp.accountName || mp.account || '未知人员'
-        return {
-          id: mp.id != null ? mp.id : i,
-          name,
-          avatarText: name.charAt(0) || '人',
-          unit: u.company || u.deptName || '',
-          position: u.position || '',
-          seat: mp.seatNo || '',
-          group: mp.groupName || ''
-        }
-      })
-
-    const meta = []
-    if (m.meetingLocation) {
-      meta.push({ icon: '/assets/icons/meta-location.png', label: '会议地点', value: m.meetingLocation })
-    }
-    if (m.mainPerson) {
-      meta.push({ icon: '/assets/icons/people.png', label: '主持人', value: m.mainPerson })
-    }
+    const status = STATUS[Number(m.status)] || {}
 
     this.setData({
       meeting: {
         title: m.meetingName || '未命名会议',
-        statusText: (STATUS[Number(m.status)] || {}).text || '',
-        statusType: (STATUS[Number(m.status)] || {}).type || '',
-        type: m.meetingTypeName || '',
-        time: formatMeetingRange(m.startTime, m.endTime) || '时间待定',
+        statusText: status.text || '',
+        statusType: status.type || '',
+        dateText: formatDateText(m.startTime, m.endTime),
+        timeText: formatMeetingTime(m.startTime, m.endTime),
         location: m.meetingLocation || '地点待定'
       },
-      stats: [
-        { id: 'topic', label: '议题', value: data.topicCount != null ? data.topicCount : 0 },
-        { id: 'file', label: '材料', value: data.fileCount != null ? data.fileCount : 0 },
-        { id: 'person', label: '参会人', value: persons.length }
-      ],
-      tabs: (data.tabs || []).map((t) => ({
-        id: t.categoryId != null ? t.categoryId : t.id,
-        name: t.categoryName || '未命名分类'
-      })),
-      persons
+      topics: topicList
+        .filter((t) => t.topicName)
+        .map((t, i) => ({
+          id: t.topicId != null ? t.topicId : i,
+          name: t.topicName
+        }))
     })
   },
 

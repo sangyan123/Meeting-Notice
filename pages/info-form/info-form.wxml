@@ -11,100 +11,61 @@
   <view class="body">
     <view class="warn-banner" wx:if="{{banner}}">{{banner}}</view>
 
-    <view class="card">
-      <text class="section-title">基本信息</text>
+    <view class="form-card">
       <view class="field">
         <text class="field-label">姓名</text>
-        <input class="input readonly" value="{{form.name}}" disabled />
+        <text class="field-value">{{form.name || '—'}}</text>
       </view>
+
       <view class="field">
-        <text class="field-label">手机号码 <text class="req">*</text></text>
-        <input
-          class="input"
-          type="number"
-          maxlength="11"
-          placeholder="请输入手机号码"
-          value="{{form.phone}}"
-          bindinput="onPhone"
-        />
+        <text class="field-label">代表团</text>
+        <text class="field-value">{{form.delegation || '—'}}</text>
       </view>
-    </view>
 
-    <view class="card">
-      <text class="section-title">住宿需求 <text class="req">*</text></text>
-      <radio-group bindchange="onHotelNeed">
-        <label class="radio-item" wx:for="{{hotelOptions}}" wx:key="value">
-          <radio value="{{item.value}}" checked="{{form.hotelNeed === item.value}}" color="#1A6DFF" />
-          <text>{{item.label}}</text>
-        </label>
-      </radio-group>
-    </view>
+      <view class="field">
+        <text class="field-label">抵达日期</text>
+        <picker mode="date" value="{{form.arriveDate}}" bindchange="onArrive">
+          <view class="picker-row {{!form.arriveDate ? 'placeholder' : ''}}">
+            <text>{{form.arriveDate || '年 / 月 / 日'}}</text>
+            <image class="date-icon" src="/assets/icons/date.png" mode="aspectFit" />
+          </view>
+        </picker>
+      </view>
 
-    <view class="card">
-      <text class="section-title">用餐特殊需求 <text class="req">*</text></text>
-      <radio-group bindchange="onDiet">
-        <label class="radio-item" wx:for="{{dietOptions}}" wx:key="value">
-          <radio value="{{item.value}}" checked="{{form.diet === item.value}}" color="#1A6DFF" />
-          <text>{{item.label}}</text>
-        </label>
-      </radio-group>
-    </view>
+      <view class="field">
+        <text class="field-label">离开日期</text>
+        <picker mode="date" value="{{form.leaveDate}}" bindchange="onLeaveDate">
+          <view class="picker-row {{!form.leaveDate ? 'placeholder' : ''}}">
+            <text>{{form.leaveDate || '年 / 月 / 日'}}</text>
+            <image class="date-icon" src="/assets/icons/date.png" mode="aspectFit" />
+          </view>
+        </picker>
+      </view>
 
-    <view class="card travel-card">
-      <text class="section-title">出行信息</text>
-      <view class="field dropdown-field">
-        <text class="field-label">交通方式 <text class="req">*</text></text>
-        <view class="dropdown">
+      <view class="field">
+        <text class="field-label">交通方式</text>
+        <view class="chips">
           <view
-            class="dropdown-trigger {{transportOpen ? 'open' : ''}} {{!form.transport ? 'placeholder' : ''}}"
-            catchtap="onToggleTransport"
-          >
-            <text>{{transportLabel || '请选择交通方式'}}</text>
-            <text class="arrow">{{transportOpen ? '∧' : '∨'}}</text>
-          </view>
-          <view class="dropdown-panel" wx:if="{{transportOpen}}">
-            <view
-              class="dropdown-item {{form.transport === item.value ? 'active' : ''}}"
-              wx:for="{{transportOptions}}"
-              wx:key="value"
-              data-value="{{item.value}}"
-              catchtap="onSelectTransport"
-            >{{item.label}}</view>
-          </view>
+            class="chip {{form.transport === item.value ? 'active' : ''}}"
+            wx:for="{{transportOptions}}"
+            wx:key="value"
+            data-value="{{item.value}}"
+            bindtap="onSelectTransport"
+          >{{item.label}}</view>
         </view>
       </view>
-      <view class="field">
-        <text class="field-label">抵达日期 <text class="req">*</text></text>
-        <picker mode="date" value="{{form.arriveDate}}" bindchange="onArrive">
-          <view class="picker {{!form.arriveDate ? 'placeholder' : ''}}">
-            {{form.arriveDate || 'yyyy/mm/日'}}
-            <image class="date-icon" src="/assets/icons/date.png" mode="aspectFit" />
-          </view>
-        </picker>
-      </view>
-      <view class="field">
-        <text class="field-label">离开日期 <text class="req">*</text></text>
-        <picker mode="date" value="{{form.leaveDate}}" bindchange="onLeaveDate">
-          <view class="picker {{!form.leaveDate ? 'placeholder' : ''}}">
-            {{form.leaveDate || 'yyyy/mm/日'}}
-            <image class="date-icon" src="/assets/icons/date.png" mode="aspectFit" />
-          </view>
-        </picker>
-      </view>
-    </view>
 
-    <view class="card">
-      <text class="section-title muted">备注 (选填)</text>
-      <textarea
-        class="textarea"
-        placeholder="如有其他需要说明的情况，请在此填写"
-        value="{{form.remark}}"
-        bindinput="onRemark"
-      />
+      <view class="field switch-field">
+        <text class="field-label">需要住宿安排</text>
+        <switch class="hotel-switch" checked="{{form.hotelNeed === 'yes'}}" bindchange="onHotelToggle" color="#1A6DFF" />
+      </view>
     </view>
 
     <view class="submitted-tip" wx:if="{{submitted}}">您已提交过，本次提交将覆盖之前的填报内容</view>
 
-    <view class="submit-btn {{canSubmit && hasMeeting && !submitting ? 'ready' : ''}}" bindtap="onSubmit">{{submitting ? '提交中…' : '提交'}}</view>
+    <view class="submit-btn {{canSubmit && hasMeeting && !submitting ? 'ready' : ''}}" bindtap="onSubmit">
+      <view class="btn-icon"></view>
+      <text>{{submitting ? '提交中…' : '提交信息'}}</text>
+    </view>
   </view>
 </view>
