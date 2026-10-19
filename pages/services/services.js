@@ -2,6 +2,7 @@ const { request, getToken } = require('../../utils/request')
 const API = require('../../utils/api')
 const { ensureCurrentMeeting } = require('../../utils/meeting')
 const { openService } = require('../../utils/services')
+const { showContactActions } = require('../../utils/contact')
 
 /** 服务入口 → 会务配置开关字段（后端未提供开关的入口不受控制，恒展示） */
 const SWITCH_OF = {
@@ -86,10 +87,7 @@ Page({
   },
 
   onContactTap(e) {
-    const phone = e.currentTarget.dataset.phone
-    if (phone) {
-      wx.makePhoneCall({ phoneNumber: phone, fail: () => {} })
-    }
+    showContactActions(e.currentTarget.dataset.phone, e.currentTarget.dataset.name)
   },
 
   onServiceTap(e) {

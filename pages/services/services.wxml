@@ -41,6 +41,7 @@
           wx:for="{{contacts}}"
           wx:key="label"
           data-phone="{{item.phone}}"
+          data-name="{{item.label}}"
           bindtap="onContactTap"
         >
           <text class="contact-label">{{item.label}}</text>

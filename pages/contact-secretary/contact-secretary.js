@@ -1,3 +1,5 @@
+const { showContactActions } = require('../../utils/contact')
+
 Page({
   data: {
     statusBarHeight: 20,
@@ -43,12 +45,7 @@ Page({
   },
 
   onCall(e) {
-    const phone = e.currentTarget.dataset.phone
-    if (!phone) return
-    wx.makePhoneCall({
-      phoneNumber: phone,
-      fail: () => {}
-    })
+    showContactActions(e.currentTarget.dataset.phone, e.currentTarget.dataset.name)
   },
 
   onBack() {
