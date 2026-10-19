@@ -40,7 +40,7 @@
   width: 112rpx;
   height: 112rpx;
   border-radius: 24rpx;
-  background: rgba(255, 255, 255, 0.16);
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,6 +51,7 @@
 .emblem-img {
   width: 82rpx;
   height: 82rpx;
+  border-radius: 50%;
 }
 
 .brand-text {

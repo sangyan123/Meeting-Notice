@@ -2,15 +2,18 @@ const { request, getToken, goLogin } = require('../../utils/request')
 const API = require('../../utils/api')
 const { formatMeetingTime, formatMeetingRange, parseDate } = require('../../utils/date')
 const { mapNoticeRow } = require('../../utils/notices')
+const { ensureCurrentMeeting } = require('../../utils/meeting')
 
 Page({
   data: {
     statusBarHeight: 20,
     headerPaddingTop: 20,
     userName: '',
+    userAvatar: '',
     meetingInfo: {},
     unreadCount: 0,
     loading: true,
+    showInfoForm: true,
     todayMeetings: [],
     notices: []
   },
@@ -31,6 +34,7 @@ Page({
       statusBarHeight,
       headerPaddingTop,
       userName: user.name || user.account || '',
+      userAvatar: user.avatar || '',
       meetingInfo: app.globalData.meetingInfo
     })
   },
@@ -42,7 +46,11 @@ Page({
     }
     const app = getApp()
     const user = app.globalData.userInfo || {}
-    this.setData({ userName: user.name || user.account || '' })
+    this.setData({
+      userName: user.name || user.account || '',
+      userAvatar: user.avatar || ''
+    })
+    this.loadUserAvatar()
 
     // 首页 onShow 可能早于 onLaunch 中的用户信息请求完成；
     // 这里等待同一个 Promise，回来后立即补显示姓名。
@@ -52,10 +60,49 @@ Page({
         if (info && (info.name || info.account) && !this.data.userName) {
           this.setData({ userName: info.name || info.account })
         }
+        if (info && info.avatar) {
+          this.setData({ userAvatar: info.avatar })
+        }
       })
     }
 
     this.fetchHome()
+  },
+
+  /** 下拉刷新：重新拉取首页数据（含会务配置开关） */
+  onPullDownRefresh() {
+    this.fetchHome().finally(() => wx.stopPullDownRefresh())
+  },
+
+  /** 头像位已保留；当前接口有头像时显示真实头像，否则继续显示白色占位图 */
+  loadUserAvatar() {
+    const app = getApp()
+    if (app.globalData.userInfo && app.globalData.userInfo.avatar) {
+      this.setData({ userAvatar: app.globalData.userInfo.avatar })
+    }
+
+    ensureCurrentMeeting()
+      .then((meeting) =>
+        request(API.appDelegateIdentity, {
+          data: { meetingId: meeting.id },
+          silent: true
+        })
+      )
+      .then((body) => {
+        const avatar = (body.data && (body.data.avatar || body.data.avatarUrl)) || ''
+        if (!avatar) return
+        app.globalData.userInfo = {
+          ...(app.globalData.userInfo || {}),
+          avatar
+        }
+        this.setData({ userAvatar: avatar })
+      })
+      .catch(() => {})
+  },
+
+  /** 真实头像加载失败时回退到占位图 */
+  onAvatarError() {
+    this.setData({ userAvatar: '' })
   },
 
   fetchHome() {
@@ -63,7 +110,7 @@ Page({
     const latestNotices = request(API.appNoticeLatest, { data: { limit: 5 }, silent: true })
       .then((body) => body)
       .catch(() => null)
-    Promise.all([
+    return Promise.all([
       request(API.currentMeeting),
       request(API.appInfoList),
       latestNotices
@@ -80,6 +127,14 @@ Page({
             title: current.meetingName || '',
             dateRange: formatMeetingRange(current.startTime, current.endTime)
           }
+
+          // 会务配置开关：infoEnabled=0 时隐藏首页「参会信息填报」入口（缺省/1 显示）
+          request(API.appServiceConfig, { data: { meetingId: current.id }, silent: true })
+            .then((cfg) => {
+              const d = (cfg && cfg.data) || {}
+              this.setData({ showInfoForm: d.infoEnabled !== 0 })
+            })
+            .catch(() => {})
         }
 
         const today0 = new Date()
@@ -121,7 +176,9 @@ Page({
       .catch((err) => {
         this.setData({ loading: false })
         wx.showToast({ title: err.message || '加载失败', icon: 'none' })
+        throw err
       })
+      .catch(() => {})
   },
 
   onBellTap() {

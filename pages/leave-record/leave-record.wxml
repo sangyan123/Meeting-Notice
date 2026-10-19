@@ -9,7 +9,13 @@
   </view>
 
   <view class="body">
-    <view class="record-card" wx:for="{{records}}" wx:key="id">
+    <view
+      class="record-card"
+      wx:for="{{records}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onRecordTap"
+    >
       <view class="record-top">
         <text class="record-title">{{item.title}}</text>
         <text class="record-status status-{{item.status}}">{{item.statusText}}</text>
@@ -21,5 +27,28 @@
       <view class="record-reason">原因：{{item.reason}}</view>
     </view>
     <view class="empty" wx:if="{{!records.length}}">暂无请假记录</view>
+  </view>
+
+  <!-- 请假申请详情弹窗 -->
+  <view class="modal-mask {{selectedRecord ? 'show' : ''}}" wx:if="{{selectedRecord}}" bindtap="onCloseDetail">
+    <view class="detail-sheet" catchtap="stopPropagation">
+      <view class="sheet-handle"></view>
+      <view class="sheet-top">
+        <text class="sheet-title">{{selectedRecord.title}}</text>
+        <text class="record-status status-{{selectedRecord.status}}">{{selectedRecord.statusText}}</text>
+      </view>
+      <view class="sheet-row">
+        <text class="sheet-label">会议日期</text>
+        <text class="sheet-value">{{selectedRecord.date}}</text>
+      </view>
+      <view class="sheet-row">
+        <text class="sheet-label">审批人</text>
+        <text class="sheet-value">{{selectedRecord.approver}}</text>
+      </view>
+      <view class="sheet-reason">
+        <text class="sheet-label">请假原因</text>
+        <text class="reason-text">{{selectedRecord.reason}}</text>
+      </view>
+    </view>
   </view>
 </view>

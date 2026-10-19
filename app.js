@@ -40,6 +40,7 @@ App({
     const name = user.realName || user.name || user.nickName || user.account || ''
     return {
       name,
+      avatar: user.avatar || user.avatarUrl || user.headImage || user.photo || '',
       avatarText: name ? name.charAt(0) : '客',
       account: user.account || '',
       phone: user.phone || '',

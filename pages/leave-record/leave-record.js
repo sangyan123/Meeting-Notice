@@ -14,7 +14,8 @@ Page({
   data: {
     statusBarHeight: 20,
     loading: true,
-    records: []
+    records: [],
+    selectedRecord: null
   },
 
   onLoad() {
@@ -58,10 +59,31 @@ Page({
       title: row.meetingName || '当前会议',
       status: status.cls,
       statusText: status.text,
-      date: (formatDateTime(row.submitTime) || '').slice(0, 10),
+      date: this.formatDate(row.meetingDate || row.meetingStartTime || row.submitTime),
+      approver: row.approveAccountName || '—',
       reason: row.reason || '—'
     }
   },
+
+  formatDate(value) {
+    return (formatDateTime(value) || '').slice(0, 10)
+  },
+
+  /** 点击记录：展示详情弹窗 */
+  onRecordTap(e) {
+    const id = e.currentTarget.dataset.id
+    const record = this.data.records.find((item) => item.id === id)
+    if (record) {
+      this.setData({ selectedRecord: record })
+    }
+  },
+
+  onCloseDetail() {
+    this.setData({ selectedRecord: null })
+  },
+
+  /** 阻止弹窗内部点击冒泡到遮罩 */
+  stopPropagation() {},
 
   /** 顶部「+ 新申请」跳转请假申请页 */
   onNew() {

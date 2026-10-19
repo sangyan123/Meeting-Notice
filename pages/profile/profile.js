@@ -75,6 +75,7 @@ Page({
           phone: d.phone || this.data.userInfo.phone,
           position: d.position || this.data.userInfo.position,
           company: d.company || this.data.userInfo.company,
+          avatar: d.avatar || d.avatarUrl || this.data.userInfo.avatar || '',
           delegateNo: d.delegateNo || '',
           delegation: d.delegation || '',
           committee: d.committee || '',

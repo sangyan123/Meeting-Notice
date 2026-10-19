@@ -124,3 +124,79 @@
   font-size: 26rpx;
   color: var(--text-muted);
 }
+
+/* ---- 详情弹窗 ---- */
+.modal-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: rgba(0, 0, 0, 0.38);
+  display: flex;
+  align-items: flex-end;
+}
+
+.detail-sheet {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 28rpx 28rpx 0 0;
+  padding: 14rpx 28rpx calc(28rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+
+.sheet-handle {
+  width: 72rpx;
+  height: 6rpx;
+  margin: 0 auto 28rpx;
+  border-radius: 999rpx;
+  background: #E5E5E5;
+}
+
+.sheet-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20rpx;
+  padding-top: 26rpx;
+  border-top: 1rpx solid #EEEEEE;
+  margin-bottom: 34rpx;
+}
+
+.sheet-title {
+  flex: 1;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.sheet-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 0;
+}
+
+.sheet-label {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+.sheet-value {
+  max-width: 60%;
+  font-size: 26rpx;
+  color: var(--text);
+  text-align: right;
+}
+
+.sheet-reason {
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+  margin-top: 12rpx;
+}
+
+.reason-text {
+  font-size: 27rpx;
+  color: var(--text);
+  line-height: 1.55;
+}

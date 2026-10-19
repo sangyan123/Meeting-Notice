@@ -5,7 +5,12 @@
     <view class="header-top">
       <view class="brand">
         <view class="emblem">
-          <image class="emblem-img" src="/assets/icons/logo-white.png" mode="aspectFit" />
+          <image
+          class="emblem-img"
+          src="{{userAvatar || '/assets/icons/logo-white.png'}}"
+          mode="aspectFill"
+          binderror="onAvatarError"
+        />
         </view>
         <view class="brand-text">
           <text class="brand-user">{{userName || '代表'}}</text>
@@ -22,7 +27,7 @@
   </view>
 
   <view class="body">
-    <view class="form-entry" bindtap="onInfoForm">
+    <view class="form-entry" wx:if="{{showInfoForm}}" bindtap="onInfoForm">
       <view class="entry-left">
         <image class="entry-icon" src="/assets/icons/svc-info-blue.png" mode="aspectFit" />
         <text class="entry-label">参会信息填报</text>
