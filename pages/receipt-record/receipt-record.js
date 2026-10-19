@@ -1,7 +1,7 @@
 const { request, getToken, goLogin } = require('../../utils/request')
 const API = require('../../utils/api')
 const { categoryTag } = require('../../utils/notices')
-const { formatDateTime } = require('../../utils/date')
+const { formatDateTime, formatMonthDayTime } = require('../../utils/date')
 
 const PAGE_SIZE = 10
 
@@ -11,7 +11,9 @@ Page({
     loading: true,
     loadingMore: false,
     finished: false,
-    list: []
+    list: [],
+    detailVisible: false,
+    detail: {}
   },
 
   onLoad() {
@@ -87,19 +89,37 @@ Page({
       receiptText: isLeave ? '请假' : '出席',
       isLeave,
       reason: row.reason || '',
-      submitTime: formatDateTime(row.submitTime)
+      submitTime: formatDateTime(row.submitTime),
+      statusText: isLeave ? '已请假' : '已出席',
+      timeText: formatMonthDayTime(row.submitTime)
     }
   },
 
   onItemTap(e) {
-    const { noticeId } = e.currentTarget.dataset
-    if (!noticeId) {
+    const { index } = e.currentTarget.dataset
+    const item = this.data.list[index]
+    if (!item) {
       return
     }
-    wx.navigateTo({ url: `/pages/notice-detail/notice-detail?id=${noticeId}` })
+    this.setData({
+      detailVisible: true,
+      detail: {
+        meetingName: item.meetingName,
+        isLeave: item.isLeave,
+        statusText: item.statusText,
+        timeText: item.timeText
+      }
+    })
   },
+
+  onCloseDetail() {
+    this.setData({ detailVisible: false })
+  },
+
+  noop() {},
 
   onBack() {
     wx.navigateBack({ delta: 1 })
   }
 })
+

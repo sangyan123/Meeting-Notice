@@ -77,6 +77,15 @@ function formatDateTime(value) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`
 }
 
+/** 月日时间展示："M月D日 HH:mm"（回执详情弹窗等） */
+function formatMonthDayTime(value) {
+  const d = parseDate(value)
+  if (!d) {
+    return ''
+  }
+  return `${d.getMonth() + 1}月${d.getDate()}日 ${fmtHM(d)}`
+}
+
 /** 通用日期展示："yyyy年M月d日"（通知落款日期等） */
 function formatDateCn(value) {
   const d = parseDate(value)
@@ -109,8 +118,10 @@ function formatMeetingRange(start, end) {
 module.exports = {
   parseDate,
   formatDateTime,
+  formatMonthDayTime,
   formatDateCn,
   formatMeetingTime,
   formatMeetingTimeFull,
   formatMeetingRange
 }
+

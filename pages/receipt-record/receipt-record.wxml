@@ -13,7 +13,7 @@
       class="record-card"
       wx:for="{{list}}"
       wx:key="id"
-      data-notice-id="{{item.noticeId}}"
+      data-index="{{index}}"
       bindtap="onItemTap"
     >
       <view class="record-top">
@@ -35,4 +35,22 @@
     <view class="load-tip" wx:if="{{loading || loadingMore}}">加载中...</view>
     <view class="load-tip" wx:if="{{!loading && !loadingMore && list.length > 0 && finished}}">没有更多了</view>
   </view>
+
+  <!-- 回执详情弹窗 -->
+  <view class="popup-mask" wx:if="{{detailVisible}}" bindtap="onCloseDetail"></view>
+  <view class="popup-sheet {{detailVisible ? 'show' : ''}}" wx:if="{{detailVisible}}" catchtap="noop">
+    <view class="popup-handle"></view>
+    <view class="popup-title">回执详情</view>
+    <view class="popup-subtitle" wx:if="{{detail.meetingName}}">{{detail.meetingName}}</view>
+    <view class="popup-row">
+      <text class="popup-label">回执状态</text>
+      <text class="popup-value status {{detail.isLeave ? 'leave' : 'attend'}}">{{detail.statusText}}</text>
+    </view>
+    <view class="popup-row">
+      <text class="popup-label">回执时间</text>
+      <text class="popup-value">{{detail.timeText}}</text>
+    </view>
+  </view>
 </view>
+
+

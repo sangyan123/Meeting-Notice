@@ -115,3 +115,85 @@
   font-size: 24rpx;
   padding: 24rpx 0 40rpx;
 }
+
+/* ==================== 回执详情弹窗 ==================== */
+.popup-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  animation: mask-in 0.2s ease-out;
+}
+
+.popup-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffffff;
+  border-radius: 28rpx 28rpx 0 0;
+  padding: 20rpx 36rpx calc(48rpx + env(safe-area-inset-bottom));
+  z-index: 1001;
+  animation: sheet-up 0.25s ease-out;
+}
+
+@keyframes mask-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes sheet-up {
+  from { transform: translateY(40%); opacity: 0.6; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.popup-handle {
+  width: 64rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: #E4E7EE;
+  margin: 0 auto 28rpx;
+}
+
+.popup-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10rpx;
+}
+
+.popup-subtitle {
+  font-size: 24rpx;
+  color: var(--text-muted);
+  margin-bottom: 28rpx;
+}
+
+.popup-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+}
+
+.popup-label {
+  font-size: 26rpx;
+  color: #8A94A6;
+}
+
+.popup-value {
+  font-size: 26rpx;
+  color: var(--text);
+}
+
+.popup-value.status.attend {
+  color: #3DAA6D;
+  font-weight: 600;
+}
+
+.popup-value.status.leave {
+  color: #E8833A;
+  font-weight: 600;
+}
