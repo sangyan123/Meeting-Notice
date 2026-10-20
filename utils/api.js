@@ -103,6 +103,9 @@ module.exports = {
   /** 会务配置 GET ?meetingId= → {orgName, servicePhone, serviceDeskLocation, emergencyPhone, noticeEnabled, leaveEnabled, hotelEnabled, mealEnabled, busEnabled, serviceCallEnabled} */
   appServiceConfig: '/meeting/appService/config',
 
+  /** 秘书处工作组列表 GET ?meetingId= → [{id, groupName, contactName, duty, phone, sortNum}]（按 sort_num 升序，校验参会人身份） */
+  appSecretaryList: '/meeting/secretary/appList',
+
   /** 消息偏好 GET → {masterEnabled, preEnabled, midEnabled, postEnabled, updateTime}；POST 保存 {masterEnabled...} 取值 0/1 */
   appMessagePref: '/meeting/appMessagePref',
 
