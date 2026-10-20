@@ -40,6 +40,7 @@ Page({
         const hotelRows = arranged
           ? [
               { label: '住宿酒店', value: d.hotelName || '—' },
+              { label: '房间类型', value: d.roomType || '—' },
               { label: '房间号', value: d.roomNo || '—' },
               { label: '入住时间', value: d.checkinTime ? formatDateTime(d.checkinTime) : '—' },
               { label: '退房时间', value: d.checkoutTime ? formatDateTime(d.checkoutTime) : '—' },
@@ -76,3 +77,6 @@ Page({
     wx.navigateBack({ delta: 1 })
   }
 })
+
+
+
