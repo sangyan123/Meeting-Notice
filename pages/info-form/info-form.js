@@ -13,6 +13,8 @@ Page({
   data: {
     statusBarHeight: 20,
     meetingId: null,
+    meetingOptions: [],
+    meetingIndex: -1,
     hasMeeting: false,
     banner: '',
     loading: false,
@@ -34,19 +36,80 @@ Page({
     const sys = wx.getSystemInfoSync()
     const app = getApp()
     const user = app.globalData.userInfo || {}
-    const meetingId = app.globalData.meetingId || null
     this.setData({
       statusBarHeight: sys.statusBarHeight || 20,
-      meetingId,
-      hasMeeting: !!meetingId,
-      banner: meetingId ? '' : '当前没有进行中的会议，暂无法填报',
       'form.name': user.name || '',
       'form.delegation': user.delegation || user.deptName || user.company || '',
       userPhone: user.phone || ''
     })
-    if (meetingId) {
-      this.loadMyInfo(meetingId)
+    this.loadMeetings()
+    this.checkSubmit()
+  },
+
+  /** 拉取本人参加的会议列表（后端仅返回参会人可见、排除创建中的会议） */
+  loadMeetings() {
+    request(API.appMyMeetingList)
+      .then((body) => {
+        const rows = (body && body.data) || []
+        this.setData({
+          meetingOptions: rows.map((m) => ({
+            id: m.id,
+            meetingName: m.meetingName || '',
+            status: m.status
+          }))
+        })
+        this.applyDefaultMeeting()
+      })
+      .catch((err) => {
+        this.setData({ banner: err.message || '获取会议列表失败' })
+      })
+  },
+
+  /** 默认选中当前进行中的会议；不在列表中时回退第一场进行中/第一场 */
+  applyDefaultMeeting() {
+    const options = this.data.meetingOptions
+    if (!options.length) {
+      this.setData({
+        meetingIndex: -1,
+        meetingId: null,
+        hasMeeting: false,
+        banner: '当前没有可填报的会议'
+      })
+      return
     }
+    const currentId = getApp().globalData.meetingId
+    let index = options.findIndex((m) => m.id === currentId)
+    if (index < 0) {
+      const activeIdx = options.findIndex((m) => m.status === 1)
+      index = activeIdx > -1 ? activeIdx : 0
+    }
+    const opt = options[index]
+    this.setData({
+      meetingIndex: index,
+      meetingId: opt.id,
+      hasMeeting: true,
+      banner: ''
+    })
+    this.loadMyInfo(opt.id)
+  },
+
+  /** 切换会议：清空上一场的填报内容并重新回显该会议的已提交数据 */
+  onMeetingChange(e) {
+    const index = Number(e.detail.value)
+    const opt = this.data.meetingOptions[index]
+    if (!opt || opt.id === this.data.meetingId) return
+    this.setData({
+      meetingIndex: index,
+      meetingId: opt.id,
+      hasMeeting: true,
+      banner: '',
+      submitted: false,
+      'form.hotelNeed': 'no',
+      'form.transport': '',
+      'form.arriveDate': '',
+      'form.leaveDate': ''
+    })
+    this.loadMyInfo(opt.id)
     this.checkSubmit()
   },
 
@@ -113,7 +176,7 @@ Page({
   onSubmit() {
     if (this.data.submitting) return
     if (!this.data.hasMeeting) {
-      wx.showToast({ title: '当前没有进行中的会议', icon: 'none' })
+      wx.showToast({ title: '请先选择会议', icon: 'none' })
       return
     }
     if (!this.data.canSubmit) {

@@ -11,6 +11,16 @@
   <view class="body">
     <view class="form-card">
       <view class="field">
+        <text class="field-label">会议名</text>
+        <picker mode="selector" range="{{meetingOptions}}" range-key="meetingName" value="{{meetingIndex}}" bindchange="onMeetingChange" disabled="{{!meetingOptions.length}}">
+          <view class="picker-row {{meetingIndex < 0 ? 'placeholder' : ''}}">
+            <text class="meeting-name-text">{{meetingIndex > -1 ? meetingOptions[meetingIndex].meetingName : '请选择会议'}}</text>
+            <view class="select-arrow"></view>
+          </view>
+        </picker>
+      </view>
+
+      <view class="field">
         <text class="field-label">申请人</text>
         <text class="field-value">{{applicant || '—'}}</text>
       </view>

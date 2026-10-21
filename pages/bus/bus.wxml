@@ -17,45 +17,49 @@
     <view class="loading" wx:if="{{loading}}">加载中...</view>
 
     <block wx:if="{{!loading}}">
-      <view class="bus-card {{item.stopped ? 'stopped' : ''}}" wx:for="{{buses}}" wx:key="id">
-        <view class="bus-top">
-          <view class="bus-left">
-            <image class="bus-icon" src="/assets/icons/che.png" mode="aspectFit" />
-            <text class="bus-no">{{item.no}}</text>
-            <text class="bus-time">{{item.time}}</text>
-            <text class="bus-date" wx:if="{{item.date}}">{{item.date}}</text>
+      <view class="bus-group" wx:for="{{groups}}" wx:for-item="group" wx:key="meetingId">
+        <view class="group-meeting">{{group.meetingName}}</view>
+
+        <view class="bus-card {{bus.stopped ? 'stopped' : ''}}" wx:for="{{group.buses}}" wx:for-item="bus" wx:key="id">
+          <view class="bus-top">
+            <view class="bus-left">
+              <image class="bus-icon" src="/assets/icons/che.png" mode="aspectFit" />
+              <text class="bus-no">{{bus.no}}</text>
+              <text class="bus-time">{{bus.time}}</text>
+              <text class="bus-date" wx:if="{{bus.date}}">{{bus.date}}</text>
+            </view>
+            <view class="status {{bus.stopped ? 'stopped' : bus.full ? 'full' : 'ok'}}">{{bus.stopped ? '停运' : bus.full ? '已满员' : '可乘坐'}}</view>
           </view>
-          <view class="status {{item.stopped ? 'stopped' : item.full ? 'full' : 'ok'}}">{{item.stopped ? '停运' : item.full ? '已满员' : '可乘坐'}}</view>
-        </view>
-        <view class="bus-route"><image class="route-icon" src="/assets/icons/meta-location.png" mode="aspectFit" /><text>{{item.route}}</text></view>
-        <view class="bus-bottom">
-          <view class="progress">
+          <view class="bus-route"><image class="route-icon" src="/assets/icons/meta-location.png" mode="aspectFit" /><text>{{bus.route}}</text></view>
+          <view class="bus-bottom">
+            <view class="progress">
+              <view
+                class="progress-bar {{bus.full ? 'full' : ''}}"
+                style="width: {{bus.percent}}%;"
+              ></view>
+            </view>
+            <text class="cap">{{bus.current}}/{{bus.capacity}}</text>
+          </view>
+          <view class="bus-remark" wx:if="{{bus.remark}}">{{bus.remark}}</view>
+          <view class="bus-actions">
             <view
-              class="progress-bar {{item.full ? 'full' : ''}}"
-              style="width: {{item.percent}}%;"
-            ></view>
+              wx:if="{{bus.myBooked}}"
+              class="book-btn booked"
+              data-id="{{bus.id}}"
+              bindtap="onCancelBookTap"
+            >已预约 · 点击取消</view>
+            <view
+              wx:elif="{{bus.bookable}}"
+              class="book-btn ready {{booking ? 'disabled' : ''}}"
+              data-id="{{bus.id}}"
+              bindtap="onBookTap"
+            >预约乘车</view>
+            <view wx:else class="book-btn disabled">{{bus.stopped ? '该班次已停运' : '名额已满'}}</view>
           </view>
-          <text class="cap">{{item.current}}/{{item.capacity}}</text>
-        </view>
-        <view class="bus-remark" wx:if="{{item.remark}}">{{item.remark}}</view>
-        <view class="bus-actions">
-          <view
-            wx:if="{{item.myBooked}}"
-            class="book-btn booked"
-            data-id="{{item.id}}"
-            bindtap="onCancelBookTap"
-          >已预约 · 点击取消</view>
-          <view
-            wx:elif="{{item.bookable}}"
-            class="book-btn ready {{booking ? 'disabled' : ''}}"
-            data-id="{{item.id}}"
-            bindtap="onBookTap"
-          >预约乘车</view>
-          <view wx:else class="book-btn disabled">{{item.stopped ? '该班次已停运' : '名额已满'}}</view>
         </view>
       </view>
 
-      <view class="empty" wx:if="{{buses.length === 0}}">
+      <view class="empty" wx:if="{{!groups.length}}">
         <text class="empty-title">暂无班车安排</text>
         <text class="empty-desc">班车班次确定后将在此展示</text>
       </view>

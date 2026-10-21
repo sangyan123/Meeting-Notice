@@ -13,6 +13,9 @@ module.exports = {
   /** 当前进行中的会议 GET → TMeetingMain（TMeetingMainController） */
   currentMeeting: '/meeting/main/appCurrentMeeting',
 
+  /** 本人参加的会议列表 GET ?meetingTypeId= → [TMeetingMain]（仅参会人可见，排除创建中，按开始时间倒序） */
+  appMyMeetingList: '/meeting/main/appList',
+
   /** 今天的会议列表 GET ?meetingTypeId= → [TMeetingMain] */
   todayMeetings: '/meeting/main/appTodayList',
 

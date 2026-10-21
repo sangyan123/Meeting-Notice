@@ -102,6 +102,25 @@
   flex-shrink: 0;
 }
 
+/* 会议下拉箭头（CSS 绘制，与日期图标同占位） */
+.select-arrow {
+  width: 14rpx;
+  height: 14rpx;
+  border-right: 3rpx solid #909399;
+  border-bottom: 3rpx solid #909399;
+  transform: rotate(45deg);
+  margin-right: 8rpx;
+  flex-shrink: 0;
+}
+
+.meeting-name-text {
+  flex: 1;
+  margin-right: 12rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* ---- 交通方式胶囊按钮 ---- */
 .chips {
   display: flex;

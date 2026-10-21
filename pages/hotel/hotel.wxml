@@ -11,38 +11,42 @@
   <scroll-view class="body" scroll-y>
     <view class="loading" wx:if="{{loading}}">加载中...</view>
 
-    <block wx:if="{{!loading && arranged}}">
-      <view class="card">
-        <text class="card-title">我的住宿信息</text>
-        <view class="row" wx:for="{{hotelRows}}" wx:key="label" data-phone="{{item.phone}}" bindtap="onCallPhone">
-          <text class="row-label">{{item.label}}</text>
-          <text class="row-value">{{item.value}}</text>
-        </view>
-      </view>
+    <block wx:if="{{!loading}}">
+      <view class="hotel-group" wx:for="{{groups}}" wx:for-item="group" wx:key="meetingId">
+        <view class="group-meeting">{{group.meetingName}}</view>
 
-      <view class="card">
-        <text class="card-title">酒店地址</text>
-        <view class="addr-line" wx:if="{{address}}">
-          <image class="addr-pin" src="/assets/icons/meta-location.png" mode="aspectFit" />
-          <text class="addr-text">{{address}}</text>
+        <view class="card">
+          <text class="card-title">我的住宿信息</text>
+          <view class="row" wx:for="{{group.hotelRows}}" wx:for-item="row" wx:key="label" data-phone="{{row.phone}}" bindtap="onCallPhone">
+            <text class="row-label">{{row.label}}</text>
+            <text class="row-value">{{row.value}}</text>
+          </view>
         </view>
-        <view class="map-box">
-          <image class="map-pin" src="/assets/icons/meta-location.png" mode="aspectFit" />
-          <text class="map-name">{{hotelName || '住宿酒店'}}</text>
-          <text class="map-dist">{{distance}}</text>
-        </view>
-      </view>
 
-      <view class="card" wx:if="{{tips.length}}">
-        <text class="card-title">住宿提醒</text>
-        <view class="tip-item" wx:for="{{tips}}" wx:key="index">
-          <view class="tip-num">{{index + 1}}</view>
-          <text class="tip-text">{{item}}</text>
+        <view class="card">
+          <text class="card-title">酒店地址</text>
+          <view class="addr-line" wx:if="{{group.address}}">
+            <image class="addr-pin" src="/assets/icons/meta-location.png" mode="aspectFit" />
+            <text class="addr-text">{{group.address}}</text>
+          </view>
+          <view class="map-box">
+            <image class="map-pin" src="/assets/icons/meta-location.png" mode="aspectFit" />
+            <text class="map-name">{{group.hotelName || '住宿酒店'}}</text>
+            <text class="map-dist">{{group.distance}}</text>
+          </view>
+        </view>
+
+        <view class="card" wx:if="{{group.tips.length}}">
+          <text class="card-title">住宿提醒</text>
+          <view class="tip-item" wx:for="{{group.tips}}" wx:for-item="tip" wx:key="index">
+            <view class="tip-num">{{index + 1}}</view>
+            <text class="tip-text">{{tip}}</text>
+          </view>
         </view>
       </view>
     </block>
 
-    <view class="empty" wx:if="{{!loading && !arranged}}">
+    <view class="empty" wx:if="{{!loading && !groups.length}}">
       <text class="empty-title">暂未安排住宿</text>
       <text class="empty-desc">如需住宿协助，请联系会务组或秘书处</text>
     </view>

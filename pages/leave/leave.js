@@ -1,10 +1,11 @@
 const { request, getToken, goLogin } = require('../../utils/request')
 const API = require('../../utils/api')
-const { ensureCurrentMeeting } = require('../../utils/meeting')
 
 Page({
   data: {
     statusBarHeight: 20,
+    meetingOptions: [],
+    meetingIndex: -1,
     applicant: '',
     startDate: '',
     endDate: '',
@@ -22,6 +23,7 @@ Page({
       : user.name || ''
     this.meetingId = null
     this.setData({ statusBarHeight: sys.statusBarHeight || 20, applicant })
+    this.loadMeetings()
     this.checkSubmit()
   },
 
@@ -30,13 +32,59 @@ Page({
       goLogin()
       return
     }
-    // 请假针对当前进行中的会议，页面不展示会议选择
-    ensureCurrentMeeting()
-      .then((meeting) => {
-        this.meetingId = meeting.id
-        this.checkSubmit()
+    // 已有列表时无需重复拉取；未选中时尝试按当前会议补选
+    if (this.data.meetingOptions.length && this.data.meetingIndex < 0) {
+      this.applyDefaultMeeting()
+    }
+  },
+
+  /** 拉取本人参加的会议列表（后端仅返回参会人可见、排除创建中的会议） */
+  loadMeetings() {
+    request(API.appMyMeetingList)
+      .then((body) => {
+        const rows = (body && body.data) || []
+        this.setData({
+          meetingOptions: rows.map((m) => ({
+            id: m.id,
+            meetingName: m.meetingName || '',
+            status: m.status
+          }))
+        })
+        this.applyDefaultMeeting()
       })
-      .catch(() => {})
+      .catch((err) => {
+        wx.showToast({ title: err.message || '获取会议列表失败', icon: 'none' })
+      })
+  },
+
+  /** 默认选中当前进行中的会议；不在列表中时回退第一场进行中/第一场 */
+  applyDefaultMeeting() {
+    const options = this.data.meetingOptions
+    if (!options.length) {
+      this.setData({ meetingIndex: -1 })
+      this.meetingId = null
+      this.checkSubmit()
+      return
+    }
+    const currentId = getApp().globalData.meetingId
+    let index = options.findIndex((m) => m.id === currentId)
+    if (index < 0) {
+      const activeIdx = options.findIndex((m) => m.status === 1)
+      index = activeIdx > -1 ? activeIdx : 0
+    }
+    this.setData({ meetingIndex: index })
+    this.meetingId = options[index].id
+    this.checkSubmit()
+  },
+
+  /** 切换会议 */
+  onMeetingChange(e) {
+    const index = Number(e.detail.value)
+    const opt = this.data.meetingOptions[index]
+    if (!opt || opt.id === this.meetingId) return
+    this.setData({ meetingIndex: index })
+    this.meetingId = opt.id
+    this.checkSubmit()
   },
 
   onStartChange(e) {
@@ -74,7 +122,7 @@ Page({
       return
     }
     if (!this.meetingId) {
-      wx.showToast({ title: '当前没有进行中的会议', icon: 'none' })
+      wx.showToast({ title: '请先选择会议', icon: 'none' })
       return
     }
 

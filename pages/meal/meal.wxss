@@ -1,5 +1,21 @@
 @import "../../styles/service-page.wxss";
 
+/* 会议分组：组标题为卡片上方的灰色会议名小字 */
+.meal-group {
+  margin-bottom: 12rpx;
+}
+
+.group-meeting {
+  font-size: 24rpx;
+  color: #98a2b3;
+  line-height: 1.4;
+  padding: 0 4rpx;
+  margin-bottom: 12rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .meal-card {
   background: #ffffff;
   border-radius: 20rpx;

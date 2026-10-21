@@ -1,12 +1,12 @@
 const { request, getToken, goLogin } = require('../../utils/request')
 const API = require('../../utils/api')
-const { ensureCurrentMeeting } = require('../../utils/meeting')
 
 Page({
   data: {
     statusBarHeight: 20,
     loading: true,
-    buses: [],
+    /** 按会议分组：[{ meetingId, meetingName, buses: [] }]，仅含班次不为空的会议 */
+    groups: [],
     /** 预约/取消请求进行中，防止重复提交 */
     booking: false
   },
@@ -24,18 +24,32 @@ Page({
     this.fetchBuses()
   },
 
+  /** 聚合本人所有会议的班次，按会议分组展示（无班次的会议不显示；单会议拉取失败时跳过） */
   fetchBuses() {
     this.setData({ loading: true })
-    ensureCurrentMeeting()
-      .then((meeting) =>
-        request(API.appBusList, { data: { meetingId: meeting.id } })
-      )
+    request(API.appMyMeetingList)
       .then((body) => {
-        const rows = (body.data && body.data.rows) || []
-        this.setData({
-          loading: false,
-          buses: rows.map((row, index) => this.mapBus(row, index))
+        const meetings = (body && body.data) || []
+        if (!meetings.length) return []
+        return Promise.all(
+          meetings.map((m) =>
+            request(API.appBusList, { data: { meetingId: m.id } })
+              .then((res) => ({ meeting: m, rows: (res.data && res.data.rows) || [] }))
+              .catch(() => null)
+          )
+        )
+      })
+      .then((results) => {
+        const groups = []
+        ;(results || []).forEach((item) => {
+          if (!item || !item.rows.length) return
+          groups.push({
+            meetingId: item.meeting.id,
+            meetingName: item.meeting.meetingName || '',
+            buses: item.rows.map((row, index) => this.mapBus(row, index))
+          })
         })
+        this.setData({ loading: false, groups })
       })
       .catch((err) => {
         this.setData({ loading: false })
@@ -72,7 +86,7 @@ Page({
 
   onBookTap(e) {
     const busId = Number(e.currentTarget.dataset.id)
-    const bus = this.data.buses.find((b) => b.id === busId)
+    const bus = this.findBus(busId)
     if (!bus || !bus.bookable || this.data.booking) {
       return
     }
@@ -119,6 +133,15 @@ Page({
           })
       }
     })
+  },
+
+  /** 跨会议分组查找班次 */
+  findBus(busId) {
+    for (const group of this.data.groups) {
+      const bus = group.buses.find((b) => b.id === busId)
+      if (bus) return bus
+    }
+    return null
   },
 
   onBack() {

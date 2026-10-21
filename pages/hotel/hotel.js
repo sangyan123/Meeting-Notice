@@ -1,18 +1,13 @@
 const { request, getToken, goLogin } = require('../../utils/request')
 const API = require('../../utils/api')
-const { ensureCurrentMeeting } = require('../../utils/meeting')
 const { formatDateTime } = require('../../utils/date')
 
 Page({
   data: {
     statusBarHeight: 20,
     loading: true,
-    arranged: false,
-    hotelName: '',
-    address: '',
-    distance: '',
-    hotelRows: [],
-    tips: []
+    /** 按会议分组：[{ meetingId, meetingName, hotelName, address, distance, hotelRows, tips }] */
+    groups: []
   },
 
   onLoad() {
@@ -28,35 +23,46 @@ Page({
     this.fetchHotel()
   },
 
+  /** 聚合本人所有会议的住宿安排，按会议分组展示（未安排住宿的会议不显示；单会议拉取失败时跳过） */
   fetchHotel() {
     this.setData({ loading: true })
-    ensureCurrentMeeting()
-      .then((meeting) =>
-        request(API.appHotel, { data: { meetingId: meeting.id } })
-      )
+    request(API.appMyMeetingList)
       .then((body) => {
-        const d = body.data || {}
-        const arranged = !!d.arranged
-        const hotelRows = arranged
-          ? [
+        const meetings = (body && body.data) || []
+        if (!meetings.length) return []
+        return Promise.all(
+          meetings.map((m) =>
+            request(API.appHotel, { data: { meetingId: m.id } })
+              .then((res) => ({ meeting: m, data: res.data || {} }))
+              .catch(() => null)
+          )
+        )
+      })
+      .then((results) => {
+        const groups = []
+        ;(results || []).forEach((item) => {
+          if (!item) return
+          const d = item.data
+          if (!d.arranged) return
+          groups.push({
+            meetingId: item.meeting.id,
+            meetingName: item.meeting.meetingName || '',
+            hotelName: d.hotelName || '',
+            address: d.address || '',
+            // 后端无距离字段，地图卡副标题用备注替代
+            distance: d.remark || '位置信息以秘书处安排为准',
+            hotelRows: [
               { label: '住宿酒店', value: d.hotelName || '—' },
               { label: '房间类型', value: d.roomType || '—' },
               { label: '房间号', value: d.roomNo || '—' },
               { label: '入住时间', value: d.checkinTime ? formatDateTime(d.checkinTime) : '—' },
               { label: '退房时间', value: d.checkoutTime ? formatDateTime(d.checkoutTime) : '—' },
               { label: '客服电话', value: d.phone || '—', phone: d.phone || '' }
-            ]
-          : []
-        this.setData({
-          loading: false,
-          arranged,
-          hotelName: d.hotelName || '',
-          address: d.address || '',
-          // 后端无距离字段，地图卡副标题用备注替代
-          distance: d.remark || '位置信息以秘书处安排为准',
-          hotelRows,
-          tips: arranged ? [d.remind, d.remark].filter(Boolean) : []
+            ],
+            tips: [d.remind, d.remark].filter(Boolean)
+          })
         })
+        this.setData({ loading: false, groups })
       })
       .catch((err) => {
         this.setData({ loading: false })
