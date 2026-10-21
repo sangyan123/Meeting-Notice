@@ -35,7 +35,7 @@
     <view class="body-spacer"></view>
   </scroll-view>
 
-  <view class="footer" style="padding-bottom: {{safeBottom}}px;" wx:if="{{notice && notice.requireReceipt}}">
+  <view class="footer" wx:if="{{notice && notice.requireReceipt}}">
     <block wx:if="{{!reasonOpen}}">
       <text class="footer-tip" wx:if="{{replyStatus === 'attend'}}">您已确认出席</text>
       <text class="footer-tip" wx:elif="{{replyStatus === 'leave'}}">您已提交请假回执</text>
