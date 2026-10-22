@@ -1,6 +1,6 @@
 const { request, getToken, goLogin } = require('../../utils/request')
 const API = require('../../utils/api')
-const { formatMeetingTime, formatMeetingRange, parseDate } = require('../../utils/date')
+const { formatMeetingTime, parseDate, formatDateCn } = require('../../utils/date')
 const { mapNoticeRow } = require('../../utils/notices')
 const { ensureCurrentMeeting } = require('../../utils/meeting')
 
@@ -9,8 +9,9 @@ Page({
     statusBarHeight: 20,
     headerPaddingTop: 20,
     userName: '',
+    userDelegation: '',
+    todayText: '',
     userAvatar: '',
-    meetingInfo: {},
     unreadCount: 0,
     loading: true,
     showInfoForm: true,
@@ -34,9 +35,17 @@ Page({
       statusBarHeight,
       headerPaddingTop,
       userName: user.name || user.account || '',
+      userDelegation: user.delegation || user.deptName || user.company || '',
       userAvatar: user.avatar || '',
-      meetingInfo: app.globalData.meetingInfo
+      todayText: this.buildTodayText()
     })
+  },
+
+  /** 顶部时间行：今天日期 + 星期 */
+  buildTodayText() {
+    const now = new Date()
+    const week = ['日', '一', '二', '三', '四', '五', '六'][now.getDay()]
+    return `${formatDateCn(now)} 星期${week}`
   },
 
   onShow() {
@@ -48,6 +57,7 @@ Page({
     const user = app.globalData.userInfo || {}
     this.setData({
       userName: user.name || user.account || '',
+      userDelegation: user.delegation || user.deptName || user.company || '',
       userAvatar: user.avatar || ''
     })
     this.loadUserAvatar()
@@ -59,6 +69,12 @@ Page({
       ready.then((info) => {
         if (info && (info.name || info.account) && !this.data.userName) {
           this.setData({ userName: info.name || info.account })
+        }
+        if (info && !this.data.userDelegation) {
+          const delegation = info.delegation || info.deptName || info.company || ''
+          if (delegation) {
+            this.setData({ userDelegation: delegation })
+          }
         }
         if (info && info.avatar) {
           this.setData({ userAvatar: info.avatar })
@@ -122,11 +138,6 @@ Page({
 
         if (current && current.id) {
           app.globalData.meetingId = current.id
-          app.globalData.meetingInfo = {
-            ...app.globalData.meetingInfo,
-            title: current.meetingName || '',
-            dateRange: formatMeetingRange(current.startTime, current.endTime)
-          }
 
           // 会务配置开关：infoEnabled=0 时隐藏首页「参会信息填报」入口（缺省/1 显示）
           request(API.appServiceConfig, { data: { meetingId: current.id }, silent: true })
@@ -162,7 +173,6 @@ Page({
 
         this.setData({
           loading: false,
-          meetingInfo: app.globalData.meetingInfo,
           unreadCount: noticeData.unreadCount || 0,
           notices,
           todayMeetings: meetings.map((m) => ({
