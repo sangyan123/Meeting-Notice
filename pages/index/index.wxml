@@ -15,6 +15,7 @@
         <view class="brand-text">
           <text class="brand-user">{{userName || '代表'}}</text>
           <text class="brand-org" wx:if="{{userDelegation}}">{{userDelegation}}</text>
+          <text class="brand-org" wx:if="{{currentMeetingName}}">{{currentMeetingName}}</text>
           <text class="brand-date">{{todayText}}</text>
         </view>
       </view>

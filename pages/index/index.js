@@ -10,6 +10,7 @@ Page({
     headerPaddingTop: 20,
     userName: '',
     userDelegation: '',
+    currentMeetingName: '',
     todayText: '',
     userAvatar: '',
     unreadCount: 0,
@@ -41,11 +42,13 @@ Page({
     })
   },
 
-  /** 顶部时间行：今天日期 + 星期 */
+  /** 顶部时间行：今天日期 + 时间 + 星期 */
   buildTodayText() {
     const now = new Date()
     const week = ['日', '一', '二', '三', '四', '五', '六'][now.getDay()]
-    return `${formatDateCn(now)} 星期${week}`
+    const hh = String(now.getHours()).padStart(2, '0')
+    const mm = String(now.getMinutes()).padStart(2, '0')
+    return `${formatDateCn(now)} ${hh}:${mm} 星期${week}`
   },
 
   onShow() {
@@ -58,8 +61,10 @@ Page({
     this.setData({
       userName: user.name || user.account || '',
       userDelegation: user.delegation || user.deptName || user.company || '',
-      userAvatar: user.avatar || ''
+      userAvatar: user.avatar || '',
+      todayText: this.buildTodayText()
     })
+    this.startTimeTicker()
     this.loadUserAvatar()
 
     // 首页 onShow 可能早于 onLaunch 中的用户信息请求完成；
@@ -83,6 +88,30 @@ Page({
     }
 
     this.fetchHome()
+  },
+
+  /** 顶部时间行：今天日期 + 时间 + 星期，每30秒自刷新 */
+  startTimeTicker() {
+    if (this.timeTimer) {
+      return
+    }
+    this.timeTimer = setInterval(() => {
+      this.setData({ todayText: this.buildTodayText() })
+    }, 30000)
+  },
+
+  onHide() {
+    if (this.timeTimer) {
+      clearInterval(this.timeTimer)
+      this.timeTimer = null
+    }
+  },
+
+  onUnload() {
+    if (this.timeTimer) {
+      clearInterval(this.timeTimer)
+      this.timeTimer = null
+    }
   },
 
   /** 下拉刷新：重新拉取首页数据（含会务配置开关） */
@@ -138,6 +167,7 @@ Page({
 
         if (current && current.id) {
           app.globalData.meetingId = current.id
+          this.setData({ currentMeetingName: current.meetingName || '' })
 
           // 会务配置开关：infoEnabled=0 时隐藏首页「参会信息填报」入口（缺省/1 显示）
           request(API.appServiceConfig, { data: { meetingId: current.id }, silent: true })
@@ -146,6 +176,8 @@ Page({
               this.setData({ showInfoForm: d.infoEnabled !== 0 })
             })
             .catch(() => {})
+        } else {
+          this.setData({ currentMeetingName: '' })
         }
 
         const today0 = new Date()
